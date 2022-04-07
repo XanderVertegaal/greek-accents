@@ -1,0 +1,5 @@
+{
+    "scss.lint.duplicateProperties": "warning",
+    "scss.lint.float": "warning",
+    "scss.lint.important": "warning"
+}

@@ -1,0 +1,31 @@
+Griekse accenten
+
+- 36 combinations of aspiration marks (3), tone marks (3), case (2) and iota-subscription (2)
+	Alpha / eta / omega lack:
+		- no-aspiration && uppercase (-6)
+	Epsilon / omikron lack:
+		- no-aspiration && uppercase (-6)
+		- subscript variants (-18)
+		- perispomenon accent (-12)
+	Iota / upsilon lack:
+		- no-aspiration && uppercase (-6)
+		- subscript variants
+- The diaeresis occurs only on the semivowels, with all breathings, never with asp:fortis|lenis, never with capitals and never with subscripted;
+- The upsilon does not have capitals with spiritus lenis
+	
+Syllabification training set:
+- Ἀθηναῖοι 
+- ποιῶ 
+- στοιᾱ́ 
+- στοᾱ́ 
+- κελεύω
+- σημεῖον
+
+
+κελεύω
+
+- Show unaccented text
+- Show amoutn of words in total score;
+- Select random word in text and analyse;
+- Keep track of score;
+- After finishing all words: show report with correct words/incorrect words

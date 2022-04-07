@@ -1,0 +1,101 @@
+<div class="page-wrapper">
+    <header class="header">
+            <h2>Greek accent trainer</h2>
+    </header>
+
+    <article class="content-wrapper">
+        <section class="text-wrapper" *ngIf="displayText">
+            <h4 class="text-title">Xenophon, <em>Anabasis</em> 1.1.2</h4>
+        <p *ngIf="selectedIndexWord">
+            <span 
+                *ngFor="let word of displayText" [id]="word[0]"
+                [class.selected]="word === selectedIndexWord" 
+                [class.seen]="seen.includes(word)">
+                {{word[1]}}
+            </span>
+        </p>
+        
+    </section>
+
+    <section class="selected-wrapper" *ngIf="selectedIndexWord">
+        <h4 class="selected-header">Determine the tonal pattern of:</h4>
+        <h2 class="selected-word">{{selectedIndexWord[1] | trim}}</h2>
+    </section>
+
+    <section class="score-board">
+        <p class="correct"> 👍 {{correctCounter}}</p>
+        <p class="incorrect"> 👎 {{incorrectCounter}}</p>
+        <p class="total"> Total {{totalCounter}}</p>
+    </section>
+
+    <section class="notifications">
+        <p class="correct" [class.visible]="isAnswerCorrect === true">Correct! This word is indeed a {{tonePattern}}</p>
+        <p class="incorrect" [class.visible]="isAnswerCorrect === false">Incorrect! This word is in fact a {{tonePattern}}</p>
+        <p class="game-over" [class.visible]="isGameOver">Game over!</p>
+    </section>
+
+    <form class="button-wrapper">
+        <button 
+            class="button-toneless"
+            type="button" 
+            (click)="onSelectTone(TonePattern.TONELESS)">
+            Toneless 
+            {{applyTonePatternToWord(trimmedWord, TonePattern.TONELESS) ?? ''}}
+        </button>
+        <button 
+            type="button" 
+            (click)="onSelectTone(TonePattern.BARYTONE)">
+            Barytone 
+            {{applyTonePatternToWord(trimmedWord, TonePattern.BARYTONE) ?? ''}}
+        </button>
+        <button 
+            type="button" 
+            (click)="onSelectTone(TonePattern.OXYTONE)">
+            Oxytone 
+            {{applyTonePatternToWord(trimmedWord, TonePattern.OXYTONE) ?? ''}}
+        </button>
+        <button 
+            type="button"
+            (click)="onSelectTone(TonePattern.PAROXYTONE)">
+            Paroxytone 
+            {{applyTonePatternToWord(trimmedWord, TonePattern.PAROXYTONE) ?? ''}}
+        </button>
+        <button 
+            type="button"
+            (click)="onSelectTone(TonePattern.PROPAROXYTONE)">
+            Proparoxytone
+            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPAROXYTONE) ?? ''}}
+        </button>
+        <button 
+            type="button" 
+            (click)="onSelectTone(TonePattern.PERISPOMENON)">
+            Perispomenon 
+            {{applyTonePatternToWord(trimmedWord, TonePattern.PERISPOMENON) ?? ''}}
+        </button>
+        <button 
+            type="button"
+            (click)="onSelectTone(TonePattern.PROPERISPOMENON)">
+            Properispomenon 
+            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPERISPOMENON) ?? ''}}
+        </button>
+        <button
+            type="button"
+            (click)="onSelectTone(TonePattern.PROPAROXYTONE_AND_OXYTONE)">
+            Proparoxtyone + oxytone
+            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPAROXYTONE_AND_OXYTONE) ?? ''}}
+        </button>
+        <button
+            type="button"
+            (click)="onSelectTone(TonePattern.PROPERISPOMENON_AND_OXYTONE)">
+            Properispomenon + oxytone
+            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPERISPOMENON_AND_OXYTONE) ?? ''}}
+        </button>
+        
+        <button class="new-word" type="button" (click)="onSelectNewWord()">Pick a new word!</button>
+    </form>
+    </article>
+
+    <footer class="footer">
+        <p>&copy; 2022</p>
+    </footer>
+</div>
