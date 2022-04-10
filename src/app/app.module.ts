@@ -13,6 +13,7 @@ import { TrimPipe } from './trim.pipe';
 import { ToneSelectFormComponent } from './tone-select-form/tone-select-form.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { TextListComponent } from './text-list/text-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     TrimPipe,
     ToneSelectFormComponent,
     ScoreboardComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    TextListComponent
   ],
   imports: [
     BrowserModule,

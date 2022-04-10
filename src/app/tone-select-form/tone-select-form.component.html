@@ -1,5 +1,16 @@
 <form class="button-wrapper">
-        <button 
+    <button 
+        [class.button-toneless]="tp.value === 'toneless'"
+        type="button"
+        *ngFor="let tp of TonePattern | keyvalue"
+        (click)="onSelectTone(tp.value)">
+        {{tp.value}}
+        <br>
+        {{applyTonePatternToWord(trimmedWord, tp.value) ?? ''}}
+    </button>
+
+
+        <!-- <button 
             class="button-toneless"
             type="button" 
             (click)="onSelectTone(TonePattern.TONELESS)">
@@ -62,7 +73,7 @@
             Properispomenon + oxytone
             <br>
             {{applyTonePatternToWord(trimmedWord, TonePattern.PROPERISPOMENON_AND_OXYTONE) ?? ''}}
-        </button>
+        </button> -->
         
         <button class="new-word" type="button" (click)="selectNewWord.next()">Pick a new word!</button>
     </form>

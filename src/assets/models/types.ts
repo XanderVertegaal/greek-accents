@@ -1,19 +1,19 @@
 export enum TonePattern {
-  OXYTONE_ACUTE = 'oxytone_acute',
-  OXYTONE_GRAVE = 'oxytone_grave',
+  TONELESS = 'toneless',
+  OXYTONE_ACUTE = 'oxytone (acute)',
+  OXYTONE_GRAVE = 'oxytone (grave)',
   PAROXYTONE = 'paroxytone',
   PROPAROXYTONE = 'proparoxytone',
   PERISPOMENON = 'perispomenon',
   PROPERISPOMENON = 'properispomenon',
   PROPAROXYTONE_AND_OXYTONE = 'proparoxytone and oxytone',
   PROPERISPOMENON_AND_OXYTONE = 'properispomenon and oxytone',
-  TONELESS = 'toneless'
 }
 
 export enum Tone {
   GRAVE = 'grave',
   ACUTE = 'acute',
-  CIRCUMFLEX = 'perispomenon',
+  CIRCUMFLEX = 'circumflex',
   NONE = 'none',
 }
 
@@ -45,7 +45,7 @@ export interface CharProps {
   subscripted: boolean;
   aspirated: Aspiration;
   tone: Tone;
-  diaeresis: boolean;  
+  diaeresis: boolean;
 }
 
 export type IndexWord = [number, string];

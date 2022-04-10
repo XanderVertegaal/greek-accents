@@ -27,6 +27,7 @@ export class ToneSelectFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    Object.values(TonePattern).forEach(tp => console.log(tp));
     this.subscriptions.push(
       this.correctTonePattern$
         .subscribe((tonePattern) => {
