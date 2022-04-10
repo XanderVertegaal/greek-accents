@@ -1,0 +1,20 @@
+.notifications {
+    height: 2em;
+
+    p {
+        display: none;
+        text-align: center;
+    }
+
+    p.visible {
+        display: block;
+    }
+
+    .correct {
+        color: green;
+    }
+    
+    .incorrect {
+        color: red;
+    }
+}

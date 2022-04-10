@@ -1,9 +1,3 @@
-* {
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    margin: 0;
-    box-sizing: border-box;
-    padding: 0;
-}
 
 .seen {
     background-color: yellow;
@@ -15,7 +9,7 @@
 .page-wrapper {
     position: relative;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -33,8 +27,14 @@ header {
 }
 
 .content-wrapper {
+    width: 1200px;
+    margin: 0 auto;
     padding: .5em;
     margin-bottom: 3em;
+
+    @media screen and (max-width: 1200px) {
+        width: 100%;   
+    }
 
     .text-title {
         padding: 0.25em 0;
@@ -56,84 +56,6 @@ header {
 
 span {
     font-size: 1em;
-}
-
-.score-board {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 1.5em 1.5em .5em;
-
-
-    p {
-        font-weight: bold;
-        font-size: 1.1em;
-       
-        &.correct {
-            color: green;
-        }
-
-        &.incorrect {
-            color: red;
-        }
-    }
-}
-
-.notifications {
-    height: 2em;
-
-    p {
-        display: none;
-        text-align: center;
-    }
-
-    p.visible {
-        display: block;
-    }
-
-    .correct {
-        color: green;
-    }
-    
-    .incorrect {
-        color: red;
-    }
-}
-
-form {
-    margin-top: auto;
-    width: 100%;
-    padding: 1em;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .5em;
-
-    button {
-        font-weight: bold;
-        padding: .75em;
-        border-radius: 5px;
-        grid-column: 1fr;
-        background-color: purple;
-        color: white;
-        border: 2px solid white;
-        outline: 1px solid purple;
-
-        &:active {
-            transform: translateY(2px);
-        }
-    }
-
-    .button-toneless {
-        grid-column: span 2;
-        margin: .25em;
-    }
-
-    .new-word {
-        grid-column: span 2;
-        width: 100%;
-        background-color: #ca4f41;
-        outline: 1px solid #ca4f41;
-    }
 }
 
 footer {

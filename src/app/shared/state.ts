@@ -1,9 +1,12 @@
 import { ActionReducerMap } from "@ngrx/store";
-import { dataReducer, dataState } from "./data.reducer";
+import { dataReducer, DataState as DataState } from "./data.reducer";
+import { scoreReducer, ScoreState } from "./score.reducer";
 export interface StoreState {
-    data: dataState
+    data: DataState,
+    score: ScoreState
 }
 
 export const StoreMap: ActionReducerMap<StoreState> = {
-    data: dataReducer
+    data: dataReducer,
+    score: scoreReducer
 }

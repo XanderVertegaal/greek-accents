@@ -1,12 +1,12 @@
 export enum TonePattern {
-  OXYTONE = 'oxytone',
+  OXYTONE_ACUTE = 'oxytone_acute',
+  OXYTONE_GRAVE = 'oxytone_grave',
   PAROXYTONE = 'paroxytone',
   PROPAROXYTONE = 'proparoxytone',
   PERISPOMENON = 'perispomenon',
   PROPERISPOMENON = 'properispomenon',
   PROPAROXYTONE_AND_OXYTONE = 'proparoxytone and oxytone',
   PROPERISPOMENON_AND_OXYTONE = 'properispomenon and oxytone',
-  BARYTONE = 'barytone',
   TONELESS = 'toneless'
 }
 
@@ -49,3 +49,7 @@ export interface CharProps {
 }
 
 export type IndexWord = [number, string];
+
+export interface MorpheusReponse {
+  
+}

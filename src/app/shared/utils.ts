@@ -115,7 +115,10 @@ export function removeWordAccents(word: string): string {
   return unaccentedWord.join('');
 }
 
-export function applyToneToNucleus({nucleus, index}: NucleusIndex, tone: Tone): NucleusIndex | null {
+export function applyToneToNucleus(
+  { nucleus, index }: NucleusIndex,
+  tone: Tone
+): NucleusIndex | null {
   let unaccChar: Character | undefined = undefined;
   if (nucleus.length === 1) {
     unaccChar = getCharFromLetter(nucleus);
@@ -136,76 +139,79 @@ export function applyToneToNucleus({nucleus, index}: NucleusIndex, tone: Tone): 
   };
   let accChar = getCharFromProps(accCharProps);
 
-  if (!accChar) {
-    console.error('No character found for props');
-    return null;
-  }
+  if (!accChar) return null;
   return nucleus.length === 1
     ? { nucleus: accChar.glyph, index: index }
-    : { nucleus: (nucleus[0] + accChar.glyph), index: index };
+    : { nucleus: nucleus[0] + accChar.glyph, index: index };
 }
 
-export function replaceNucleus(word: string, { nucleus, index }: NucleusIndex): string {
+export function replaceNucleus(
+  word: string,
+  { nucleus, index }: NucleusIndex
+): string {
   let newWord = word.split('').reverse();
   newWord.splice(index, nucleus.length, nucleus);
   return newWord.reverse().join('');
 }
 
-export function applyTonePatternToWord(word: string, tonePattern: TonePattern): string | null {
+export function applyTonePatternToWord(
+  word: string,
+  tonePattern: TonePattern
+): string | null {
   const nuclei = getNuclei(word);
   let selectedNucleus: NucleusIndex | null = null;
   let accentedNucleus: NucleusIndex | null = null;
-  if (nuclei.length === 0) return null
+  if (nuclei.length === 0) return null;
   switch (tonePattern) {
     case TonePattern.TONELESS:
       return word;
-    
-    case TonePattern.BARYTONE:
+
+    case TonePattern.OXYTONE_GRAVE:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.GRAVE);
       if (!accentedNucleus) return null;
       return replaceNucleus(word, accentedNucleus);
 
-    case TonePattern.OXYTONE:
+    case TonePattern.OXYTONE_ACUTE:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.ACUTE);
       if (!accentedNucleus) return null;
       return replaceNucleus(word, accentedNucleus);
-    
+
     case TonePattern.PAROXYTONE:
       if (nuclei[1] === undefined) return null;
       selectedNucleus = nuclei[1];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.ACUTE);
       if (!accentedNucleus) return null;
       return replaceNucleus(word, accentedNucleus);
-    
+
     case TonePattern.PROPAROXYTONE:
       if (nuclei[2] === undefined) return null;
       selectedNucleus = nuclei[2];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.ACUTE);
       if (!accentedNucleus) return null;
       return replaceNucleus(word, accentedNucleus);
-    
+
     case TonePattern.PERISPOMENON:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.CIRCUMFLEX);
       if (!accentedNucleus) return null;
       return replaceNucleus(word, accentedNucleus);
-    
+
     case TonePattern.PROPERISPOMENON:
       if (nuclei[1] === undefined) return null;
       selectedNucleus = nuclei[1];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.CIRCUMFLEX);
       if (!accentedNucleus) return null;
       return replaceNucleus(word, accentedNucleus);
-    
+
     case TonePattern.PROPAROXYTONE_AND_OXYTONE:
       if (nuclei[2] === undefined) return null;
       let ppoProparox = applyToneToNucleus(nuclei[2], Tone.ACUTE);
       let ppoOx = applyToneToNucleus(nuclei[0], Tone.ACUTE);
       if (!ppoProparox || !ppoOx) return null;
       return replaceNucleus(replaceNucleus(word, ppoProparox), ppoOx);
-    
+
     case TonePattern.PROPERISPOMENON_AND_OXYTONE:
       if (nuclei[1] === undefined) return null;
       let prpPerisp = applyToneToNucleus(nuclei[1], Tone.CIRCUMFLEX);
@@ -230,14 +236,14 @@ export function determineTonePattern(nuclei: NucleusIndex[]): TonePattern {
   // console.log('Found nucleid tones:', nucleusTones)
   switch (nucleusTones[0]) {
     case Tone.GRAVE:
-      return TonePattern.BARYTONE;
+      return TonePattern.OXYTONE_GRAVE;
     case Tone.ACUTE:
       if (nucleusTones[1] === Tone.CIRCUMFLEX) {
         return TonePattern.PROPERISPOMENON_AND_OXYTONE;
       } else if (nucleusTones[2] === Tone.ACUTE) {
         return TonePattern.PROPAROXYTONE_AND_OXYTONE;
       } else {
-        return TonePattern.OXYTONE;
+        return TonePattern.OXYTONE_ACUTE;
       }
     case Tone.CIRCUMFLEX:
       return TonePattern.PERISPOMENON;

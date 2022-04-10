@@ -1,0 +1,35 @@
+form {
+    margin-top: auto;
+    width: 100%;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5em;
+
+    button {
+        font-weight: bold;
+        padding: .75em;
+        border-radius: 5px;
+        grid-column: 1fr;
+        background-color: purple;
+        color: white;
+        border: 2px solid white;
+        outline: 1px solid purple;
+
+        &:active {
+            transform: translateY(2px);
+        }
+    }
+
+    .button-toneless {
+        grid-column: span 2;
+        margin: .25em;
+    }
+
+    .new-word {
+        grid-column: span 2;
+        width: 100%;
+        background-color: #ca4f41;
+        outline: 1px solid #ca4f41;
+    }
+}

@@ -10,12 +10,18 @@ import { environment } from '../environments/environment';
 import { StoreMap } from './shared/state';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { TrimPipe } from './trim.pipe';
+import { ToneSelectFormComponent } from './tone-select-form/tone-select-form.component';
+import { ScoreboardComponent } from './scoreboard/scoreboard.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TrimPipe
+    TrimPipe,
+    ToneSelectFormComponent,
+    ScoreboardComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

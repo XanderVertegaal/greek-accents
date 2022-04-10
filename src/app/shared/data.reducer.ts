@@ -1,17 +1,26 @@
 import { createReducer, on } from '@ngrx/store';
-import { setSelectedIndexWord } from '../home/actions/home.actions';
-import { setAccentedText} from '../services/actions/corpus.actions';
+import { TonePattern } from 'src/assets/models/types';
+import { setCorrectTonePattern, setSelectedIndexWord } from '../home/actions/home.actions';
+import { setAccentedText, setSelectedAuthor, setSelectedPassage, setSelectedWork} from '../services/actions/corpus.actions';
 
-export interface dataState {
+export interface DataState {
   accentedText: string[];
   selectedIndexWord: [number, string] | null;
   seen: number[];
+  correctTonePattern: TonePattern | null;
+  selectedAuthor: string;
+  selectedWork: string;
+  selectedPassage: string;
 }
 
-const initialDataState: dataState = {
+const initialDataState: DataState = {
   accentedText: [],
   selectedIndexWord: null,
-  seen: []
+  seen: [],
+  correctTonePattern: null,
+  selectedAuthor: '',
+  selectedWork: '',
+  selectedPassage: ''
 };
 
 export const dataReducer = createReducer(
@@ -26,6 +35,30 @@ export const dataReducer = createReducer(
     return {
       ...state,
       selectedIndexWord: action.indexWord,
+    };
+  }),
+  on(setCorrectTonePattern, (state, action) => {
+    return {
+      ...state,
+      correctTonePattern: action.tonePattern,
+    };
+  }),
+  on(setSelectedAuthor, (state, action) => {
+    return {
+      ...state,
+      selectedAuthor: action.author,
+    };
+  }),
+  on(setSelectedWork, (state, action) => {
+    return {
+      ...state,
+      selectedWork: action.work,
+    };
+  }),
+  on(setSelectedPassage, (state, action) => {
+    return {
+      ...state,
+      selectedPassage: action.passage,
     };
   })
 );

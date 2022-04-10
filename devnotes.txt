@@ -1,5 +1,10 @@
 Griekse accenten
 
+
+To-do (a lot):
+	- Check for σωτῆρα rule (in cases like Ἑλλήνες...) or maybe not...?
+
+
 - 36 combinations of aspiration marks (3), tone marks (3), case (2) and iota-subscription (2)
 	Alpha / eta / omega lack:
 		- no-aspiration && uppercase (-6)
@@ -29,3 +34,437 @@ Syllabification training set:
 - Select random word in text and analyse;
 - Keep track of score;
 - After finishing all words: show report with correct words/incorrect words
+
+Rules
+
+Vowel contractions:
+	- no accent + no accent = no accent;
+	- ultimate:
+		accent + no accent = perispomenon
+		no accent + accent = oxytone / barytone
+	- penultimate:
+		- ultimate is long => oxytone
+		- ultime is short => perispomenon
+	- antepenultimate => acute
+
+	Exception:
+		- Λητώ, acc. Λητώ, voc. Λητοῖ
+
+Article
+	- Nominative sg./pl. m/f have no accent;
+	- Accusative sg./pl. m/f, nom-acc. sg./pl. n. nom.-acc.du. => oxytone
+	- Genitive/Dative => perispomenon.
+
+
+Nominal forms:
+	- The accent remains for as long as possible on the syllable that bears it in the nominative singular.
+	- Exceptions:
+		- Vocatives (recessive)
+			=> δεσπότης => δέσποτα! (vs. nom.pl. δεσπόται)
+			=> ἀδελφός => ἄδελφε!
+			=> PNs in -ων: Ἀγάμεμνον, Αὐτόμεδον, Ποσείδων! (Ποσειδῶν)
+			=> Kinship terms: δαήρ (δᾶερ), σωτήρ (σῶτερ), ἀνήρ (ἄνερ), πατήρ (πάτερ), θυγάτηρ (θύγατερ)
+		- Δημήτηρ is recessive.
+		
+	
+	- Monosyllabic Rule: accent is on the (monosyllabic) stem in direct cases, on ending in oblique cases
+		=> perispomenon when ultimate is long; oxytone/barytone when ultimate is short
+	- Exceptions
+		- No MR in genitive plural and gen.-dat.du.: 
+			=> δᾴς (δᾳδός, δᾴδων)
+			=> δμώς (δμωός, δμώων)
+			=> οὖς (ὠτός, ὤτων)
+			=> παῖς (παιδός, παίδων)
+			=> Τρώς (Τρωός, Τρώων)
+			=> φώς (φωτός, φωσί(ν), but: φώτων, φώτοιν)
+		- No MR in plural and dual:
+			=> πᾱς (παντός, παντί, but πάντε, πάντοιν, πάντων, πᾶσι(ν))
+			=> εἶς-compounds: οὐδείς, μηδείς (οὐδενός, οὺδένων). εἶς itself follows MR
+		- No MR in monosyllabic participles (recessive/stative)
+		- No MR in τίς (recessive/stative)
+		- Contracted monosyllables not following MR
+			=> ἦρ (= ἔαρ)
+			=> κῆρ (= κέαρ)
+			=> πρών (= πρωών)
+		- Polysyllables following MR
+			=> γυνή, γυναικός (but voc.sg. is recessive γύναι);
+			=> κύων, κυνός
+			=> ἀνήρ, ἀνδρός and ἀρήν, ἀρνός (except dat.pl. ἀνδράσι(ν), ἀρνάσι(ν))
+			=> πατήρ, μήτηρ, θυγάτηρ, γαστήρ (only in sg.)
+	
+Pronouns
+	- Personal pronouns
+	
+Verbal nouns/adjectives:
+	-
+	
+	
+===============
+
+Particulars:
+		- First declension nouns/adjectives
+			- Feminines in -α are generally recessive/paroxytone
+			- Gen./dat. (sg./du./pl.) => oxytones become perispomena
+			- Perispomena always stay perispomena (example??)
+			- Gen.pl. => always perispomenon in substantives;
+				=> adjectives follow masculine/neuter accentuation
+			- Comparatives and superlatives are recessive.
+			
+			Ambiguous vowels:
+			- Adjectives: nom.sg. -α is always long): *-eh2
+				=> this is because of the REI-rule
+				=> Substantives: *-eh2 / -h2
+			- Acc.pl. -ας is always long
+				=> this is because of the 2nd CV
+			- Nom.pl. -αι is always short
+			- Acc.sg. => -αν can be long or short
+				=> Actually: 
+			(- Vocative sg. => -α is always short in masculines in -ης, -της)
+				=> *-h2
+			
+			
+			
+			
+		- Second declension nouns/adjectives
+			- Most neuters are barytone.
+			- Adjectives in -λος, -νος, -ρoς are most often oxytone
+			- Gen./dat. (sg./du./pl.) => oxytones become perispomena
+				=> but Attic declension subst./adj. λεώς/ (λᾱός) keep their nom.sg. accentuation, so gen.sg. λεώ, λεών, Μενέλεως(!)
+				But note: ἰλέως (ἴλαος) => ἴλεα. Also Smythe notes that accentuation is uncertain in many cases: ὁ λαγώς ~ λαγῶς
+			- Contracts in -οῦς are perispomenon in all cases apart from nom.-acc.du. τὼ νώ.
+			- Compounds with πλοῦς / ῥοῦς are paroxytone in all cases of substantives (but ἁπλοῦς, διπλοῦς are not???)
+				=> but compounds with νοῦς, πλοῦς ῥοῦς have the accent on the syllable preceding these stems: εὔνους, εὖνοι
+			- Comparatives and superlatives are recessive.
+			- μέγας, μεγάλη, μέγα is always paroxytone.
+			
+			Ambiguous vowels:
+				(- Nom.pl. -oι is always short)
+					=> but loc. -οι is long.
+				- Acc.sg.m./f. -α is short, but not in -ευ-stems (where metathesis took place)
+					 βασιλέα
+			
+			
+		- Third declension nouns/adjectives
+			- More often than not, neuter nouns are recessive.
+			- Adjectives in -ων, -ίων (incl. comparatives) are recessive.
+				=> βελτίων, βέλτιον
+				=> μνήμων, μνῆμον
+				=> σώφρων, σῶφρον
+				- Exceptions:
+					- Λακεδαίμων, Λακεδαῖμον 
+			(- Simple adjectives in -ης can be oxytone or paroxytone: ἀληθής, πλήρης)
+				=> The paroxytone ones may actually be recessive;
+				=> Oxytones are the predominant/productive pattern
+				=> Results of contraction get a perispomenon:
+					ἀληθῆ, ἀληθοῦς, ἀληθεῖ, ἀληθεῖς, ἀληθῶν
+			- Paroxytone compound adjectives in -ης are recessive: αὐτάρκης, ἄυταρκες, φιλαλήθης, φιλάληθες
+			- Exception:
+				- Substantives and adjectives in -ώδης, -ώλης, -ώρης are static: εὐῶδες
+				
+			- i-stems and u-stems can be recessive or oxytone.
+				- All(?) u-stem adjectives are oxytone (βαρύς εὺρύς)
+					- This includes πολύς, πολλή, πολύ
+				- Most u-stem substantives are recessive (πῆχυς)
+					=> Paroxytone subst. usually have -ῠ-
+					=> Oxytones and monosyllables have -ῡ- (ἰχθῦς, ὄφρῦς)
+				=> 
+			- The gen.sg. of -ι-stems is proparoxytone: πόλεως
+			- Words in -ευς have the accent on the -ε-.
+				- έα
+				=> Contraction in βασιλεῖ
+		
+Pronouns
+	- Personal
+		- Singular is oxytone έγώ, σοί, ἕ
+			=> 3rd dat. οἷ
+			=> Gen.sg. ἐμοῦ, σοῦ, οὗ
+		- Dual is oxytone in direct, perispomenon in oblique: νώ, σφώ, νῷν, σφῷν
+		- Plural is perispomenon: ἡμεῖς, ὑμῶν, σφᾶς
+			=> 3rd dat. σφίσι(ν)
+	- τίς is always acute, never grave, and recessive/columnar.
+	- οὗτος ἐκεῖνος + ι all become oxytone: oὑτοσί 
+	- (Others follow basic rule for nouns)
+
+Verbal forms:
+	- Finite verbs: recessive accentuation applies (note contraction results!)
+
+Verbal substantives/adjectives
+	- Recessive are:
+		- Sigmatic aorist participle active is paroxytone: θαυμάσας, θαυμάσασα, θαυμάσαν
+		- Thematic present participle active
+			=> NB: contracted forms: νικῶν
+			=> NB: Attic futures: ἀγγελῶν
+		- Thematic medio(passive) participle: λυόμενος
+			- Exception: perfect mediopassive: λελυμένος
+
+	- Thematic aorist participle active is oxytone: λιπών, λιποῦσα, λιπόν
+	- Present participle of εἰμί and εἶμι is oxytone: ὤν οὖσα, ὄν; ἰών, ἰοῦσα, ἰόν
+	- Athematic participles in -ς are oxytone: λυθείς, δούς, λελυκώς (λελυκυῖᾰ)
+	- Verbal adjectives and -τός are oxtyone;
+	- Verbal adjectives in -τέος are paroxytone (-τέον)
+	
+Numerals:
+	- εἷς and τρεῖς follow the MR
+	- μία: oxytone, but perispomenon in genitive and dative (μιᾶς, μιᾷ, μίαν)
+	- δύο, δυοῖν ( ἄμφω, ἀμφοῖν)
+	
+
+==================================================================================
+
+First declension
+	- Substantives and adjectives follow the same rules.
+	- Compound words
+		- with a long final syllable retain the accent of their last element - αρχι-πειρατής
+			* non-prepositions + disyllabic oxytones > κριτής > ὀνειροκρίτης / ὐποκριτής
+		- with a short final syllable are recessive: οὐρά > κυνόσ-ουρα
+		
+	- -ας / -ης
+		- Monosyllables are perispomenon
+		- Polysyllables in -ας are paroxytone - νεανίας, ταμίας, Λεωνίδας
+			* Contracted forms are perispomenon - Ἐρμᾶς, Βορρᾶς
+			
+	- 	-ης - μισογύνης, ἀράχνης
+	
+	
+	Second declension
+		- General: 
+			=> -ος 'pure' substantives are oxytone
+			=> -ος 'impure' substantives are recessive
+			=> -ος 'pure' adjectives are recessive
+			=> -ος 'impure' adjectives are oxytone
+			
+		-αός 1 λαός, ναός
+			* 3 ἔρραος, μάραος, 
+			* ΠΝ-συντακτα < Οἰνόμαος, Ἀρχέλαος, Μενέλαος
+		-βος < ὄλβος, θόρυβος, Λέσβος, Φοῖβος
+			* 1 ἀμοιβός, ἀμορβός
+		-γος < λόγος, φθόγγος, ἀπόλογος, Ἄργος, Ὤγυγος
+			* -ουργος 5 Λυκοῦργος
+			* 1 ἀγός, ἀμολγός, φηγός, Πελασγός
+		-δος < ῥάβδος, μόλυβδος, Ἄβυδος, Ῥόδος
+			* 1 ὁδός, ἀοιδός, Λυδός
+		-εος 1 ἀδελφεός, θεός, ἐρινεός
+			* < ἔλεος, ἠΐθεος
+			* ΠΝ-συντακτα < Τιμόθεος, Φιλόθεος
+		-ζος < ὄζος, τόπαζος
+			* 1 μαζός
+		-ηος 1 αἰζηός, πηός
+		-θος < ἄκανθος, πόθος, μῦθος, Ξάνθος
+			* 1 μισθός, βοηθός
+		-ιος 1 βιός 'bow', ἀνεψιός, υἱός
+			* ΠΝ < Θρῖος, Κίος
+				* Many exceptions: 1 Ἀσκληπιός, 2 Βαλίος, Δολίος, 3 Ἅλιος, Κρόνιος
+			* < βίος 'life', ἥλιος
+			* 2 γομφίος, νυμφίος
+		-αιος 5 βαρκαῖος, σκωπαῖος, Ἀλκαῖος, Πτολεμαῖος
+			* ἔλαιος, ὑμέναιος
+			* ΠΝ 3 Αθήναιος, Τίμαιος, Φίλαιος, 1 Ἀχαιός
+		-ειος 1 ἀδελφειός, ἐλειός, Ἀλφειός, Ὁλμείος,
+			 * 5 θεῖος
+			 * ΠΝ 3 Ἄρειος, Βασίλειος, 5 Δαρεῖος
+		-οιος 1 γλοιός, φλοιός
+			* ΠΝ 5 Κοῖος, Μοῖος
+				* 1 Οἰός
+		-κος < ἄρκος, λύκος, οἶκος, πίθηκος, δίσκος, ὅρκος
+			* -ισκος 2 δεσποτίσκος, παιδίσκος, Φαλίσκοι
+			* -ικος 1 γραμματικός, μουσικός, Ἀττικός, Ἀνδρικός
+			* 1 ἀσκός, ἀστακός, σηκός, φαρμακός
+			* ΠΝ ***
+		-λος < ἄγγελος, ἄμπελος, βύβλος, ὄχλος, στόλος, Αἴολος, Μαύσωολος, Τάνταλος
+			* (prec. by λ, long V or diphth) 1 αὐλός, γαυλός, θαλλός, φαλλός
+				* < δοῦλος, στῦλος, ψύλλος οὖλος 
+			* ῐλος/-ῠλος 2 ναυτίλος, κτίλος, 'Ρωμύλος, Τρωΐλος, Αἰσχύλος (Wheeler's Law)
+				* < δἀκτυλος, κόνδυλος
+				* ΠΝ ***
+			* 1 ὀβελός, ὀμφαλός, αἰγιαλός
+		-μος
+			- -μο- suffix:
+				- 1 (heavy penult) θῡμός, βωμός, θεσμός, ὀφθαλμός
+				- < (light penult) πόλεμος, θάλαμος
+				* 1 ποταμός
+				(Verbal abstracts can be either? νόμος 'law', νομός 'pasture',
+					 κόσμος, ὅρμος, δρόμος, χυμός
+				- μο-
+			- Vast majority of subst. is oxytone
+				- Light penultimate => recessive 
+					- (rare words, synchr. opaque; concrete meaning)
+					- more common in Homer than thereafter
+				- Heavy penultimate => oxytone 
+					- Many productive derivations (-σμο, -γμο, -θμο)
+					- abstr. meaning
+			- Primary adjectives are oxytone θερμός, ὼμός (= Skt.)
+				* Secondary -ῠμος, -ῐμος are recessive
+			-ΠΝ < Κάδμος, Πύραμος, Νικόδημος
+				* ΠΝ ***
+				
+		-νος < ἄγνος, κίνδυνος, οἶνος, πόνος, τύραννος, Δάρδανος, Μύκονος
+			* (adj.) 1 [[examples??]]
+				* -ινος/-(σ)υνος < βύβλινος, θάρσυνος
+			* -ῖνος 5 γελασῖνος, κεστρῖνος
+			* -ωνος 1 καλωνός, κοινωνός
+			* 2 παρθένος, καρκίνος
+			* ΠΝ ***
+			
+		-ξος < πύξος, τάξος, Νάξος
+			* ἰξός, μυοξός
+		
+		-ους
+			- simplex 4 νοῦς, βοῦς, Ἰησοῦς
+			- compnds 2 εὔπλους, εὔχρους
+			
+		-πος < ἄνθρωπος, ἵππος, Ὄλυμπος, Φίλιππος
+			* 1 (verbal nouns?) καρπός, πομπός, τροπός, σκοπός, κλοπός
+			
+		-ρος < ὄνειρος, πάπυρος, κάπρος, Κῦρος, Κέρβερος, Ὅμηρος
+			* (adj.) 1 [[examples?]]
+			* 1 ἰατρός, νεκρός, νεφρός, ἀγρός, θορός, χορός
+			* 5 ἑταῖρος
+			* ΠΝ *** 1 Τευκροί, 5 Ἀρκτοῦρος...
+			
+		-σος < θύρσος, νῆσος, παράδεισος, Κροῖσος, Ἔφεσος
+			* νεοσσός, κερασός, χρυσός
+			* ΠΝ *** (Παρνασσός)
+			
+		-τος < ἄρκτος, θάνατος, σκότος, Αἴγυπτος, Μίλητος, Πλοῦτος
+			* (adj.) 1 [[examples?]]
+			* -στος 1 ἀστός, βλαστός, ἱστός
+				* κίστος, νόστος, κόστος
+			* 1 ἐνιαυτός, κοντός, πρωκτός, στρατός
+			* ΠΝ ***
+		-λο-: 
+			- substantvies are mostly recessive
+			- adjectives are mostly oxytone (except for 2 -ιλο-/-υλο-); subst
+		-ρο, το, νο
+			- adjectives: oxytone
+			- nouns: final / recessive
+		-υος 1 εἰλυός, ἐννυός, νυός
+			* 3 ἔγγυος
+			* ΠΝ < Τίμαυος, Δρῦας
+		-φος < γόμφος, ζόφος, λόφος, τάφος, Σίσυφος
+			* 1 ἀδελφός, τροφός, Δελφοί
+		-χος < βάτραχος, βρόχος, στίχος, μόσχος, τοῖχος
+			* -ουχος 5 ῥαβδοῦχος, εὐνοῦχος
+			* 1 ἀρχός, μοιχός, μοναχός
+		-ψος < κινδαψός, χορδαψός
+			* disyllables < γύψος, θάψος, Μόψος
+		-ωος, -ῳος 5 δμῶος, Ἀχελῷος
+			* 1 λαγωός, πατρωός
+			
+		- Neuters in -ον are recessive (ΠΝ Ἴλιον, Δίον, τὰ Ἀθήναια)
+			* Adjectival
+				substantivised 1 τὸ ἀγαθόν
+				verbal adjectives -τόν 1 βοτόν, δοτόν
+				1 ἱερόν
+			* Existing corresponding masculine
+				1 δεσμά (δεσμός), ζυγόν (ζυγός)
+			* 1 λουτρόν, πτερόν, σφυρόν, ᾠόν, πλευρόν
+			* dactylic diminutives 2 παιδίον, τιτθίον, κρουνίον
+				***
+			* 2 ὀστέον
+			* -ειον, -ωον, -ῳον 5 στοιχεῖον, γραφεῖον, σημεῖον, Ἡφαιστεῖον, Λητῷον
+
+			Compound neuters are recessive, but those in -εῖον stay 5
+			
+		ADJECTIVES
+		-αος 1 ἀγλαός, κεραός
+			* < ἵλαος, σάος
+		-βος 1 κολοβός, στραβός,
+			* < φοῖβος, κράμβος
+		-γος 1 ἀγωγός, ἀργός
+			* < λήθαργος
+			* 2 ὀλίγος
+		-δος 1 ἀοιδός, λορδός
+		-εος < αἰθάλεος, ἀργύρεος, δαιδάλεος, νέος, χρυσέος
+			* hypertrisyll. with non-radical λ 2 σμερδαλέος, ἀζαλέος, θαρσαλέος
+				(vs. δαιδάλεος, θέλεος)
+			* verb.adj. -τέος 2 λεκτέος, πρακτέος
+			* contracted: 4 ἀργυροῦς (ἀργύρεος), χαλκοῦς (χάλκεος)
+		-ζος 1 πεζός, πρωϊζός
+		-ηος 1 αἰζηός, εὐνηός
+		-θος 1 ἀγαθός, βοηθός, ξανθός
+			 * 3 ἀκόλουθος (compound?)
+			 * 3 νόθος
+			 * 5 λοῖσθος
+		-ιος < ἅγιος, ἅγριος, ἄξιος, δῖος, ἴδιος
+			* 1 δεξιός, πολιός, σκολιός, μονιός
+			* 2 ἀντίος, μυρίοι, πλησίος
+		-αιος
+			- disyll 1 βαιός, φαιός, σκαιός
+			- trisyll+ 5 γενναῖος, ἀρχαῖος, Ἀθηναῖος
+				* 1 ἀραιός, Ἀχαιός, γεραιός, κραταιός
+				* 3 δίκαιος, μάταιος, βἐβαιος
+		-ειος < Αἰάντειος, Ἀλεξάνδρειος, θεῖος, θήρειος
+			* 5 ἀγρεῖος, ἀνδρεῖος, ἀστεῖος, Ἀργεῖος
+			* 1 ἀφνειός, θαμειός
+		-οιος
+			- disyll 1 γλοιός, δοιός, κροιός
+				* 5 ποῖος, τοῖος, οἶος, οἷος
+			- trisyll+ 5 παντοῖος, αἰδοῖος, γελοῖος
+		-υιος < πήχυιος
+			* 1 γυιός
+		-κος < λευκός, γραμματικός Πυθαγορικός
+			* pronom. adj. 2 ἡλίκος, πηλίκος
+			* 3 ἄγροικος, ἄρεσκος
+			* 5 θρῆσκος, σῶκος
+		-λος 1 ἐσθλός, καλός, τυφλός, φειδωλός
+			* -ιλος/-υλος (Wheeler's Law) 2 ποικίλος
+			* < ἕκηλος, δῆλος, δαίδαλος, ἀτάσθαλος
+		-μος < 
+			
+			
+Verbs
+	- Simple verbs are recessive.
+	- Fem.gen.pl. is perispomenon if it is not the same stem as the nom
+		=> λελυκυῖα, λελυκυιῶν, λύσασα, λυσασῶν vs. λυομένων
+	- Final -αι/-οι are long in the opt.sg. (ἀκούσαι), but short in the inf. (ἀκοῦσαι)
+	- Uncontracted monosyllabic participles are oxytone: βάς, δύς, πτάς, σβείς, σχών, φύς
+	
+Exceptions:
+	- 1
+		- εὶμί, φημί, ἠμί
+			* εἶς, φῇσθα
+			* ἔασι, ἔοντι
+		- φαθί (2sg.imp.)
+		- Thematic aor.ptc.act. βαλών, λαβών
+		- pf.ptc.act. λελυκώς
+		- Athematic prs./aor. ptc. (τι)θείς, ἱστάς, δούς
+		- Aor.ptc.pass. λυθείς, πεισθείς, πλακείς
+		- εἰπέ, ἐλθέ, εὑρέ, ἰδέ, λαβέ
+		- Participles ἐών, ὤν, ἰών, κιών, χρεών
+	- 4 
+		- Attic future ἀγγελῶν, σπερῶν
+		- Contracted athem.subj.act. διδῶ, τιθῶ
+			* εἶμι < ἴω, ἴῃς
+		- Contracted subj.aor.pass. τυφθῶ, λυθῆς 
+		- Thematic imp.aor.2sg. βαλοῦ, λαβοῦ
+			* ἰδού when used as an interjection
+		- Thematic aor.inf. λαβεῖν, βαλεῖν
+	- 2/5 
+		- Contracted athematic ind.prs.act.3pl. τιθᾶσι < τιθέασι
+		- Contracted pf.act.3pl. τεθνᾶσι < τεθνάασι
+		- Contracted future πεσοῦμαι
+		- Subj./opt.perf.pass. κεκτῶμαι, κεκτῴμην
+		- Athem. med./pass. subj./opt. ἱστῶμαι, ἱσταῖτο
+			*  δύναμαι, ἐπίσταμαι, κρέμαμαι < ἐπίσταιο, δύνηται
+		- Opt.pass.aor.pl. λυθεῖμεν
+		- Athem.οpt.pl. ἰσταῖμεν, σταῖμεν
+		- Sigm.ptc.aor.act. ποιήσας (ποιήσασα, ποιῆσαν)
+		- Perfect passive ptc. λελυμένος
+		- Sigm.aor.act. πεῖσαι, πλέξαι
+		- Infinitives in -ναι and -μεν (but not -μεναι)
+			- διδόναι, ἱστάναι, λελυκέναι, ἐλθέμεν, λυθῆναι
+		- Them.aor.inf.med. γενέσθαι, πιθέσθαι
+		- Athem.aor.inf.med. ἀποδόσθαι, στάσθαι
+		- Perf.med.-pass.inf. λελῦσθαι, πεπαῦσθαι
+	
+	- Compound verbs
+		- Recessive accents stay recessive; fixed accents stay fixed
+			ἔφευρε, κάτευδε, σύνεσμεν; ἐπιγενέσθαι, ἀποτρεφθῇ, συντιθείς
+		
+		Exceptions:
+			- Monosyllables 2 δός, ἀπόδος, περίθες ἐπίσχες
+			- Athem.aor.med. < ἀπόδωμαι, ἐπίθηται, ἀπόθεσο/ἀπόθεο
+				* 2sg. disyll 4 ἐνθοῦ, προοῦ
+			- Disyllabic ind. impf./aor./perf./pl.q.pf. retain accent when augmented
+				ἐπέβαν, συνῆκε, ἀνεῖλον, κατεῖπε (3sg.) vs. κάτειπε (imp.)
+		
