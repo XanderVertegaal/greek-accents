@@ -14,6 +14,7 @@ import { ToneSelectFormComponent } from './tone-select-form/tone-select-form.com
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { TextListComponent } from './text-list/text-list.component';
+import { TrainerComponent } from './trainer/trainer.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TextListComponent } from './text-list/text-list.component';
     ToneSelectFormComponent,
     ScoreboardComponent,
     NotificationsComponent,
-    TextListComponent
+    TextListComponent,
+    TrainerComponent
   ],
   imports: [
     BrowserModule,

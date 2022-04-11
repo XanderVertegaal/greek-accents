@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { TonePattern } from 'src/assets/models/types';
-import { setCorrectTonePattern, setSelectedIndexWord } from '../home/actions/home.actions';
+import { setCorrectTonePattern, setSelectedIndexWord } from '../trainer/actions/trainer.actions';
 import { setAccentedText, setSelectedAuthor, setSelectedPassage, setSelectedWork} from '../services/actions/corpus.actions';
 
 export interface DataState {

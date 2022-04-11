@@ -3,35 +3,16 @@
             <h2>Greek accent trainer</h2>
     </header>
 
+    <nav>
+        <ul>
+            <li routerLink="texts">Texts</li>
+            <li routerLink="trainer">Trainer</li>
+        </ul>
+    </nav>
+
+    
     <article class="content-wrapper">
-        <section class="text-wrapper" *ngIf="displayText">
-            <h4 class="text-title">{{selectedAuthor$ | async}}, <em>{{selectedWork$ | async}}</em> {{selectedPassage$ | async}}</h4>
-        <p *ngIf="selectedIndexWord">
-            <span 
-                *ngFor="let word of displayText" [id]="word[0]"
-                [class.selected]="word === selectedIndexWord" 
-                [class.seen]="correct.includes(word)"
-                (click)="onClickWord(word)">
-                {{word[1]}}
-            </span>
-        </p>
-        </section>
-
-        <section class="selected-wrapper" *ngIf="selectedIndexWord">
-            <h4 class="selected-header">Determine the tonal pattern of:</h4>
-            <h2 class="selected-word">{{selectedIndexWord[1] | trim}}</h2>
-        </section>
-
-        <app-scoreboard></app-scoreboard>
-
-        <app-notifications></app-notifications>
-
-        <section class="word-analysis">
-            <p>Word type:</p>        
-        </section>
-
-        <app-tone-select-form (selectNewWord)="onSelectNewWord()"></app-tone-select-form>
-            
+        <router-outlet></router-outlet>
     </article>
 
     <footer class="footer">
