@@ -6,7 +6,7 @@ import { IndexWord, TonePattern } from 'src/assets/models/types';
 import { setCorrectTonePattern, setSelectedIndexWord } from './actions/trainer.actions';
 import { CorpusService } from '../services/corpus.service';
 import { StoreState } from '../shared/state';
-import { applyTonePatternToWord, determineTonePattern, getNuclei, removeWordAccents } from '../shared/utils';
+import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
 
 @Component({
   selector: 'app-trainer',
@@ -91,7 +91,6 @@ export class TrainerComponent implements OnInit {
         }, 1500);
       })
     );
-    this.corpusService.loadText();
   }
 
   onSelectNewWord(): void {
@@ -103,7 +102,7 @@ export class TrainerComponent implements OnInit {
       this.isGameOver = true;
     } else {
       this.store.dispatch(
-        setSelectedIndexWord({ indexWord: getRandomIndexWord(unseenWords) })
+        setSelectedIndexWord({ indexWord: getRandomWord(unseenWords) })
       );
     }
   }
@@ -133,7 +132,3 @@ export class TrainerComponent implements OnInit {
     // )
   }
 }
-function getRandomIndexWord(unseenWords: IndexWord[]): [number, string] {
-  throw new Error('Function not implemented.');
-}
-

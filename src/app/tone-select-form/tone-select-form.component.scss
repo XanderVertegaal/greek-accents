@@ -27,6 +27,11 @@ form {
         margin: .25em;
     }
 
+    .button-left {
+        grid-column-start: 1;
+        background-color: blue;
+    }
+
     .new-word {
         grid-column: span 2;
         width: 100%;

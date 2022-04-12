@@ -26,8 +26,10 @@ import { setCorrectTonePattern, setSelectedIndexWord } from '../trainer/actions/
 })
 export class HomeComponent implements OnInit {
   
-  constructor() { }
+  constructor(private corpusService: CorpusService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.corpusService.loadText();
+   }
 
 }

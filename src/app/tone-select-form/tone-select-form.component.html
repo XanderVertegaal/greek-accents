@@ -1,8 +1,9 @@
 <form class="button-wrapper">
     <button 
+    *ngFor="let tp of TonePattern | keyvalue"
         [class.button-toneless]="tp.value === 'toneless'"
+        [class.button-left]="tp.value === 'paroxytone' || tp.value === 'perispomenon' || tp.value === 'proparoxytone and oxytone'"
         type="button"
-        *ngFor="let tp of TonePattern | keyvalue"
         (click)="onSelectTone(tp.value)">
         {{tp.value}}
         <br>

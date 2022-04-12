@@ -15,6 +15,7 @@ import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { TextListComponent } from './text-list/text-list.component';
 import { TrainerComponent } from './trainer/trainer.component';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TrainerComponent } from './trainer/trainer.component';
     ScoreboardComponent,
     NotificationsComponent,
     TextListComponent,
-    TrainerComponent
+    TrainerComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
