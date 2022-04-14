@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { TonePattern } from "src/assets/models/types";
+import { TonePattern } from "src/assets/types";
 
 export const setSelectedIndexWord = createAction(
     '[Trainer] Set selected word',

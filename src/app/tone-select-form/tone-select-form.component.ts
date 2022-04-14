@@ -1,7 +1,7 @@
 import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { fromEvent, Observable, Subscription } from 'rxjs';
-import { IndexWord, TonePattern } from 'src/assets/models/types';
+import { IndexWord, TonePattern } from 'src/assets/types';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord } from '../shared/utils';
 import { incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter } from './actions/tone-select.actions';

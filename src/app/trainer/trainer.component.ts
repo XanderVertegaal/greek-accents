@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { IndexWord, TonePattern } from 'src/assets/models/types';
+import { IndexWord, Text, TonePattern } from 'src/assets/types';
 import { setCorrectTonePattern, setSelectedIndexWord } from './actions/trainer.actions';
 import { CorpusService } from '../services/corpus.service';
 import { StoreState } from '../shared/state';
@@ -20,15 +20,15 @@ export class TrainerComponent implements OnInit {
 
   accentedText: IndexWord[] | null = null;
   displayText: IndexWord[] | null = null;
+  selectedAuthor: string = '';
+  selectedWork: string = '';
+  selectedPassage: string = '';
 
-  accentedText$: Observable<string[]>;
   selectedIndexWord$: Observable<IndexWord | null>;
   selectedIndexWord: IndexWord | null = null;
   correctCounter$: Observable<number>;
   totalCounter$: Observable<number>;
-  selectedWork$: Observable<string>;
-  selectedAuthor$: Observable<string>;
-  selectedPassage$: Observable<string>;
+  selectedText$: Observable<Text | null>;
 
   correctTonePattern: TonePattern | null = null;
   TonePattern = TonePattern;
@@ -39,26 +39,26 @@ export class TrainerComponent implements OnInit {
 
   constructor(
     private store: Store<StoreState>,
-    private corpusService: CorpusService,
-    private http: HttpClient
   ) {
-    this.accentedText$ = this.store.select(state => state.data.accentedText);
     this.selectedIndexWord$ = this.store.select(state => state.data.selectedIndexWord);
     this.totalCounter$ = this.store.select(state => state.score.totalCounter);
     this.correctCounter$ = this.store.select(state => state.score.correctCounter);
-    this.selectedAuthor$ = this.store.select(state => state.data.selectedAuthor);
-    this.selectedWork$ = this.store.select(state => state.data.selectedWork);
-    this.selectedPassage$ = this.store.select(state => state.data.selectedPassage);
+    this.selectedText$ = this.store.select(state => state.data.selectedText);
   }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.accentedText$.subscribe((text: string[]) => {
-        let unaccentedText = text.map((word) =>
+      this.selectedText$.subscribe((text: Text | null) => { 
+        if (text === null) return;
+        const splitText = text.text.split(' ');
+        let unaccentedText = splitText.map((word) =>
           removeWordAccents(word).replace(/[,.;:—·]/gi, '')
         );
-        this.accentedText = Array.from(text.entries());
+        this.accentedText = Array.from(splitText.entries());
         this.displayText = Array.from(unaccentedText.entries());
+        this.selectedAuthor = text.author;
+        this.selectedWork = text.work;
+        this.selectedPassage = text.passage;
         this.onSelectNewWord();
       }),
 

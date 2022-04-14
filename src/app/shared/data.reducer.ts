@@ -1,64 +1,41 @@
 import { createReducer, on } from '@ngrx/store';
-import { TonePattern } from 'src/assets/models/types';
-import { setCorrectTonePattern, setSelectedIndexWord } from '../trainer/actions/trainer.actions';
-import { setAccentedText, setSelectedAuthor, setSelectedPassage, setSelectedWork} from '../services/actions/corpus.actions';
+import { Text, TonePattern } from 'src/assets/types';
+import * as TrainerActions from '../trainer/actions/trainer.actions';
+import * as CorpusActions from '../services/actions/corpus.actions';
+import * as TextListActions from '../text-list/actions/text-list.actions';
 
 export interface DataState {
-  accentedText: string[];
   selectedIndexWord: [number, string] | null;
   seen: number[];
   correctTonePattern: TonePattern | null;
-  selectedAuthor: string;
-  selectedWork: string;
-  selectedPassage: string;
+  selectedText: Text | null;
 }
 
 const initialDataState: DataState = {
-  accentedText: [],
   selectedIndexWord: null,
   seen: [],
   correctTonePattern: null,
-  selectedAuthor: '',
-  selectedWork: '',
-  selectedPassage: ''
+  selectedText: null
 };
 
 export const dataReducer = createReducer(
   initialDataState,
-  on(setAccentedText, (state, action) => {
+  on(CorpusActions.setSelectedText, TextListActions.setSelectedText, (state, action) => {
     return {
       ...state,
-      accentedText: action.text
+      selectedText: action.text
     }
   }),
-  on(setSelectedIndexWord, (state, action) => {
+  on(TrainerActions.setSelectedIndexWord, (state, action) => {
     return {
       ...state,
       selectedIndexWord: action.indexWord,
     };
   }),
-  on(setCorrectTonePattern, (state, action) => {
+  on(TrainerActions.setCorrectTonePattern, (state, action) => {
     return {
       ...state,
       correctTonePattern: action.tonePattern,
-    };
-  }),
-  on(setSelectedAuthor, (state, action) => {
-    return {
-      ...state,
-      selectedAuthor: action.author,
-    };
-  }),
-  on(setSelectedWork, (state, action) => {
-    return {
-      ...state,
-      selectedWork: action.work,
-    };
-  }),
-  on(setSelectedPassage, (state, action) => {
-    return {
-      ...state,
-      selectedPassage: action.passage,
     };
   })
 );

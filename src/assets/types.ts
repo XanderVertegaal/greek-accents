@@ -50,6 +50,18 @@ export interface CharProps {
 
 export type IndexWord = [number, string];
 
+export interface Text {
+  id: string;
+  author: string;
+  work: string;
+  passage: string;
+  text: string;
+}
+export interface NucleusIndex {
+  nucleus: string;
+  index: number;
+}
+
 export interface MorpheusReponse {
   
 }

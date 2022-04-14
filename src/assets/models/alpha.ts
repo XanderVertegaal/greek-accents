@@ -1,4 +1,4 @@
-import { Aspiration, Character, Tone, Vowel } from "./types";
+import { Aspiration, Character, Tone, Vowel } from "../types";
 
 export const alpha: Character[] = [
   {

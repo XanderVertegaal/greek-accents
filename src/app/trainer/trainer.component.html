@@ -1,5 +1,5 @@
 <section class="text-wrapper" *ngIf="displayText">
-    <h4 class="text-title">{{selectedAuthor$ | async}}, <em>{{selectedWork$ | async}}</em> {{selectedPassage$ | async}}</h4>
+    <h4 class="text-title">{{selectedAuthor}}, <em>{{selectedWork}}</em> {{selectedPassage}}</h4>
 <p *ngIf="selectedIndexWord">
     <span 
         *ngFor="let word of displayText" [id]="word[0]"

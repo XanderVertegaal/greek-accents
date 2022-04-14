@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CorpusService, Text } from '../services/corpus.service';
+import { Store } from '@ngrx/store';
+import { CorpusService } from '../services/corpus.service';
 import { StoreState } from '../shared/state';
+import { setSelectedText } from './actions/text-list.actions';
+import { Text } from 'src/assets/types';
 
 @Component({
   selector: 'app-text-list',
@@ -10,14 +13,18 @@ import { StoreState } from '../shared/state';
 export class TextListComponent implements OnInit {
   texts: Text[] = [];
 
-  constructor(private corpusService: CorpusService) { }
+  constructor(private corpusService: CorpusService, private store: Store<StoreState>) { }
 
   ngOnInit(): void {
     this.texts = this.corpusService.corpus;
   }
 
   selectText(textId: string): void {
-    console.log('Implementing seelected text');
+    const selectedText = this.texts.find(text => text.id === textId);
+    if (selectedText !== undefined)
+    {
+      this.store.dispatch(setSelectedText({ text: selectedText}));
+      }
   }
 
 }

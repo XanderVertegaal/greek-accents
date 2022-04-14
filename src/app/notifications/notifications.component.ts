@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { IndexWord, TonePattern } from 'src/assets/models/types';
+import { IndexWord, TonePattern } from 'src/assets/types';
 import { StoreState } from '../shared/state';
 
 @Component({
