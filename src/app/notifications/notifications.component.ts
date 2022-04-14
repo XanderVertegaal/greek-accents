@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, switchMap } from 'rxjs';
 import { IndexWord, TonePattern } from 'src/assets/types';
 import { StoreState } from '../shared/state';
 
@@ -37,9 +37,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this.isAnswerCorrect = false;
       }),
       this.selectedIndexWord$.subscribe(() => {
-        setTimeout(() => {
-          this.isAnswerCorrect = null;
-        }, 1500);
+        this.isAnswerCorrect = null;
       }),
       this.correctTonePattern$.subscribe(tp => {
         this.correctTonePattern = tp;

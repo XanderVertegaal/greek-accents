@@ -1,0 +1,31 @@
+.text-list {
+    padding: 20px;
+
+    .selected {
+        background-color: green;
+        color: white;
+    }
+
+    h2 {
+        margin-bottom: 1em;
+    }
+
+    .not-loaded {
+        color: grey;
+    }
+
+    li {
+        margin: .25em 0;
+        padding: .25em;
+        list-style-type: none;
+        border-radius: 3px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: lightcoral;
+            color: black;
+        }
+    }
+}
+
+

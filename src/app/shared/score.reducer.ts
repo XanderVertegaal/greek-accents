@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, setCorrectCounter, setIncorrectCounter, setTotalCounter } from "../tone-select-form/actions/tone-select.actions";
+import * as ToneSelectActions from "../tone-select-form/actions/tone-select.actions";
 
 export interface ScoreState {
     correctCounter: number;
@@ -15,37 +15,37 @@ const initialScoreState: ScoreState = {
 
 export const scoreReducer = createReducer(
     initialScoreState,
-    on(setCorrectCounter, (state, action) => {
+    on(ToneSelectActions.setCorrectCounter, (state, action) => {
         return {
             ...state,
             correctCounter: action.correctCounter
         };
     }),
-    on(setIncorrectCounter, (state, action) => {
+    on(ToneSelectActions.setIncorrectCounter, (state, action) => {
         return {
             ...state,
             incorrectCounter: action.incorrectCounter
         };
     }),
-    on(setTotalCounter, (state, action) => {
+    on(ToneSelectActions.setTotalCounter, (state, action) => {
         return {
             ...state,
             totalCounter: action.totalCounter
         };
     }),
-    on(incrementCorrectCounter, (state) => {
+    on(ToneSelectActions.incrementCorrectCounter, (state) => {
         return {
             ...state,
             correctCounter: state.correctCounter + 1
         };
     }),
-    on(incrementIncorrectCounter, (state) => {
+    on(ToneSelectActions.incrementIncorrectCounter, (state) => {
         return {
             ...state,
             incorrectCounter: state.incorrectCounter + 1
         };
     }),
-    on(incrementTotalCounter, (state) => {
+    on(ToneSelectActions.incrementTotalCounter, (state) => {
         return {
             ...state,
             totalCounter: state.totalCounter + 1

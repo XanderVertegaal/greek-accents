@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
@@ -13,7 +13,7 @@ import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord,
   templateUrl: './trainer.component.html',
   styleUrls: ['./trainer.component.scss']
 })
-export class TrainerComponent implements OnInit {
+export class TrainerComponent implements OnInit, OnDestroy {
   applyTonePatternToWord = applyTonePatternToWord;
 
   subscriptions: Subscription[] = [];
@@ -51,7 +51,7 @@ export class TrainerComponent implements OnInit {
       this.selectedText$.subscribe((text: Text | null) => { 
         if (text === null) return;
         const splitText = text.text.split(' ');
-        let unaccentedText = splitText.map((word) =>
+        const unaccentedText = splitText.map((word) =>
           removeWordAccents(word).replace(/[,.;:—·]/gi, '')
         );
         this.accentedText = Array.from(splitText.entries());
@@ -128,5 +128,9 @@ export class TrainerComponent implements OnInit {
     //     console.log('Type:', body[0].rest.entry.dict.pofs['$'])
     //   }
     // )
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }
