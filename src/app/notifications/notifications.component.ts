@@ -15,6 +15,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   incorrectCounter$: Observable<number>;
   correctTonePattern$: Observable<TonePattern | null>;
   selectedIndexWord$: Observable<IndexWord | null>;
+  correctTonePattern: TonePattern | null = null;
   isAnswerCorrect: boolean | null = null;
   isGameOver = false;
 
@@ -38,7 +39,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       this.selectedIndexWord$.subscribe(() => {
         setTimeout(() => {
           this.isAnswerCorrect = null;
-        }, 1000);
+        }, 1500);
+      }),
+      this.correctTonePattern$.subscribe(tp => {
+        this.correctTonePattern = tp;
       })
     );
   }

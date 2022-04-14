@@ -1,1 +1,13 @@
-<p>text-list works!</p>
+<header>
+    <h2>Pick a text from the list below.</h2>
+</header>
+
+<ul *ngIf="texts.length > 0; else noTexts">
+    <li *ngFor="let text of texts" (click)="selectText(text.id)">
+        <strong>{{text.author}}: <em>{{text.work}}</em> ({{text.passage}})</strong>
+    </li>
+</ul>
+
+<ng-template #noTexts>
+    <p>No texts loaded.</p>
+</ng-template>

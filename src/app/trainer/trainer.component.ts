@@ -110,8 +110,6 @@ export class TrainerComponent implements OnInit {
   onClickWord(indexWord: IndexWord): void {
     if (!this.correct.includes(indexWord)) {
       this.store.dispatch(setSelectedIndexWord({ indexWord }));
-      this.store.dispatch(setCorrectTonePattern({ tonePattern: determineTonePattern(
-        getNuclei(indexWord[1]))}));
     }
   }
 

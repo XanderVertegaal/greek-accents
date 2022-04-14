@@ -1,5 +1,5 @@
 <section class="notifications">
-    <p class="correct" [class.visible]="isAnswerCorrect === true">Correct! This word is indeed a {{correctTonePattern$ | async}}</p>
-    <p class="incorrect" [class.visible]="isAnswerCorrect === false">Incorrect! This word is in fact a {{correctTonePattern$ | async}}</p>
+    <p class="correct" [class.visible]="isAnswerCorrect === true">Correct! This word is indeed a {{correctTonePattern}}</p>
+    <p class="incorrect" [class.visible]="isAnswerCorrect === false">Incorrect! This word is in fact a {{correctTonePattern}}</p>
     <p class="game-over" [class.visible]="isGameOver">Game over!</p>
 </section>
