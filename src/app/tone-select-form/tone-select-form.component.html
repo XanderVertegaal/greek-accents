@@ -1,80 +1,13 @@
 <form class="button-wrapper">
     <button 
     *ngFor="let tp of TonePattern | keyvalue"
-        [class.button-toneless]="tp.value === 'toneless'"
-        [class.button-left]="tp.value === 'paroxytone' || tp.value === 'perispomenon' || tp.value === 'proparoxytone and oxytone'"
+        [class]="tp.value + '-button'"
+        [style.grid-area]="tp.value"
         type="button"
         (click)="onSelectTone(tp.value)">
         {{tp.value}}
         <br>
         {{applyTonePatternToWord(trimmedWord, tp.value) ?? ''}}
-    </button>
-
-
-        <!-- <button 
-            class="button-toneless"
-            type="button" 
-            (click)="onSelectTone(TonePattern.TONELESS)">
-            Toneless
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.TONELESS) ?? ''}}
-        </button>
-        <button 
-            type="button" 
-            (click)="onSelectTone(TonePattern.OXYTONE_GRAVE)">
-            Oxytone (grave)
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.OXYTONE_GRAVE) ?? ''}}
-        </button>
-        <button 
-            type="button" 
-            (click)="onSelectTone(TonePattern.OXYTONE_ACUTE)">
-            Oxytone (acute)
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.OXYTONE_ACUTE) ?? ''}}
-        </button>
-        <button 
-            type="button"
-            (click)="onSelectTone(TonePattern.PAROXYTONE)">
-            Paroxytone 
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.PAROXYTONE) ?? ''}}
-        </button>
-        <button 
-            type="button"
-            (click)="onSelectTone(TonePattern.PROPAROXYTONE)">
-            Proparoxytone
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPAROXYTONE) ?? ''}}
-        </button>
-        <button 
-            type="button" 
-            (click)="onSelectTone(TonePattern.PERISPOMENON)">
-            Perispomenon 
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.PERISPOMENON) ?? ''}}
-        </button>
-        <button 
-            type="button"
-            (click)="onSelectTone(TonePattern.PROPERISPOMENON)">
-            Properispomenon
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPERISPOMENON) ?? ''}}
-        </button>
-        <button
-            type="button"
-            (click)="onSelectTone(TonePattern.PROPAROXYTONE_AND_OXYTONE)">
-            Proparoxtyone + oxytone
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPAROXYTONE_AND_OXYTONE) ?? ''}}
-        </button>
-        <button
-            type="button"
-            (click)="onSelectTone(TonePattern.PROPERISPOMENON_AND_OXYTONE)">
-            Properispomenon + oxytone
-            <br>
-            {{applyTonePatternToWord(trimmedWord, TonePattern.PROPERISPOMENON_AND_OXYTONE) ?? ''}}
-        </button> -->
-        
-        <button class="new-word" type="button" (click)="selectNewWord.next()">Pick a new word!</button>
+    </button>        
+    <button class="new-word" type="button" (click)="selectNewWord.next()">Pick a new word!</button>
     </form>
