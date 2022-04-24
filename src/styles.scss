@@ -4,3 +4,39 @@
     box-sizing: border-box;
     padding: 0;
 }
+
+.page-wrapper {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.content-wrapper {
+    width: 1200px;
+    margin: 0 auto;
+    padding: .5em;
+    margin-bottom: 3em;
+
+    @media screen and (max-width: 1200px) {
+        width: 100%;   
+    }
+}
+
+.button {
+    color: white;
+    background-color: purple;
+    text-align: center;
+    font-weight: bold;
+    padding: .75em;
+    border-radius: 5px;
+    border: 2px solid white;
+    outline: 1px solid purple;
+
+    &.red {
+        background-color: #ca4f41;
+        outline: 1px solid #ca4f41;
+    }
+}

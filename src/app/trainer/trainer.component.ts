@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
 import { setCorrectTonePattern, setSelectedIndexWord } from './actions/trainer.actions';
-import { CorpusService } from '../services/corpus.service';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
 

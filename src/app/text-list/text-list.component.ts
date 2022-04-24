@@ -9,37 +9,40 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-text-list',
   templateUrl: './text-list.component.html',
-  styleUrls: ['./text-list.component.scss']
+  styleUrls: ['./text-list.component.scss'],
 })
 export class TextListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  texts: Text[] = [];
   selectedText$: Observable<Text | null>;
   selectedId: string = '';
+  texts: Text[] = [];
 
-  constructor(private corpusService: CorpusService, private store: Store<StoreState>) {
-    this.selectedText$ = this.store.select(state => state.data.selectedText);
-   }
+  constructor(
+    private corpusService: CorpusService,
+    private store: Store<StoreState>
+  ) {
+    this.selectedText$ = this.store.select((state) => state.data.selectedText);
+  }
 
   ngOnInit(): void {
-    this.texts = this.corpusService.corpus;
     this.subscriptions.push(
-      this.selectedText$.subscribe(text => {
+      this.selectedText$.subscribe((text) => {
         this.selectedId = text ? text.id : '';
+      }),
+      this.corpusService.texts.subscribe((texts) => {
+        this.texts = texts;
       })
-    )
+    );
   }
 
   selectText(textId: string): void {
-    const selectedText = this.texts.find(text => text.id === textId);
-    if (selectedText !== undefined)
-    {
-      this.store.dispatch(setSelectedText({ text: selectedText}));
-      }
+    const selectedText = this.texts.find((text) => text.id === textId);
+    if (selectedText !== undefined) {
+      this.store.dispatch(setSelectedText({ text: selectedText }));
+    }
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
-
 }

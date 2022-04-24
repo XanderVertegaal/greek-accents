@@ -65,3 +65,38 @@ export interface NucleusIndex {
 export interface MorpheusReponse {
   
 }
+
+
+export enum Case {
+  NOMINATIVE,
+  GENITIVE,
+  ACCUSATIVE,
+  DATIVE,
+  VOCATIVE,
+  NOMINATIVE_ACCUSATIVE,
+  GENITIVE_DATIVE
+}
+
+export enum Number {
+  SINGULAR,
+  DUAL,
+  PLURAL,
+}
+
+export enum Gender {
+  FEMININE,
+  MASCULINE,
+  NEUTER,
+  MASCULINE_NEUTER,
+  FEMININE_MASCULINE,
+  FEMININE_MASCULINE_NEUTER
+}
+export interface Nominal {
+  case: Case,
+  number: Number,
+  gender: Gender
+}
+
+export interface NominalForm extends Nominal {
+  form: string
+}
