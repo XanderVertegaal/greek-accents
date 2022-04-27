@@ -1,0 +1,28 @@
+<article class="content-wrapper">
+    <section class="lesson-text">
+        <header class="lesson-header">
+            <h3>Accentuation of the definite article</h3>
+        </header>
+        <section class="text-body">
+            <p>The accentuation of the definite article follows three rules:</p>
+            <ol>
+                <li>The direct cases (nom./acc.) are oxytone: τόν, τώ, τά etc. (A1)</li>
+                <ul>
+                    <li><strong>Exception</strong>: The nom./acc. sg./pl. m./f. are toneless: ὁ, ἡ, οἱ, αἱ. (A1a)</li>
+                </ul>
+                <li>The oblique cases (gen./dat.) are perispomenon: τῶν, τοῖν, ταῖς etc. (A2)</li>
+            </ol>
+        </section>
+    </section>
+    <section class="exercise">
+        <h3>Determine the tone pattern of the following word:</h3>
+        <section class="selected-wrapper" *ngIf="unaccentedWord">
+            <h2 class="selected-word">{{unaccentedWord}}</h2>
+        </section>
+        <button class="button red new-word" (click)="getNewWord()">New word</button>
+        <button 
+            *ngFor="let tp of tonePatterns | keyvalue"
+            class="button">
+            {{tp.value}}</button>
+    </section>
+</article>

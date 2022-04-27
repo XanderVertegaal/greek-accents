@@ -16,7 +16,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { TextListComponent } from './text-list/text-list.component';
 import { TrainerComponent } from './trainer/trainer.component';
 import { CourseComponent } from './course/course.component';
-import { ArticleComponent } from './course/article/article.component';
+import { ArticleComponent } from './article/article.component';
 
 @NgModule({
   declarations: [

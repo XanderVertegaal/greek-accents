@@ -268,6 +268,6 @@ export function determineTonePattern(nuclei: NucleusIndex[]): TonePattern {
   return TonePattern.TONELESS;
 }
 
-export function getRandomWord(indexedText: IndexWord[]): IndexWord {
-  return indexedText[randomInt(0, indexedText.length - 1)];
+export function getRandomWord<T>(wordArray: T[]): T {
+  return wordArray[randomInt(0, wordArray.length - 1)];
 }

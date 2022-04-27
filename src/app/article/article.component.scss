@@ -1,0 +1,41 @@
+.lesson-text {
+    header {
+        margin: 1em 0;
+    }
+
+    li {
+        padding: .5em 0;
+    }
+
+    ol {
+        margin: 1em 0 1em 1em;
+
+        ul {
+            margin-left: 1em;
+        }
+    }
+}
+
+.exercise {
+    .selected-word {
+        justify-self: flex-start;
+        text-align: center;
+        margin: .5em;
+        color: #ca4f41;
+        border-radius: 5px;
+        border: 3px solid #ca4f41;
+        padding: .25em;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: .5em;
+
+        &.new-word {
+            &:active {
+                transform: translateY(1px);
+                background-color: #777777;
+            }
+        }
+    }
+}

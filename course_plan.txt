@@ -1,0 +1,161 @@
+
+- General introduction // Nature of the accent
+	- Ancient Greek was a tonal language.
+	- Differences in pitch can indicate differences in meaning.
+	...inherited from PIE
+	
+	- Accent Marks		
+		- There are three Greek accent marks: acute, grave and circumflex.
+		- These marks are written on top of vowel signs.
+			- The acute indicates a high tone before a drop.(?)
+			- The perispomenon indicates a high tone and a drop on the same long vowel.
+			- The grave accent (ὰ) is a variant of the acute if it falls on the ultimate when another accented word follows.
+				* The acute remains on τίς, τί.
+				* The acute remains in pauses: before interpunction marks and verse ends.
+	
+		- Generally, an accented (orthotonic) Greek word only carries one accent mark.
+		- Some words are inherently unaccented (barytone): proclitic ἐν and enclitic τις.
+		- In combination with clitics, a single word may carry two accents: ἄνθρωπός τις.
+	
+	
+- Course structure
+
+	- Chapter 1: General principles
+		- Vowel length and the accent:
+			- The acute (ά) and grave (ὰ) are found on both long and short vowels.
+			- The circumflex (ᾶ) is only found on long vowels and diphthongs.		
+			- Always short are ε / ο. 
+			- Always long are η / ω and the diphthongs ει, ου, ωυ, ῃ etc.
+			- The vowels α / ι / υ can be either long or short and their quantity has to be learned (though guides will be given in this app).
+			- The diphthongs αι and οι are short in the last syllable.
+				* The optative -αι -οι and locative -οι are long.
+				
+			Exercises
+	
+		- Limitation Law: the accent cannot stand further back than the antepenult.
+			- The acute (ά) can stand on the ultimate, the penult and the antepenult.
+			- The circumflex (ᾶ) can stand on the penult and the ultimate.
+			(- The grave (ὰ) can only stand on the ultimate.)
+			- The accent cannot fall on the antepenult if the ultimate contains a long vowel, diphthong or ends in two consonants: -ψ, -ξ: φιλόλογος - φιλοκόλαξ, ἄνθρωπος, ἀνθρώπου.
+				* Compounds with enclitics: ὤντινων.
+				* Metathesis quantitatis: 
+					- ἵλεως, Μενέλεως (< Μενέλᾱος)
+					- Gen.sg. of ι/υ-stems: πόλεως
+					- Some compound adjectives in -ως: δύσερως, ὑψίκερως
+				
+			- The accent may shift because of this: ἄνθρωπος > ἀνθρώπου, βελτίων > βέλτιον
+			- This leads to a limited number of tonal patterns:
+				- Oxytone
+				- Paroxytone
+				- Proparoxytone
+				- Perispomenon
+				- Properispomenon
+				- Barytone (= toneless)
+			Exercises:
+				- Shift the accent only if necessary:
+					ἄνθρωπος > ἄνθρωπον / ἀνθρώπου
+				- What is the quantity of the following vowels
+					θάλαττα, ἥμισυς, πῆχυς, δύναμις, μῆνις, ὀφρῦς, φίλος
+		
+		
+		
+		- Σωτῆρα Rule: an accent on a long penult with short ultimate following must be a perispomenon: σωτήρ > σωτῆρα, δοῦλος, ναῦται.
+			* Compounds with enclitics do not follow this rule: οἴδε, οὔτις, ὥστε.
+	
+	- Chapter 2: Contraction
+		- When two vowels contract, the following accent rules take place:
+			- Unaccented + unaccented => unaccented
+			- Unaccented + accented: acute: ἐποιε-όμην => ἐποιούμην
+			- Accented + unaccented: circumflex: ἐποιέ-ομεν => ἐποιοῦμεν
+		Exercise: contraction verbs of νικάω, ποιέω, δηλόω (all recessive)
+			
+	- Chapter 3: Articles
+		- Direct cases are oxytone.
+			* nom. sg./pl. m./f. are barytone.
+		- Oblique cases are perispomenon.	
+			ὁ		ἡ		τό
+			τοῦ		τῆς		τοῦ
+			τῷ		τῇ		τῷ
+			τόν		τήν		τό
+			
+			τώ		τώ		τώ
+			τοῖν	τοῖν	τοῖν
+			
+			οἱ		αἱ		τά
+			τῶν		τῶν		τῶν
+			τοῖς	ταῖς	τοῖς
+			τούς	τάς		τά
+		
+		- Exercise: accentuate articles (random from a fixed pool)
+	
+	
+	- Chapter 4: Nouns (substantives and adjectives)
+		- Main rule: accent stays where it is in the nominative singular.
+			
+		- First Declension
+			- Main rule is followed.
+				(- Perispomena stay perispomena: Ἀθηνᾶ, Ἀθηνᾶς, Ἀθηνᾷ, Ἀθηνᾶν.)
+			
+			FD1 Oxytones become perispomena in the gen./dat. (sg./du./pl.): 
+					=> ψυχή, ψυχῆς, ψυχῇ, ψυχήν, ψυχά, ψυχαῖν.
+			
+			FD2 As a result: gen.pl. => always perispomenon in substantives
+				μοῦσα > μουσάων > μουσῶν.
+			
+			
+			Bonus: Ionic genitive in -εω is considered as one syllable:
+				Πηληϊάδης > Πηληϊάδεω
+				Ἑρμῆς > Ἑρμέω
+			Bonus: genitives in -ιω, -ειω, -ια are paroxytone
+				ἐϋμμελίω, Ἐρμείω, ἐϋμμελία
+			Bonus: genitives in -αο are recessive
+				Ἀτρεΐδης > Ἀτρείδου / Ἀτρείδαο
+				ἀργεστής > ἀργεστοῦ / ἀργεστᾶο
+			
+			Adjectives follow the main rule: nom.sg.m.
+				=> Genitives are perispomenon if their stem is different from the masc./ntr.; else they will follow the masc./ntr. (columnar)
+					ἄξιος > m./f./n. ἀξίων
+					μέλας > m./n. μελάνων, f. μελαινῶν
+				
+			Ambiguous vowels:
+			- Adjectives: nom.sg. -α is always long): *-eh2
+				=> this is because of the REI-rule
+				=> Substantives: *-eh2 / -h2
+			- Acc.pl. -ας is always long (but not in Doric)
+				=> this is because of the 2nd CV
+			- Nom.pl. -αι is always short
+			- Acc.sg. => -αν can be long or short
+				=> Actually: 
+			(- Vocative sg. => -α is always short in masculines in -ης, -της)
+				=> *-h2
+				
+				
+		- Second Declension
+		- Third Declension
+		
+		- Exercise:
+			- Combination of random articles + 
+	
+	- Chapter 5: Verbs
+		- Simple verbs
+		- Participles, nominal forms
+		- 
+	
+	- Chapter 6: Pronouns
+	
+	- Chapter 6: Adverbs
+	
+	- Chapter 7: Clitics
+	
+	- Chapter 8: Crasis, Elision, Synizesis, Anastrophe (prep.)
+	
+	
+	
+	- Chapter X Nominal accentuation patterns
+		- Comparatives and superlatives are recessive.
+	
+
+
+		
+
+		

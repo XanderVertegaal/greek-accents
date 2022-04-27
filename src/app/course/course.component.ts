@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NominalForm } from 'src/assets/types';
 
 @Component({
   selector: 'app-course',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
+  selectedWord: NominalForm | null = null;
 
   constructor() { }
 

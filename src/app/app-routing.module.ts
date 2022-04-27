@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { CourseComponent } from './course/course.component';
 import { TextListComponent } from './text-list/text-list.component';
 import { TrainerComponent } from './trainer/trainer.component';
-import { ArticleComponent } from './course/article/article.component';
+import { ArticleComponent } from './article/article.component';
 
 const routes: Routes = [
   {
@@ -13,10 +13,8 @@ const routes: Routes = [
     children: [
       { path: 'texts', component: TextListComponent },
       { path: 'trainer', component: TrainerComponent },
-      {
-        path: 'course', component: CourseComponent, children: [
-        {path: 'article', component: ArticleComponent}
-      ]},
+      { path: 'course', component: CourseComponent },
+      { path: 'article', component: ArticleComponent },
       { path: '**', redirectTo: 'texts' },
     ],
   },

@@ -111,7 +111,7 @@ Particulars:
 			- Comparatives and superlatives are recessive.
 			
 			Ambiguous vowels:
-			- Adjectives: nom.sg. -α is always long): *-eh2
+			- Adjectives: nom.sg. -α is always long): *-eh2 (but not in xariessa)
 				=> this is because of the REI-rule
 				=> Substantives: *-eh2 / -h2
 			- Acc.pl. -ας is always long
@@ -468,3 +468,57 @@ Exceptions:
 			- Disyllabic ind. impf./aor./perf./pl.q.pf. retain accent when augmented
 				ἐπέβαν, συνῆκε, ἀνεῖλον, κατεῖπε (3sg.) vs. κάτειπε (imp.)
 		
+
+Parts of speech:
+	RDF {
+		Annotation {
+			Body {
+				rest {
+					entry {
+						dict {
+							hdwd {
+							pofs { 
+							decl { "1st & 2nd", "2nd"
+							gend? { "masculine"
+							
+						infl {
+							term {
+							pofs {
+								$ {
+									"adjective", "noun", "adverb", "verb", "verb participle"
+							"mood" {
+								$ {
+									"imperative", "optative", "indicative", "subjunctive", "participle"
+							"num" {
+								$ {
+									"singular", "plural", "dual"
+							"pers" {
+								$ {
+									"2nd", "1st", "3rd"
+							"tense" {
+								$ {
+									"present", "aorist", "pluperfect"
+							"voice" {
+								$ {
+									"passive", "active"
+							"dial" {
+								$ {
+									"Attic epic", "Attic Ionic", "Homeric Ionic"
+							"decl" {
+								$ {
+									"1st & 2nd", "2nd"
+							"case" {
+								$ {
+									"nominative", "genitive", "dative", "accusative"
+							"gend" {
+								$ {
+									"masculine", "feminine", "neuter"
+							"stemtype" {
+								$ {
+									"os_h_on", "adverb", "ew_pr", "aor_pass, "perf_act", "aor2"
+							"derivtype": {
+								$ {
+									"ew-denom", "aw_denom", "reg_conj"
+							"morph" {
+								$ {
+									"indeclform", "contr", "unaugmented"
