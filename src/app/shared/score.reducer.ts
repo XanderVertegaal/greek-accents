@@ -1,5 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import * as ToneSelectActions from "../tone-select-form/actions/tone-select.actions";
+import * as TrainerActions from "../trainer/actions/trainer.actions";
+import * as ArticleActions from "../article/actions/article.actions";
 
 export interface ScoreState {
     correctCounter: number;
@@ -15,37 +16,37 @@ const initialScoreState: ScoreState = {
 
 export const scoreReducer = createReducer(
     initialScoreState,
-    on(ToneSelectActions.setCorrectCounter, (state, action) => {
+    on(TrainerActions.setCorrectCounter, ArticleActions.setCorrectCounter, (state, action) => {
         return {
             ...state,
             correctCounter: action.correctCounter
         };
     }),
-    on(ToneSelectActions.setIncorrectCounter, (state, action) => {
+    on(TrainerActions.setIncorrectCounter, ArticleActions.setIncorrectCounter, (state, action) => {
         return {
             ...state,
             incorrectCounter: action.incorrectCounter
         };
     }),
-    on(ToneSelectActions.setTotalCounter, (state, action) => {
+    on(TrainerActions.setTotalCounter, ArticleActions.setTotalCounter, (state, action) => {
         return {
             ...state,
             totalCounter: action.totalCounter
         };
     }),
-    on(ToneSelectActions.incrementCorrectCounter, (state) => {
+    on(TrainerActions.incrementCorrectCounter, ArticleActions.incrementCorrectCounter, (state) => {
         return {
             ...state,
             correctCounter: state.correctCounter + 1
         };
     }),
-    on(ToneSelectActions.incrementIncorrectCounter, (state) => {
+    on(TrainerActions.incrementIncorrectCounter, ArticleActions.incrementIncorrectCounter, (state) => {
         return {
             ...state,
             incorrectCounter: state.incorrectCounter + 1
         };
     }),
-    on(ToneSelectActions.incrementTotalCounter, (state) => {
+    on(TrainerActions.incrementTotalCounter, ArticleActions.incrementTotalCounter, (state) => {
         return {
             ...state,
             totalCounter: state.totalCounter + 1

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
-import { setCorrectTonePattern, setSelectedIndexWord } from './actions/trainer.actions';
+import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter } from './actions/trainer.actions';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
 
@@ -30,6 +30,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
 
   correctTonePattern: TonePattern | null = null;
   TonePattern = TonePattern;
+  tonePatterns: TonePattern[] = Object.values(TonePattern);
   isAnswerCorrect: boolean | null = null;
   isGameOver = false;
 
@@ -38,10 +39,10 @@ export class TrainerComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<StoreState>,
   ) {
-    this.selectedIndexWord$ = this.store.select(state => state.data.selectedIndexWord);
+    this.selectedIndexWord$ = this.store.select(state => state.trainer.selectedIndexWord);
     this.totalCounter$ = this.store.select(state => state.score.totalCounter);
     this.correctCounter$ = this.store.select(state => state.score.correctCounter);
-    this.selectedText$ = this.store.select(state => state.data.selectedText);
+    this.selectedText$ = this.store.select(state => state.trainer.selectedText);
   }
 
   ngOnInit(): void {
@@ -89,6 +90,15 @@ export class TrainerComponent implements OnInit, OnDestroy {
         }, 1500);
       })
     );
+  }
+
+  onSelectTone(tonePattern: TonePattern) {
+    if (tonePattern === this.correctTonePattern) {
+      this.store.dispatch(incrementCorrectCounter());
+    } else {
+      this.store.dispatch(incrementIncorrectCounter());
+    }
+    this.store.dispatch(incrementTotalCounter());
   }
 
   onSelectNewWord(): void {

@@ -21,7 +21,7 @@ export class TextListComponent implements OnInit, OnDestroy {
     private corpusService: CorpusService,
     private store: Store<StoreState>
   ) {
-    this.selectedText$ = this.store.select((state) => state.data.selectedText);
+    this.selectedText$ = this.store.select((state) => state.trainer.selectedText);
   }
 
   ngOnInit(): void {

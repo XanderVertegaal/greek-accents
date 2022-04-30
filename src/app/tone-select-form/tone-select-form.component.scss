@@ -20,9 +20,20 @@ form {
         color: white;
         border: 2px solid white;
         outline: 1px solid purple;
+        box-shadow: 1px 1px 1px 1px black;
+
+        &.disabled {
+            background-color: #777777;
+            box-shadow: none;
+            
+            &:active {
+                transform: translateY(0);
+            }
+        }
 
         &:active {
             transform: translateY(2px);
+            box-shadow: none;
         }
     }
 

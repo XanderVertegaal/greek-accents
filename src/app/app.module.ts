@@ -17,6 +17,8 @@ import { TextListComponent } from './text-list/text-list.component';
 import { TrainerComponent } from './trainer/trainer.component';
 import { CourseComponent } from './course/course.component';
 import { ArticleComponent } from './article/article.component';
+import { KeyValuePipe } from '@angular/common';
+import { SelectedComponent } from './selected/selected.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { ArticleComponent } from './article/article.component';
     TextListComponent,
     TrainerComponent,
     CourseComponent,
-    ArticleComponent
+    ArticleComponent,
+    SelectedComponent
   ],
   imports: [
     BrowserModule,

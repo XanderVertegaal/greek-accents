@@ -154,18 +154,20 @@ export function replaceNucleus(
   return newWord.reverse().join('');
 }
 
-export function applyTonePatternToWord(
-  word: string,
-  tonePattern: TonePattern
-): string | null {
+export function applyTonePatternToWord(word: string, tonePattern: TonePattern): string | null {
   const nuclei = getNuclei(word);
   let selectedNucleus: NucleusIndex | null = null;
   let accentedNucleus: NucleusIndex | null = null;
-  if (nuclei.length === 0) return null;
+  if (nuclei.length === 0) {
+    if (tonePattern === TonePattern.TONELESS) {
+      return word;
+    }
+    return null;
+  }
+    
   switch (tonePattern) {
     case TonePattern.TONELESS:
       return word;
-
     case TonePattern.OXYTONE_GRAVE:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.GRAVE);

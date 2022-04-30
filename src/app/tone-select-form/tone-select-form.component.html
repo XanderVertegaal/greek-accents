@@ -1,13 +1,15 @@
 <form class="button-wrapper">
     <button 
-    *ngFor="let tp of TonePattern | keyvalue"
-        [class]="tp.value + '-button'"
-        [style.grid-area]="tp.value"
+    *ngFor="let tp of tonePatterns"
+        [class]="tp + '-button'"
+        [class.disabled]="!applyTonePatternToWord(selectedWord, tp)"
+        [disabled]="!applyTonePatternToWord(selectedWord, tp)"
+        [style.grid-area]="tp"
         type="button"
-        (click)="onSelectTone(tp.value)">
-        {{tp.value}}
+        (click)="selectTone.next(tp)">
+        {{tp}}
         <br>
-        {{applyTonePatternToWord(trimmedWord, tp.value) ?? ''}}
+        {{applyTonePatternToWord(selectedWord, tp) ?? ''}}
     </button>        
     <button class="new-word" type="button" (click)="selectNewWord.next()">Pick a new word!</button>
     </form>

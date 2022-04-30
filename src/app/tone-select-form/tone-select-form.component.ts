@@ -1,10 +1,9 @@
-import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { fromEvent, Observable, Subscription } from 'rxjs';
 import { IndexWord, TonePattern } from 'src/assets/types';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord } from '../shared/utils';
-import { incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter } from './actions/tone-select.actions';
 
 @Component({
   selector: 'app-tone-select-form',
@@ -12,73 +11,53 @@ import { incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCount
   styleUrls: ['./tone-select-form.component.scss'],
 })
 export class ToneSelectFormComponent implements OnInit, OnDestroy {
+  @Input() selectedWord: string = '';
   @Output() selectNewWord = new EventEmitter<void>();
+  @Output() selectTone = new EventEmitter<TonePattern>();
   subscriptions: Subscription[] = [];
   TonePattern = TonePattern;
-  selectedIndexWord$: Observable<IndexWord | null>;
-  correctTonePattern$: Observable<TonePattern | null>;
-  correctTonePattern: TonePattern | null = null;
+  tonePatterns: TonePattern[] = Object.values(TonePattern);
+  
   applyTonePatternToWord = applyTonePatternToWord;
-  trimmedWord: string = '';
 
-  constructor(private store: Store<StoreState>) {
-    this.correctTonePattern$ = this.store.select((state) => state.data.correctTonePattern);
-    this.selectedIndexWord$ = this.store.select((state) => state.data.selectedIndexWord);
-  }
+  constructor() { }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.correctTonePattern$
-        .subscribe((tonePattern) => {
-          this.correctTonePattern = tonePattern;
-        }),
-      this.selectedIndexWord$.subscribe(indexWord => {
-        if (!indexWord) return;
-        this.trimmedWord = indexWord[1].replace(/[,.;:—·]/gi, '');
-      }),
       fromEvent(window, 'keydown').subscribe((event: Event) => {
         this.handleKeyDown(event as KeyboardEvent);
       })
     );
   }
 
-  onSelectTone(tonePattern: TonePattern): void {
-    if (tonePattern === this.correctTonePattern) {
-      this.store.dispatch(incrementCorrectCounter());
-    } else {
-      this.store.dispatch(incrementIncorrectCounter());
-    }
-    this.store.dispatch(incrementTotalCounter());
-  }
-
   handleKeyDown(event: KeyboardEvent) {
     switch (event.key) {
       case '0':
-        this.onSelectTone(TonePattern.TONELESS);
+        this.selectTone.emit(TonePattern.TONELESS);
         break;
       case '1':
-        this.onSelectTone(TonePattern.OXYTONE_ACUTE);
+        this.selectTone.emit(TonePattern.OXYTONE_ACUTE);
         break;
       case '2':
-        this.onSelectTone(TonePattern.PAROXYTONE);
+        this.selectTone.emit(TonePattern.PAROXYTONE);
         break;
       case '3':
-        this.onSelectTone(TonePattern.PROPAROXYTONE);
+        this.selectTone.emit(TonePattern.PROPAROXYTONE);
         break;
       case '4':
-        this.onSelectTone(TonePattern.PERISPOMENON);
+        this.selectTone.emit(TonePattern.PERISPOMENON);
         break;
       case '5':
-        this.onSelectTone(TonePattern.PROPERISPOMENON);
+        this.selectTone.emit(TonePattern.PROPERISPOMENON);
         break;
       case '6':
-        this.onSelectTone(TonePattern.PROPAROXYTONE_AND_OXYTONE);
+        this.selectTone.emit(TonePattern.PROPAROXYTONE_AND_OXYTONE);
         break;
       case '7':
-        this.onSelectTone(TonePattern.PROPERISPOMENON_AND_OXYTONE);
+        this.selectTone.emit(TonePattern.PROPERISPOMENON_AND_OXYTONE);
         break;
       case '8':
-        this.onSelectTone(TonePattern.OXYTONE_GRAVE);
+        this.selectTone.emit(TonePattern.OXYTONE_GRAVE);
     }
   }
 

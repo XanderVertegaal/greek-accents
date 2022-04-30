@@ -11,10 +11,7 @@
 </p>
 </section>
 
-<section class="selected-wrapper" *ngIf="selectedIndexWord">
-    <h4 class="selected-header">Determine the tonal pattern of:</h4>
-    <h2 class="selected-word">{{selectedIndexWord[1] | trim}}</h2>
-</section>
+<app-selected *ngIf="selectedIndexWord" [selectedWord]="selectedIndexWord[1] | trim"></app-selected>
 
 <app-scoreboard></app-scoreboard>
 
@@ -24,5 +21,9 @@
     <p>Word type:</p>        
 </section> -->
 
-<app-tone-select-form (selectNewWord)="onSelectNewWord()"></app-tone-select-form>
+<app-tone-select-form 
+    *ngIf="selectedIndexWord" 
+    (selectTone)="onSelectTone($event)" 
+    [selectedWord]="selectedIndexWord[1]">
+</app-tone-select-form>
     

@@ -1,118 +1,137 @@
-import { Case, Gender, NominalForm, Number } from "../types";
+import { Article, Case, Gender, Nominal, NominalForm, Number, TonePattern } from "../types";
 
-export const articles: NominalForm[] = [
+export const articles: Article[] = [
     {
         form: 'ἡ',
         case: Case.NOMINATIVE,
         number: Number.SINGULAR,
-        gender: Gender.FEMININE
+        gender: Gender.FEMININE,
+        tone: TonePattern.TONELESS
     },
     {
-        form: 'τῆς',
+        form: 'της',
         case: Case.GENITIVE,
         number: Number.SINGULAR,
         gender: Gender.FEMININE,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'τῇ',
+        form: 'τῃ',
         case: Case.DATIVE,
         number: Number.SINGULAR,
-        gender: Gender.FEMININE
+        gender: Gender.FEMININE,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'τήν',
+        form: 'την',
         case: Case.ACCUSATIVE,
         number: Number.SINGULAR,
-        gender: Gender.FEMININE
+        gender: Gender.FEMININE,
+        tone: TonePattern.OXYTONE_ACUTE
     },
     {
         form: 'ὁ',
         case: Case.NOMINATIVE,
         number: Number.SINGULAR,
-        gender: Gender.MASCULINE
+        gender: Gender.MASCULINE,
+        tone: TonePattern.TONELESS
     },
     {
-        form: 'τοῦ',
+        form: 'του',
         case: Case.GENITIVE,
         number: Number.SINGULAR,
         gender: Gender.MASCULINE,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'τῷ',
+        form: 'τῳ',
         case: Case.DATIVE,
         number: Number.SINGULAR,
-        gender: Gender.MASCULINE
+        gender: Gender.MASCULINE,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'τόν',
+        form: 'τον',
         case: Case.ACCUSATIVE,
         number: Number.SINGULAR,
-        gender: Gender.MASCULINE
+        gender: Gender.MASCULINE,
+        tone: TonePattern.OXYTONE_ACUTE
     },
     {
-        form: 'τό',
+        form: 'το',
         case: Case.NOMINATIVE_ACCUSATIVE,
         number: Number.SINGULAR,
-        gender: Gender.NEUTER
+        gender: Gender.NEUTER,
+        tone: TonePattern.OXYTONE_ACUTE
     },
     {
-        form: 'τώ',
+        form: 'τω',
         case: Case.NOMINATIVE_ACCUSATIVE,
         number: Number.DUAL,
-        gender: Gender.FEMININE_MASCULINE_NEUTER
+        gender: Gender.FEMININE_MASCULINE_NEUTER,
+        tone: TonePattern.OXYTONE_ACUTE
     },
     {
-        form: 'τοῖν',
+        form: 'τοιν',
         case: Case.GENITIVE_DATIVE,
         number: Number.DUAL,
-        gender: Gender.FEMININE_MASCULINE_NEUTER
+        gender: Gender.FEMININE_MASCULINE_NEUTER,
+        tone: TonePattern.PERISPOMENON
     },
     {
         form: 'αἱ',
         case: Case.NOMINATIVE,
         number: Number.PLURAL,
-        gender: Gender.FEMININE
+        gender: Gender.FEMININE,
+        tone: TonePattern.TONELESS
     },
     {
-        form: 'τῶν',
+        form: 'των',
         case: Case.GENITIVE,
         number: Number.PLURAL,
-        gender: Gender.FEMININE_MASCULINE_NEUTER
+        gender: Gender.FEMININE_MASCULINE_NEUTER,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'ταῖς',
+        form: 'ταις',
         case: Case.DATIVE,
         number: Number.PLURAL,
-        gender: Gender.FEMININE
+        gender: Gender.FEMININE,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'τάς',
+        form: 'τας',
         case: Case.ACCUSATIVE,
         number: Number.PLURAL,
-        gender: Gender.FEMININE
+        gender: Gender.FEMININE,
+        tone: TonePattern.OXYTONE_ACUTE
     },
     {
         form: 'οἱ',
         case: Case.NOMINATIVE,
         number: Number.PLURAL,
-        gender: Gender.MASCULINE
+        gender: Gender.MASCULINE,
+        tone: TonePattern.TONELESS
     },
     {
-        form: 'τοῖς',
+        form: 'τοις',
         case: Case.DATIVE,
         number: Number.PLURAL,
-        gender: Gender.MASCULINE_NEUTER
+        gender: Gender.MASCULINE_NEUTER,
+        tone: TonePattern.PERISPOMENON
     },
     {
-        form: 'τούς',
+        form: 'τους',
         case: Case.ACCUSATIVE,
         number: Number.PLURAL,
-        gender: Gender.MASCULINE
+        gender: Gender.MASCULINE,
+        tone: TonePattern.OXYTONE_ACUTE
     },
     {
-        form: 'τά',
+        form: 'τα',
         case: Case.NOMINATIVE_ACCUSATIVE,
         number: Number.PLURAL,
-        gender: Gender.NEUTER
+        gender: Gender.NEUTER,
+        tone: TonePattern.OXYTONE_ACUTE
     }
 ]

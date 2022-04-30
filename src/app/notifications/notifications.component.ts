@@ -22,8 +22,8 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<StoreState>) { 
     this.correctCounter$ = this.store.select((state) => state.score.correctCounter);
     this.incorrectCounter$ = this.store.select((state) => state.score.incorrectCounter);
-    this.correctTonePattern$ = this.store.select((state) => state.data.correctTonePattern);
-    this.selectedIndexWord$ = this.store.select((state) => state.data.selectedIndexWord);
+    this.correctTonePattern$ = this.store.select((state) => state.trainer.correctTonePattern);
+    this.selectedIndexWord$ = this.store.select((state) => state.trainer.selectedIndexWord);
   }
 
   ngOnInit(): void {

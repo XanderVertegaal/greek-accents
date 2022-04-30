@@ -12,17 +12,18 @@
                 </ul>
                 <li>The oblique cases (gen./dat.) are perispomenon: τῶν, τοῖν, ταῖς etc. (A2)</li>
             </ol>
+            <p><strong>NB:</strong> the vocative marker ὦ (not strictly an article) is perispomenon.</p>
         </section>
     </section>
-    <section class="exercise">
-        <h3>Determine the tone pattern of the following word:</h3>
-        <section class="selected-wrapper" *ngIf="unaccentedWord">
-            <h2 class="selected-word">{{unaccentedWord}}</h2>
-        </section>
-        <button class="button red new-word" (click)="getNewWord()">New word</button>
-        <button 
-            *ngFor="let tp of tonePatterns | keyvalue"
-            class="button">
-            {{tp.value}}</button>
-    </section>
+
+    <app-selected [selectedWord]="unaccentedWord"></app-selected>
+
+    <app-scoreboard></app-scoreboard>
+
+    <app-tone-select-form 
+        *ngIf="selectedWord" 
+        [selectedWord]="selectedWord.form"
+        (selectTone)="onSelectTone($event)" 
+        (selectNewWord)="onSelectNewWord()">
+    </app-tone-select-form>
 </article>

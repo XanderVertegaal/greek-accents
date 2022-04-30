@@ -4,21 +4,21 @@ import * as TrainerActions from '../trainer/actions/trainer.actions';
 import * as CorpusActions from '../services/actions/corpus.actions';
 import * as TextListActions from '../text-list/actions/text-list.actions';
 
-export interface DataState {
+export interface TrainerDataState {
   selectedIndexWord: [number, string] | null;
   seen: number[];
   correctTonePattern: TonePattern | null;
   selectedText: Text | null;
 }
 
-const initialDataState: DataState = {
+const initialDataState: TrainerDataState = {
   selectedIndexWord: null,
   seen: [],
   correctTonePattern: null,
   selectedText: null
 };
 
-export const dataReducer = createReducer(
+export const trainerReducer = createReducer(
   initialDataState,
   on(CorpusActions.setSelectedText, TextListActions.setSelectedText, (state, action) => {
     return {

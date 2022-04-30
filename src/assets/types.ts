@@ -24,7 +24,7 @@ export enum Vowel {
   OMICRON = 'omicron',
   OMEGA = 'omega',
   IOTA = 'iota',
-  UPSILON = 'upsilon'
+  UPSILON = 'upsilon',
 }
 
 export enum Aspiration {
@@ -62,10 +62,7 @@ export interface NucleusIndex {
   index: number;
 }
 
-export interface MorpheusReponse {
-  
-}
-
+export interface MorpheusReponse {}
 
 export enum Case {
   NOMINATIVE,
@@ -74,7 +71,7 @@ export enum Case {
   DATIVE,
   VOCATIVE,
   NOMINATIVE_ACCUSATIVE,
-  GENITIVE_DATIVE
+  GENITIVE_DATIVE,
 }
 
 export enum Number {
@@ -89,14 +86,53 @@ export enum Gender {
   NEUTER,
   MASCULINE_NEUTER,
   FEMININE_MASCULINE,
-  FEMININE_MASCULINE_NEUTER
+  FEMININE_MASCULINE_NEUTER,
 }
 export interface Nominal {
-  case: Case,
-  number: Number,
-  gender: Gender
+  case: Case;
+  number: Number;
+  gender: Gender;
+  tone: TonePattern
+}
+
+export interface Article extends Nominal {
+  form: string;
 }
 
 export interface NominalForm extends Nominal {
-  form: string
+  form: string;
+  translation: string;
+  exception?: Nominal[];
+}
+
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
+export enum Declension {
+  FIRST_DECLENSION,
+  SECOND_DECLENSION,
+  THIRD_DECLENSION,
+}
+
+export enum Diathesis {
+  ACTIVUM,
+  MEDIUM,
+  MEDIOPASSIVUM,
+  PASSIVUM,
+}
+
+export enum Tense {
+  PRAESENS,
+  IMPERFECTUM,
+  AORISTUS,
+  FUTURUM,
+  PERFECTUM,
+  PLUSQUAMPERFECTUM,
+}
+
+export enum Mood {
+  INDICATIVUS,
+  IMPERATIVUS,
+  CONIUNCTIVUS,
+  OPTATIVUS,
+  INFINITIVUS,
 }

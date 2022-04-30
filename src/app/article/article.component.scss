@@ -1,4 +1,6 @@
 .lesson-text {
+    margin: 2em 0;
+
     header {
         margin: 1em 0;
     }
@@ -8,7 +10,8 @@
     }
 
     ol {
-        margin: 1em 0 1em 1em;
+        margin-left: 1em;
+        margin-bottom: 1em;
 
         ul {
             margin-left: 1em;
