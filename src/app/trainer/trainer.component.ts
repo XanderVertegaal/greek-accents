@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
-import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter } from './actions/trainer.actions';
+import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, resetAllCounters } from './actions/trainer.actions';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
 
@@ -46,6 +46,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(resetAllCounters());
     this.subscriptions.push(
       this.selectedText$.subscribe((text: Text | null) => { 
         if (text === null) return;

@@ -51,5 +51,13 @@ export const scoreReducer = createReducer(
             ...state,
             totalCounter: state.totalCounter + 1
         };
+    }),
+    on(TrainerActions.resetAllCounters, ArticleActions.resetAllCounters, (state) => {
+        return {
+            ...state,
+            correctCounter: 0,
+            incorrectCounter: 0,
+            totalCounter: 0
+        };
     })
-)
+);

@@ -26,3 +26,7 @@ export const incrementIncorrectCounter = createAction(
 export const incrementTotalCounter = createAction(
     '[Article] Increment total counter'
 );
+
+export const resetAllCounters = createAction(
+    '[Article] Reset all counters'
+);

@@ -42,10 +42,8 @@ export class ArticleComponent implements OnInit {
   constructor(private store: Store<StoreState>) {}
 
   ngOnInit(): void {
+    
     this.getNewWord();
-    this.store.dispatch(setCorrectCounter({ correctCounter: 0 }));
-    this.store.dispatch(setIncorrectCounter({ incorrectCounter: 0 }));
-    this.store.dispatch(setTotalCounter({ totalCounter: 0 }));
   }
 
   getNewWord(): void {

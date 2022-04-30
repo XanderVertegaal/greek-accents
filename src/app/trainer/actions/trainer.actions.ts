@@ -17,23 +17,27 @@ export const setCorrectCounter = createAction(
 );
 
 export const setIncorrectCounter = createAction(
-    '[Trainer] Set incorrect counter',
-    props<{ incorrectCounter: number; }>()
+  '[Trainer] Set incorrect counter',
+  props<{ incorrectCounter: number }>()
 );
 
 export const setTotalCounter = createAction(
-    '[Trainer] Set total counter',
-    props<{ totalCounter: number; }>()
+  '[Trainer] Set total counter',
+  props<{ totalCounter: number }>()
 );
 
 export const incrementCorrectCounter = createAction(
-    '[Trainer] Increment correct counter'
+  '[Trainer] Increment correct counter'
 );
 
 export const incrementIncorrectCounter = createAction(
-    '[Trainer] Increment incorrect counter'
+  '[Trainer] Increment incorrect counter'
 );
 
 export const incrementTotalCounter = createAction(
-    '[Trainer] Increment total counter'
+  '[Trainer] Increment total counter'
+);
+
+export const resetAllCounters = createAction(
+  '[Trainer] Reset all counters'
 );
