@@ -1,8 +1,18 @@
-import { allChars, allSemi, toneChars } from 'src/assets/models';
 import {
+  allChars,
+  allSemi,
+  longShortChars,
+  toneChars,
+} from 'src/assets/models';
+import {
+  Casus,
   Character,
   CharProps,
+  Genus,
   IndexWord,
+  Nominal,
+  NominalForm,
+  Numerus,
   Tone,
   TonePattern,
 } from 'src/assets/types';
@@ -154,7 +164,10 @@ export function replaceNucleus(
   return newWord.reverse().join('');
 }
 
-export function applyTonePatternToWord(word: string, tonePattern: TonePattern): string | null {
+export function applyTonePatternToWord(
+  word: string,
+  tonePattern: TonePattern
+): string | null {
   const nuclei = getNuclei(word);
   let selectedNucleus: NucleusIndex | null = null;
   let accentedNucleus: NucleusIndex | null = null;
@@ -164,7 +177,7 @@ export function applyTonePatternToWord(word: string, tonePattern: TonePattern): 
     }
     return null;
   }
-    
+
   switch (tonePattern) {
     case TonePattern.TONELESS:
       return word;
@@ -272,4 +285,245 @@ export function determineTonePattern(nuclei: NucleusIndex[]): TonePattern {
 
 export function getRandomWord<T>(wordArray: T[]): T {
   return wordArray[randomInt(0, wordArray.length - 1)];
+}
+
+export function removeMacraBreves(word: string): string {
+  return word.replace(/[ᾱᾰ]/g, 'α').replace(/[ῑῐ]/g, 'ι').replace(/[ῡῠ]/g, 'υ');
+}
+
+function isPenultimateLong(longShort: string): boolean | undefined {
+  const noLongShort = removeMacraBreves(longShort);
+  const reverseIndex = getNuclei(noLongShort)[1].index;
+  const penultIndex = longShort.length - reverseIndex;
+  if (
+    ['ᾱ', 'ῑ', 'ῡ', 'Ᾱ', 'Ῑ', 'Ῡ', 'η', 'ω'].includes(
+      longShort[penultIndex - 1]) || getNuclei(noLongShort)[1].nucleus.length > 1
+  ) {
+    return true;
+  }
+  if (['ᾰ', 'ῐ', 'ῠ', 'Ᾰ', 'Ῐ', 'Ῠ', 'ϊ'].includes(longShort[penultIndex - 1])) {
+    return false;
+  }
+  return undefined;
+}
+
+function getUnaccentedStem(
+  word: NominalForm,
+  targetCase: Casus,
+  targetNumber: Numerus
+): string {
+  const bareStem = word.form.endsWith('ς')
+    ? removeMacraBreves(word.form).slice(0, -1)
+    : removeMacraBreves(word.form);
+
+  switch (targetNumber) {
+    case Numerus.SINGULAR:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+          return removeMacraBreves(word.form);
+        case Casus.VOCATIVE:
+          if (word.gender === Genus.MASCULINE) {
+            if (bareStem.endsWith('τη')) {
+              return bareStem.replace(/τη$/, 'τα');
+            }
+            return bareStem;
+          }
+          return word.form;
+        case Casus.GENITIVE:
+          if (word.gender === Genus.MASCULINE) {
+            return bareStem.slice(0, -1) + 'ου';
+          }
+          if (word.tone === TonePattern.PERISPOMENON) {
+            return bareStem + 'ς';
+          }
+          if (bareStem.match(/[ρει]α$/)) {
+            return bareStem.slice(0, -1) + 'ας';
+          }
+          return bareStem.slice(0, -1) + 'ης';
+        case Casus.DATIVE:
+          if (word.gender === Genus.MASCULINE) {
+            if (bareStem.endsWith('α')) {
+              return bareStem.replace(/α$/, 'ᾳ');
+            }
+            return bareStem.replace(/η$/, 'ῃ');
+          }
+          if (word.tone === TonePattern.PERISPOMENON) {
+            if (bareStem.endsWith('α')) {
+              return bareStem.replace(/α$/, 'ᾳ');
+            }
+            return bareStem.replace(/η$/, 'ῃ');
+          }
+          if (bareStem.match(/[ρει]α$/)) {
+            return bareStem.replace(/α$/, 'ᾳ');
+          }
+          return bareStem.slice(0, -1) + 'ῃ';
+        case Casus.ACCUSATIVE:
+          return bareStem + 'ν';
+        default:
+          return '';
+      }
+    case Numerus.DUAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+        case Casus.ACCUSATIVE:
+          return bareStem.slice(0, -1) + 'α';
+        case Casus.GENITIVE:
+        case Casus.DATIVE:
+          return bareStem.slice(0, -1) + 'αιν';
+        default:
+          return '';
+      }
+    case Numerus.PLURAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+          return bareStem.slice(0, -1) + 'αι';
+        case Casus.GENITIVE:
+          return bareStem.slice(0, -1) + 'ων';
+        case Casus.DATIVE:
+          return bareStem.slice(0, -1) + 'αις';
+        case Casus.ACCUSATIVE:
+          return bareStem.slice(0, -1) + 'ας';
+        default:
+          return '';
+      }
+    default:
+      return '';
+  }
+}
+
+export function declineSubstantive(
+  word: NominalForm,
+  targetCase: Casus,
+  targetNumber: Numerus
+): string | void {
+  const stem = getUnaccentedStem(word, targetCase, targetNumber);
+
+  if (word.exception) {
+    const exception = word.exception.find(exc =>
+      (targetCase === exc.case ?? word.case)
+      && (targetNumber === exc.number ?? word.number)
+    );
+    if (exception !== undefined) {
+      const selectedForm = exception.form ?? word.form;
+      const selectedTonePattern = exception.tone ?? word.tone;
+      return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? '';
+    }
+  }
+
+  switch (targetNumber) {
+    case Numerus.SINGULAR:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.ACCUSATIVE:
+        case Casus.VOCATIVE:
+          return applyTonePatternToWord(stem, word.tone) ?? '';
+        case Casus.GENITIVE:
+        case Casus.DATIVE:
+          switch (word.tone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return (
+                applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? ''
+              );
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+        default:
+          return '';
+      }
+    case Numerus.DUAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+        case Casus.ACCUSATIVE:
+          switch (word.tone) {
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+          }
+          return applyTonePatternToWord(stem, word.tone) ?? '';
+        case Casus.GENITIVE:
+        case Casus.DATIVE:
+          switch (word.tone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return (
+                applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? ''
+              );
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+        default:
+          return '';
+      }
+    case Numerus.PLURAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+          if (word.tone === TonePattern.PAROXYTONE) {
+            // If properispomenon is possible => penultimate is possibly long. If it is short: it must be paroxytone.
+            if (
+              applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) !== null
+            ) {
+              // Perispomenon or paroxytone depends on length of penultimate nucleus.
+              if (isPenultimateLong(word.form) === true) {
+                return (
+                  applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) ??
+                  ''
+                );
+              } else if (isPenultimateLong(word.form) === false) {
+                return (
+                  applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? ''
+                );
+              } else {
+                return `${
+                  applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) ??
+                  ''
+                } // ${
+                  applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? ''
+                }`;
+              }
+            }
+          }
+          return applyTonePatternToWord(stem, word.tone) ?? '';
+        case Casus.GENITIVE:
+          return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
+        case Casus.DATIVE:
+          switch (word.tone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+        case Casus.ACCUSATIVE:
+          switch (word.tone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return applyTonePatternToWord(stem, word.tone) ?? '';
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+        default:
+          return '';
+      }
+  }
 }

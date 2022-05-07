@@ -16,9 +16,13 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { TextListComponent } from './text-list/text-list.component';
 import { TrainerComponent } from './trainer/trainer.component';
 import { CourseComponent } from './course/course.component';
-import { ArticleComponent } from './article/article.component';
-import { KeyValuePipe } from '@angular/common';
+import { ArticleLessonComponent } from './article/article-lesson/article-lesson.component';
 import { SelectedComponent } from './selected/selected.component';
+import { FirstDeclensionComponent } from './first-declension/first-declension.component';
+import { FirstDeclensionNounsComponent } from './tables/first-declension-nouns/first-declension-nouns.component';
+import { ArticleExerciseComponent } from './article/article-exercise/article-exercise.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormInputComponent } from './exercise/form-input/form-input.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +35,15 @@ import { SelectedComponent } from './selected/selected.component';
     TextListComponent,
     TrainerComponent,
     CourseComponent,
-    ArticleComponent,
-    SelectedComponent
+    ArticleLessonComponent,
+    SelectedComponent,
+    FirstDeclensionComponent,
+    FirstDeclensionNounsComponent,
+    ArticleExerciseComponent,
+    FormInputComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

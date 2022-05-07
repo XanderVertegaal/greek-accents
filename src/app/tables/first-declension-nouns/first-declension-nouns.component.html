@@ -1,0 +1,62 @@
+<section>
+    <h4>Declension tables</h4>
+  
+    <table *ngFor="let word of words">
+      <thead>
+        <th>{{word.form}}</th>
+        <th>'{{word.translation}}'</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Nom.sg.</td>
+          <td>{{declineSubstantive(word, Case.NOMINATIVE, Number.SINGULAR)}}</td>
+  
+          <td>Nom.du.</td>
+          <td>{{declineSubstantive(word, Case.NOMINATIVE, Number.DUAL)}}</td>
+  
+          <td>Nom.pl.</td>
+          <td>{{declineSubstantive(word, Case.NOMINATIVE, Number.PLURAL)}}</td>
+        </tr>
+        <tr>
+          <td>Gen.sg.</td>
+          <td>{{declineSubstantive(word, Case.GENITIVE, Number.SINGULAR)}}</td>
+  
+          <td>Gen.du.</td>
+          <td>{{declineSubstantive(word, Case.GENITIVE, Number.DUAL)}}</td>
+  
+          <td>Gen.pl.</td>
+          <td>{{declineSubstantive(word, Case.GENITIVE, Number.PLURAL)}}</td>
+        </tr>
+        <tr>
+          <td>Dat.sg.</td>
+          <td>{{declineSubstantive(word, Case.DATIVE, Number.SINGULAR)}}</td>
+  
+          <td>Dat.du.</td>
+          <td>{{declineSubstantive(word, Case.DATIVE, Number.DUAL)}}</td>
+  
+          <td>Dat.pl.</td>
+          <td>{{declineSubstantive(word, Case.DATIVE, Number.PLURAL)}}</td>
+        </tr>
+        <tr>
+          <td>Acc.sg.</td>
+          <td>{{declineSubstantive(word, Case.ACCUSATIVE, Number.SINGULAR)}}</td>
+  
+          <td>Acc.du.</td>
+          <td>{{declineSubstantive(word, Case.ACCUSATIVE, Number.DUAL)}}</td>
+  
+          <td>Acc.pl.</td>
+          <td>{{declineSubstantive(word, Case.ACCUSATIVE, Number.PLURAL)}}</td>
+        </tr>
+        <tr>
+          <td>Voc.sg.</td>
+          <td>{{declineSubstantive(word, Case.VOCATIVE, Number.SINGULAR)}}</td>
+  
+          <td>Voc.du.</td>
+          <td>{{declineSubstantive(word, Case.VOCATIVE, Number.DUAL)}}</td>
+  
+          <td>Voc.pl.</td>
+          <td>{{declineSubstantive(word, Case.VOCATIVE, Number.PLURAL)}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>

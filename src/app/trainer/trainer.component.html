@@ -22,8 +22,7 @@
 </section> -->
 
 <app-tone-select-form 
-    *ngIf="selectedIndexWord" 
-    (selectTone)="onSelectTone($event)" 
-    [selectedWord]="selectedIndexWord[1]">
+    *ngIf="selectedIndexWord"
+    (answerIsCorrect)="onReceiveAnswerStatus($event)">
 </app-tone-select-form>
     

@@ -1,5 +1,7 @@
 import { Aspiration, Character, Tone, Vowel } from "../types";
 
+export const alphaLongShort: string[] = ['ᾱ', 'ᾰ', 'Ᾱ', 'Ᾰ'];
+
 export const alpha: Character[] = [
   {
     glyph: 'ᾋ',

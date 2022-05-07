@@ -1,4 +1,11 @@
 <section class="selected-wrapper" *ngIf="selectedWord">
     <h4 class="selected-header">Determine the tonal pattern of:</h4>
-    <h2 class="selected-word">{{selectedWord}}</h2>
+    <h2 class="selected-word">
+        {{selectedWord}}
+        <ng-container *ngIf="showHints">
+            <br>
+            <span class="hint" *ngFor="let hint of hints | keyvalue">{{hint.value}}</span>
+        </ng-container>
+    </h2>
+
 </section>

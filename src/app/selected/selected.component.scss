@@ -11,3 +11,16 @@
     border: 3px solid #ca4f41;
     padding: .25em;
 }
+
+.hint {
+    font-size: smaller;
+    color: black;
+
+    &:last-of-type::after {
+        content: ")";
+    }
+
+    &:first-of-type::before {
+        content: "(";
+    }
+}

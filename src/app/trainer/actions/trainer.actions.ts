@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { TonePattern } from 'src/assets/types';
+import { NucleusIndex, TonePattern } from 'src/assets/types';
 
 export const setSelectedIndexWord = createAction(
   '[Trainer] Set selected word',
@@ -40,4 +40,21 @@ export const incrementTotalCounter = createAction(
 
 export const resetAllCounters = createAction(
   '[Trainer] Reset all counters'
+);
+
+export const answerIsCorrect = createAction(
+  "[Trainer] Answer is correct",
+);
+
+export const answerIsIncorrect = createAction(
+  "[Trainer] Answer is incorrect",
+);
+
+export const answerReset = createAction(
+  "[Trainer] Answer reset",
+);
+
+export const setSelectednucleusIndex = createAction(
+  "[Trainer] Set selected NucleusIndex",
+  props<{ nucleusIndex: NucleusIndex }>()
 );

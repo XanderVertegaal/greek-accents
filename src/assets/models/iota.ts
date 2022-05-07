@@ -1,5 +1,7 @@
 import { Aspiration, Character, Tone, Vowel } from "../types";
 
+export const iotaLongShort: string[] = ['ῑ', 'ῐ', 'Ῑ', 'Ῐ'];
+
 export const iota: Character[] = [
   {
     glyph: 'Ἳ',

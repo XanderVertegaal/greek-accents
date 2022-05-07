@@ -15,15 +15,5 @@
             <p><strong>NB:</strong> the vocative marker ὦ (not strictly an article) is perispomenon.</p>
         </section>
     </section>
-
-    <app-selected [selectedWord]="unaccentedWord"></app-selected>
-
-    <app-scoreboard></app-scoreboard>
-
-    <app-tone-select-form 
-        *ngIf="selectedWord" 
-        [selectedWord]="selectedWord.form"
-        (selectTone)="onSelectTone($event)" 
-        (selectNewWord)="onSelectNewWord()">
-    </app-tone-select-form>
 </article>
+    

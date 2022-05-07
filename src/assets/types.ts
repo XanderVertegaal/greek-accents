@@ -62,37 +62,38 @@ export interface NucleusIndex {
   index: number;
 }
 
-export interface MorpheusReponse {}
+// export interface MorpheusReponse {}
 
-export enum Case {
-  NOMINATIVE,
-  GENITIVE,
-  ACCUSATIVE,
-  DATIVE,
-  VOCATIVE,
-  NOMINATIVE_ACCUSATIVE,
-  GENITIVE_DATIVE,
+export enum Casus {
+  NOMINATIVE = 'nom.',
+  GENITIVE = 'gen.',
+  ACCUSATIVE = 'acc.',
+  DATIVE = 'dat.',
+  VOCATIVE = 'voc.',
 }
 
-export enum Number {
-  SINGULAR,
-  DUAL,
-  PLURAL,
+export enum Numerus {
+  SINGULAR = 'sg.',
+  DUAL = 'du.',
+  PLURAL = 'pl.',
 }
 
-export enum Gender {
-  FEMININE,
-  MASCULINE,
-  NEUTER,
-  MASCULINE_NEUTER,
-  FEMININE_MASCULINE,
-  FEMININE_MASCULINE_NEUTER,
+export enum Genus {
+  FEMININE = 'fem.',
+  MASCULINE = 'masc.',
+  NEUTER = 'neut.'
 }
 export interface Nominal {
-  case: Case;
-  number: Number;
-  gender: Gender;
+  case: Casus;
+  number: Numerus;
+  gender: Genus;
   tone: TonePattern
+}
+
+export enum WordType {
+  ARTICLE = 'article',
+  SUBSTANTIVE = 'substantive',
+  VERB = 'verb'
 }
 
 export interface Article extends Nominal {
@@ -102,7 +103,7 @@ export interface Article extends Nominal {
 export interface NominalForm extends Nominal {
   form: string;
   translation: string;
-  exception?: Nominal[];
+  exception?: Partial<NominalForm>[];
 }
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

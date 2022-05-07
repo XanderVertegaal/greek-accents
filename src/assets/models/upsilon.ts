@@ -1,5 +1,7 @@
 import { Aspiration, Character, Tone, Vowel } from "../types";
 
+export const upsilonLongShort: string[] = ['ῡ', 'ῠ', 'Ῡ', 'Ῠ'];
+
 export const upsilon: Character[] = [
   {
     glyph: 'Ὓ',

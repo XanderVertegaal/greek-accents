@@ -1,10 +1,5 @@
 Griekse accenten
 
-
-To-do (a lot):
-	- Check for σωτῆρα rule (in cases like Ἑλλήνες...) or maybe not...?
-
-
 - 36 combinations of aspiration marks (3), tone marks (3), case (2) and iota-subscription (2)
 	Alpha / eta / omega lack:
 		- no-aspiration && uppercase (-6)
@@ -17,17 +12,24 @@ To-do (a lot):
 		- subscript variants
 - The diaeresis occurs only on the semivowels, with all breathings, never with asp:fortis|lenis, never with capitals and never with subscripted;
 - The upsilon does not have capitals with spiritus lenis
-	
-Syllabification training set:
-- Ἀθηναῖοι 
-- ποιῶ 
-- στοιᾱ́ 
-- στοᾱ́ 
-- κελεύω
-- σημεῖον
 
 
-κελεύω
+Exercise types:
+
+	Article:
+		- show unaccented article (+ case/number/gender)		=>		pick tone pattern (multiple choice)
+		- show case/number/gender								=>		write the appropriate article (input field)
+			gen.du.fem. => ταῖν
+		- show multiple accented article forms					=>		pick the correct one (multiple choice)
+			τῆν, τήν, τὴν => τήν
+		- show accented article (+ case/number/gender)			=>		transform to different: case &/ gender &/ number
+			
+
+	First declension:
+		- Show unaccented word + case/number + translation		=>		pick tone pattern (multiple choice)
+		δικαις (dat.pl.fem.) 'right' -> 'paroxytone'
+		
+	- Show nominative singular + 
 
 - Show unaccented text
 - Show amoutn of words in total score;

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { fromEvent, Observable, Subscription } from 'rxjs';
-import { IndexWord, TonePattern } from 'src/assets/types';
+import { fromEvent, Subscription } from 'rxjs';
+import { Article, NominalForm, TonePattern } from 'src/assets/types';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord } from '../shared/utils';
 
@@ -11,18 +11,19 @@ import { applyTonePatternToWord } from '../shared/utils';
   styleUrls: ['./tone-select-form.component.scss'],
 })
 export class ToneSelectFormComponent implements OnInit, OnDestroy {
-  @Input() selectedWord: string = '';
-  @Output() selectNewWord = new EventEmitter<void>();
-  @Output() selectTone = new EventEmitter<TonePattern>();
+  @Output() answerIsCorrect = new EventEmitter<boolean>();
   subscriptions: Subscription[] = [];
   TonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
   
+  selectedWord: Article | NominalForm | undefined = undefined;
+  
   applyTonePatternToWord = applyTonePatternToWord;
 
-  constructor() { }
+  constructor(private store: Store<StoreState>) { }
 
   ngOnInit(): void {
+    this.store.select(state => state.exercise.selectedWord).subscribe(word => this.selectedWord = word);
     this.subscriptions.push(
       fromEvent(window, 'keydown').subscribe((event: Event) => {
         this.handleKeyDown(event as KeyboardEvent);
@@ -33,31 +34,43 @@ export class ToneSelectFormComponent implements OnInit, OnDestroy {
   handleKeyDown(event: KeyboardEvent) {
     switch (event.key) {
       case '0':
-        this.selectTone.emit(TonePattern.TONELESS);
+        this.selectTone(TonePattern.TONELESS);
         break;
       case '1':
-        this.selectTone.emit(TonePattern.OXYTONE_ACUTE);
+        this.selectTone(TonePattern.OXYTONE_ACUTE);
         break;
       case '2':
-        this.selectTone.emit(TonePattern.PAROXYTONE);
+        this.selectTone(TonePattern.PAROXYTONE);
         break;
       case '3':
-        this.selectTone.emit(TonePattern.PROPAROXYTONE);
+        this.selectTone(TonePattern.PROPAROXYTONE);
         break;
       case '4':
-        this.selectTone.emit(TonePattern.PERISPOMENON);
+        this.selectTone(TonePattern.PERISPOMENON);
         break;
       case '5':
-        this.selectTone.emit(TonePattern.PROPERISPOMENON);
+        this.selectTone(TonePattern.PROPERISPOMENON);
         break;
       case '6':
-        this.selectTone.emit(TonePattern.PROPAROXYTONE_AND_OXYTONE);
+        this.selectTone(TonePattern.PROPAROXYTONE_AND_OXYTONE);
         break;
       case '7':
-        this.selectTone.emit(TonePattern.PROPERISPOMENON_AND_OXYTONE);
+        this.selectTone(TonePattern.PROPERISPOMENON_AND_OXYTONE);
         break;
       case '8':
-        this.selectTone.emit(TonePattern.OXYTONE_GRAVE);
+        this.selectTone(TonePattern.OXYTONE_GRAVE);
+    }
+  }
+
+  selectTone(tone: TonePattern): void {
+    if (!this.selectedWord) {
+      return;
+    }
+    const correctTone = this.selectedWord.tone;
+    if (tone === correctTone) {
+      this.answerIsCorrect.emit(true);
+    } else {
+      this.answerIsCorrect.emit(false);
     }
   }
 

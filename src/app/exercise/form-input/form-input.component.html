@@ -1,0 +1,4 @@
+<form (submit)="onSubmit($event)">
+  <input type="text" (input)="onInput($event)" [formControl]="input" [class.correct]="isAnswerCorrect === true" [class.incorrect]="isAnswerCorrect === false">
+  <button class="button">Submit answer</button>
+</form>

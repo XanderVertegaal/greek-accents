@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
-import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, resetAllCounters } from './actions/trainer.actions';
+import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, resetAllCounters, answerIsCorrect, answerReset, answerIsIncorrect } from './actions/trainer.actions';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
 
@@ -18,9 +18,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
 
   accentedText: IndexWord[] | null = null;
   displayText: IndexWord[] | null = null;
-  selectedAuthor: string = '';
-  selectedWork: string = '';
-  selectedPassage: string = '';
+  selectedAuthor = '';
+  selectedWork = '';
+  selectedPassage = '';
 
   selectedIndexWord$: Observable<IndexWord | null>;
   selectedIndexWord: IndexWord | null = null;
@@ -66,10 +66,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
         if (!indexWordPair || !this.accentedText) return;
         this.selectedIndexWord = indexWordPair;
         this.correct.push(this.accentedText[indexWordPair[0]]);
-        let currentIndex = this.selectedIndexWord[0];
+        const currentIndex = this.selectedIndexWord[0];
         this.correctTonePattern = determineTonePattern(getNuclei(this.accentedText[currentIndex][1]));
         this.store.dispatch(setCorrectTonePattern({ tonePattern: this.correctTonePattern }));
-        this.analyseWord(indexWordPair[0]);
       }),
 
       this.correctCounter$.subscribe((correctCounter) => {
@@ -104,7 +103,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
 
   onSelectNewWord(): void {
     if (!this.displayText) return;
-    let unseenWords = this.displayText.filter(
+    const unseenWords = this.displayText.filter(
       (word) => !this.correct.includes(word)
     );
     if (this.correct.length > 0 && unseenWords.length === 0) {
@@ -122,21 +121,22 @@ export class TrainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  analyseWord(index: number): any {
-    // if (!this.accentedText) return null;
-    // const selectedWord = this.accentedText[index][1];
-    // console.log('Word:', selectedWord);
-    // this.http.get<any>("http://localhost:1501/analysis/word?lang=grc&engine=morpheusgrc&word=" + selectedWord).subscribe(
-    //   (data) => {
-    //     const body = data.RDF.Annotation.Body;
-    //     console.log('Perseus analysis:', body);
-    //     if (body.length === undefined) {
-    //       console.log('Type:', body.rest.entry.dict.pofs['$'])
-    //       return;
-    //     }
-    //     console.log('Type:', body[0].rest.entry.dict.pofs['$'])
-    //   }
-    // )
+  onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
+    if (isAnswerCorrect === true) {
+      this.store.dispatch(incrementCorrectCounter());
+      this.store.dispatch(answerIsCorrect());
+      setTimeout(() => {
+        this.store.dispatch(answerReset());
+      }, 1500);
+    } else {
+      this.store.dispatch(incrementIncorrectCounter());
+      this.store.dispatch(answerIsIncorrect());
+      setTimeout(() => {
+        this.store.dispatch(answerReset());
+      }, 1500);
+    }
+    this.store.dispatch(incrementTotalCounter());
+    this.onSelectNewWord();
   }
 
   ngOnDestroy(): void {
