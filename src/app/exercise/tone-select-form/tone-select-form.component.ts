@@ -1,9 +1,9 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { fromEvent, Subscription } from 'rxjs';
-import { Article, NominalForm, TonePattern } from 'src/assets/types';
-import { StoreState } from '../shared/state';
-import { applyTonePatternToWord } from '../shared/utils';
+import { TonePattern } from 'src/assets/types';
+import { StoreState } from '../../shared/state';
+import { applyTonePatternToWord, determineTonePattern, getNuclei, removeWordAccents } from '../../shared/utils';
 
 @Component({
   selector: 'app-tone-select-form',
@@ -13,17 +13,33 @@ import { applyTonePatternToWord } from '../shared/utils';
 export class ToneSelectFormComponent implements OnInit, OnDestroy {
   @Output() answerIsCorrect = new EventEmitter<boolean>();
   subscriptions: Subscription[] = [];
-  TonePattern = TonePattern;
+  tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
-  
-  selectedWord: Article | NominalForm | undefined = undefined;
-  
+
+  selectedForm: string | undefined = undefined;
+  selectedTonePattern: TonePattern | undefined = undefined;
+
   applyTonePatternToWord = applyTonePatternToWord;
 
   constructor(private store: Store<StoreState>) { }
 
   ngOnInit(): void {
-    this.store.select(state => state.exercise.selectedWord).subscribe(word => this.selectedWord = word);
+    this.store.select(state => state.exercise.selectedArticle).subscribe(article => {
+      if (article === undefined) {
+        return;
+      }
+      this.selectedForm = article.form;
+      this.selectedTonePattern = article.tone;
+    });
+
+    this.store.select(state => state.trainer.selectedIndexWord).subscribe(indexWord => {
+      if (indexWord == null) {
+        return;
+      }
+      this.selectedForm = removeWordAccents(indexWord[1]);
+      this.selectedTonePattern = determineTonePattern(getNuclei(indexWord[1]));
+    });
+
     this.subscriptions.push(
       fromEvent(window, 'keydown').subscribe((event: Event) => {
         this.handleKeyDown(event as KeyboardEvent);
@@ -63,10 +79,10 @@ export class ToneSelectFormComponent implements OnInit, OnDestroy {
   }
 
   selectTone(tone: TonePattern): void {
-    if (!this.selectedWord) {
+    if (!this.selectedTonePattern) {
       return;
     }
-    const correctTone = this.selectedWord.tone;
+    const correctTone = this.selectedTonePattern;
     if (tone === correctTone) {
       this.answerIsCorrect.emit(true);
     } else {

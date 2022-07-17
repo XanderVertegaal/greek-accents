@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { StoreState } from '../shared/state';
@@ -8,7 +8,7 @@ import { StoreState } from '../shared/state';
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.scss']
 })
-export class ScoreboardComponent implements OnInit {
+export class ScoreboardComponent {
   correctCounter$: Observable<number>;
   incorrectCounter$: Observable<number>;
   totalCounter$: Observable<number>;
@@ -18,9 +18,6 @@ export class ScoreboardComponent implements OnInit {
     this.correctCounter$ = this.store.select((state) => state.score.correctCounter);
     this.incorrectCounter$ = this.store.select((state) => state.score.incorrectCounter);
     this.totalCounter$ = this.store.select((state) => state.score.totalCounter);
-  }
-
-  ngOnInit(): void {
   }
 
 }

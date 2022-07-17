@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article, Casus, Genus, Numerus } from 'src/assets/types';
+import { Store } from '@ngrx/store';
+import { Casus, Genus, Numerus } from 'src/assets/types';
+import { StoreState } from '../shared/state';
 
 @Component({
   selector: 'app-selected',
@@ -9,12 +11,14 @@ import { Article, Casus, Genus, Numerus } from 'src/assets/types';
 export class SelectedComponent implements OnInit {
   @Input() selectedWord: string | null = null;
   @Input() hints: [Casus, Numerus, Genus] | null = null;
-  @Input() showHints = true;
+  showHints = true;
+  isAnswerCorrect: boolean | undefined;
 
 
-  constructor() { }
+  constructor(private store: Store<StoreState>) { }
 
   ngOnInit(): void {
+    this.store.select(state => state.exercise.answerStatus).subscribe(status => this.isAnswerCorrect = status);
   }
 
 }

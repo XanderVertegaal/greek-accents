@@ -18,10 +18,9 @@ Exercise types:
 
 	Article:
 		- show unaccented article (+ case/number/gender)		=>		pick tone pattern (multiple choice)
-		- show case/number/gender								=>		write the appropriate article (input field)
-			gen.du.fem. => ταῖν
-		- show multiple accented article forms					=>		pick the correct one (multiple choice)
 			τῆν, τήν, τὴν => τήν
+		- show case/number/gender								=>		write the appropriate article (input field)
+			gen.du.fem. => ταῖν	
 		- show accented article (+ case/number/gender)			=>		transform to different: case &/ gender &/ number
 			
 

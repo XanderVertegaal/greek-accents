@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NominalForm } from 'src/assets/types';
 
 @Component({
@@ -6,11 +6,9 @@ import { NominalForm } from 'src/assets/types';
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.scss']
 })
-export class CourseComponent implements OnInit {
+export class CourseComponent {
   selectedWord: NominalForm | null = null;
 
   constructor() { }
-
-  ngOnInit(): void { }
 
 }

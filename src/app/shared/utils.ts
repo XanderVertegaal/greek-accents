@@ -1,22 +1,22 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import {
   allChars,
   allSemi,
-  longShortChars,
   toneChars,
 } from 'src/assets/models';
 import {
   Casus,
   Character,
-  CharProps,
   Genus,
-  IndexWord,
-  Nominal,
   NominalForm,
   Numerus,
   Tone,
   TonePattern,
 } from 'src/assets/types';
 import { NucleusIndex } from 'src/assets/types';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export enum QuestionType { DETERMINE, TRANSFORM }
 
 export function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -33,7 +33,7 @@ export function getAccChars(word: string): Character[] {
   const foundChars: Character[] = [];
   const letters = word.split('');
   letters.forEach((letter) => {
-    for (let char of toneChars) {
+    for (const char of toneChars) {
       if (letter === char.glyph) {
         foundChars.push(char);
         continue;
@@ -52,7 +52,9 @@ export function removeAcc(char: Character): Character | undefined {
     },
   };
   const foundBaseChar = getCharFromProps(constructedBaseChar);
-  if (!foundBaseChar) return undefined;
+  if (!foundBaseChar) {
+    return undefined;
+  }
   return foundBaseChar;
 }
 
@@ -88,7 +90,7 @@ export function getNuclei(word: string): NucleusIndex[] {
     if (!isSemivowel(letter)) {
       nuclei.push({
         nucleus: letter,
-        index: index,
+        index,
       });
       return;
     }
@@ -99,27 +101,27 @@ export function getNuclei(word: string): NucleusIndex[] {
         getCharFromLetter(letter)?.props.diaeresis
       ) {
         // semivowels with diaeresis
-        nuclei.push({ nucleus: letter, index: index });
+        nuclei.push({ nucleus: letter, index });
         return;
       }
       skipNext = true;
       nuclei.push({
         nucleus: reversedLetters[index + 1] + letter,
-        index: index,
+        index,
       });
       return;
     } else {
-      nuclei.push({ nucleus: letter, index: index });
+      nuclei.push({ nucleus: letter, index });
     }
   });
   return nuclei;
 }
 
 export function removeWordAccents(word: string): string {
-  let unaccentedWord = word.split('').map((letter) => {
-    if (!isVowel(letter)) return letter;
+  const unaccentedWord = word.split('').map((letter) => {
+    if (!isVowel(letter)) {return letter;}
     const char = getCharFromLetter(letter);
-    if (char === undefined) return;
+    if (char === undefined) {return;}
     return removeAcc(char)?.glyph;
   });
   return unaccentedWord.join('');
@@ -129,7 +131,7 @@ export function applyToneToNucleus(
   { nucleus, index }: NucleusIndex,
   tone: Tone
 ): NucleusIndex | null {
-  let unaccChar: Character | undefined = undefined;
+  let unaccChar: Character | undefined;
   if (nucleus.length === 1) {
     unaccChar = getCharFromLetter(nucleus);
   } else if (nucleus.length === 2) {
@@ -139,27 +141,27 @@ export function applyToneToNucleus(
     return null;
   }
 
-  if (unaccChar === undefined) return { nucleus, index };
-  let accCharProps: Character = {
+  if (unaccChar === undefined) {return { nucleus, index };}
+  const accCharProps: Character = {
     ...unaccChar,
     props: {
       ...unaccChar.props,
-      tone: tone,
+      tone,
     },
   };
-  let accChar = getCharFromProps(accCharProps);
+  const accChar = getCharFromProps(accCharProps);
 
-  if (!accChar) return null;
+  if (!accChar) {return null;}
   return nucleus.length === 1
-    ? { nucleus: accChar.glyph, index: index }
-    : { nucleus: nucleus[0] + accChar.glyph, index: index };
+    ? { nucleus: accChar.glyph, index }
+    : { nucleus: nucleus[0] + accChar.glyph, index };
 }
 
 export function replaceNucleus(
   word: string,
   { nucleus, index }: NucleusIndex
 ): string {
-  let newWord = word.split('').reverse();
+  const newWord = word.split('').reverse();
   newWord.splice(index, nucleus.length, nucleus);
   return newWord.reverse().join('');
 }
@@ -184,54 +186,58 @@ export function applyTonePatternToWord(
     case TonePattern.OXYTONE_GRAVE:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.GRAVE);
-      if (!accentedNucleus) return null;
+      if (!accentedNucleus) {return null;}
       return replaceNucleus(word, accentedNucleus);
 
     case TonePattern.OXYTONE_ACUTE:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.ACUTE);
-      if (!accentedNucleus) return null;
+      if (!accentedNucleus) {return null;}
       return replaceNucleus(word, accentedNucleus);
 
     case TonePattern.PAROXYTONE:
-      if (nuclei[1] === undefined) return null;
+      if (nuclei[1] === undefined) {return null;}
       selectedNucleus = nuclei[1];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.ACUTE);
-      if (!accentedNucleus) return null;
+      if (!accentedNucleus) {return null;}
       return replaceNucleus(word, accentedNucleus);
 
     case TonePattern.PROPAROXYTONE:
-      if (nuclei[2] === undefined) return null;
+      if (nuclei[2] === undefined) {return null;}
       selectedNucleus = nuclei[2];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.ACUTE);
-      if (!accentedNucleus) return null;
+      if (!accentedNucleus) {return null;}
       return replaceNucleus(word, accentedNucleus);
 
     case TonePattern.PERISPOMENON:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.CIRCUMFLEX);
-      if (!accentedNucleus) return null;
+      if (!accentedNucleus) {return null;}
       return replaceNucleus(word, accentedNucleus);
 
     case TonePattern.PROPERISPOMENON:
-      if (nuclei[1] === undefined) return null;
+      if (nuclei[1] === undefined) {return null;}
       selectedNucleus = nuclei[1];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.CIRCUMFLEX);
-      if (!accentedNucleus) return null;
+      if (!accentedNucleus) {return null;}
       return replaceNucleus(word, accentedNucleus);
 
     case TonePattern.PROPAROXYTONE_AND_OXYTONE:
-      if (nuclei[2] === undefined) return null;
-      let ppoProparox = applyToneToNucleus(nuclei[2], Tone.ACUTE);
-      let ppoOx = applyToneToNucleus(nuclei[0], Tone.ACUTE);
-      if (!ppoProparox || !ppoOx) return null;
+      if (nuclei[2] === undefined) {return null;}
+      // eslint-disable-next-line no-case-declarations
+      const ppoProparox = applyToneToNucleus(nuclei[2], Tone.ACUTE);
+      // eslint-disable-next-line no-case-declarations
+      const ppoOx = applyToneToNucleus(nuclei[0], Tone.ACUTE);
+      if (!ppoProparox || !ppoOx) {return null;}
       return replaceNucleus(replaceNucleus(word, ppoProparox), ppoOx);
 
     case TonePattern.PROPERISPOMENON_AND_OXYTONE:
-      if (nuclei[1] === undefined) return null;
-      let prpPerisp = applyToneToNucleus(nuclei[1], Tone.CIRCUMFLEX);
-      let prpOxy = applyToneToNucleus(nuclei[0], Tone.ACUTE);
-      if (!prpPerisp || !prpOxy) return null;
+      if (nuclei[1] === undefined) {return null;}
+      // eslint-disable-next-line no-case-declarations
+      const prpPerisp = applyToneToNucleus(nuclei[1], Tone.CIRCUMFLEX);
+      // eslint-disable-next-line no-case-declarations
+      const prpOxy = applyToneToNucleus(nuclei[0], Tone.ACUTE);
+      if (!prpPerisp || !prpOxy) {return null;}
       return replaceNucleus(replaceNucleus(word, prpPerisp), prpOxy);
   }
 }
@@ -393,7 +399,7 @@ function getUnaccentedStem(
   }
 }
 
-export function declineSubstantive(
+export function declineFirstDeclensionSubstantive(
   word: NominalForm,
   targetCase: Casus,
   targetNumber: Numerus
@@ -403,7 +409,7 @@ export function declineSubstantive(
   if (word.exception) {
     const exception = word.exception.find(exc =>
       (targetCase === exc.case ?? word.case)
-      && (targetNumber === exc.number ?? word.number)
+      && (targetNumber === exc.gramNumber ?? word.gramNumber)
     );
     if (exception !== undefined) {
       const selectedForm = exception.form ?? word.form;

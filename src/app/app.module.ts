@@ -7,10 +7,10 @@ import { HomeComponent } from './home/home.component';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { StoreMap } from './shared/state';
+import { storeMap } from './shared/state';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { TrimPipe } from './trim.pipe';
-import { ToneSelectFormComponent } from './tone-select-form/tone-select-form.component';
+import { ToneSelectFormComponent } from './exercise/tone-select-form/tone-select-form.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { TextListComponent } from './text-list/text-list.component';
@@ -23,6 +23,8 @@ import { FirstDeclensionNounsComponent } from './tables/first-declension-nouns/f
 import { ArticleExerciseComponent } from './article/article-exercise/article-exercise.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormInputComponent } from './exercise/form-input/form-input.component';
+import { ConversionTableComponent } from './shared/components/conversion-table/conversion-table.component';
+import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -41,13 +43,15 @@ import { FormInputComponent } from './exercise/form-input/form-input.component';
     FirstDeclensionNounsComponent,
     ArticleExerciseComponent,
     FormInputComponent,
+    ConversionTableComponent,
   ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(StoreMap),
+    StoreModule.forRoot(storeMap),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [],

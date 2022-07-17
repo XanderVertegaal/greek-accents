@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
+// eslint-disable-next-line max-len
 import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, resetAllCounters, answerIsCorrect, answerReset, answerIsIncorrect } from './actions/trainer.actions';
 import { StoreState } from '../shared/state';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
@@ -29,7 +30,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
   selectedText$: Observable<Text | null>;
 
   correctTonePattern: TonePattern | null = null;
-  TonePattern = TonePattern;
+  tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
   isAnswerCorrect: boolean | null = null;
   isGameOver = false;
@@ -48,8 +49,10 @@ export class TrainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(resetAllCounters());
     this.subscriptions.push(
-      this.selectedText$.subscribe((text: Text | null) => { 
-        if (text === null) return;
+      this.selectedText$.subscribe((text: Text | null) => {
+        if (text === null) {
+          return;
+        }
         const splitText = text.text.split(' ');
         const unaccentedText = splitText.map((word) =>
           removeWordAccents(word).replace(/[,.;:—·]/gi, '')
@@ -63,7 +66,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
       }),
 
       this.selectedIndexWord$.subscribe((indexWordPair) => {
-        if (!indexWordPair || !this.accentedText) return;
+        if (!indexWordPair || !this.accentedText) {
+          return;
+        }
         this.selectedIndexWord = indexWordPair;
         this.correct.push(this.accentedText[indexWordPair[0]]);
         const currentIndex = this.selectedIndexWord[0];
@@ -72,7 +77,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
       }),
 
       this.correctCounter$.subscribe((correctCounter) => {
-        if (correctCounter === 0) return;
+        if (correctCounter === 0) {
+          return;
+        }
         if (this.accentedText && this.selectedIndexWord) {
           this.displayText?.splice(
             this.selectedIndexWord[0],
@@ -84,7 +91,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
       }),
 
       this.totalCounter$.subscribe((counter) => {
-        if (counter === 0) return;
+        if (counter === 0) {
+          return;
+        }
         setTimeout(() => {
           this.onSelectNewWord();
         }, 1500);
@@ -102,7 +111,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
   }
 
   onSelectNewWord(): void {
-    if (!this.displayText) return;
+    if (!this.displayText) {
+      return;
+    }
     const unseenWords = this.displayText.filter(
       (word) => !this.correct.includes(word)
     );

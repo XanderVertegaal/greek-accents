@@ -1,11 +1,27 @@
-<section class="selected-wrapper" *ngIf="selectedWord">
-    <h4 class="selected-header">Determine the tonal pattern of:</h4>
-    <h2 class="selected-word">
-        {{selectedWord}}
-        <ng-container *ngIf="showHints">
-            <br>
-            <span class="hint" *ngFor="let hint of hints | keyvalue">{{hint.value}}</span>
-        </ng-container>
-    </h2>
+<section class="display-wrapper card" 
+[class.hinted]="hints"
+*ngIf="selectedWord">
+  <h4 class="display-header">Determine the tonal pattern of:</h4>
+  <h2 class="display-word"
+    [class.correct]="isAnswerCorrect === true" 
+    [class.incorrect]="isAnswerCorrect === false">
+    {{selectedWord}}
+    <ng-container *ngIf="showHints">
+      <br>
+      <span class="hint" *ngFor="let hint of hints | keyvalue"> 
+        {{hint.value}}
+      </span>
+    </ng-container>
+  </h2>
+  
+  <div class="hint-button-wrapper" *ngIf="hints">
+    <h5>Hints:</h5>
+    <button  
+      class="button red"
+      [class.show-hints]="showHints" 
+      (click)="showHints = !showHints">
+      {{showHints ? 'On' : 'Off'}}
+    </button>
+  </div>
 
 </section>

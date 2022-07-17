@@ -1,4 +1,22 @@
 <form (submit)="onSubmit($event)">
-  <input type="text" (input)="onInput($event)" [formControl]="input" [class.correct]="isAnswerCorrect === true" [class.incorrect]="isAnswerCorrect === false">
-  <button class="button">Submit answer</button>
+  <div class="form-row">
+    <label for="input">Enter the accented Greek form:</label>
+    <input 
+      type="text" 
+      name="input" 
+      (input)="onInput($event)" 
+      [formControl]="input">
+    <div 
+      class="info"
+      [class.show-info]="showInfo" 
+      (click)="showInfo = !showInfo">
+      <p class="info-text" [class.show-info]="showInfo">i</p>
+    </div>
+  </div>
+  <div class="button-row">
+    <button class="button">Clear input</button>
+    <button class="button">Submit answer</button>
+  </div>
 </form>
+
+<app-conversion-table @slideIn *ngIf="showInfo"></app-conversion-table>

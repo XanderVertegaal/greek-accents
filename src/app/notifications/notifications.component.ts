@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, switchMap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IndexWord, TonePattern } from 'src/assets/types';
 import { StoreState } from '../shared/state';
 
@@ -19,7 +19,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   isAnswerCorrect: boolean | null = null;
   isGameOver = false;
 
-  constructor(private store: Store<StoreState>) { 
+  constructor(private store: Store<StoreState>) {
     this.correctCounter$ = this.store.select((state) => state.score.correctCounter);
     this.incorrectCounter$ = this.store.select((state) => state.score.incorrectCounter);
     this.correctTonePattern$ = this.store.select((state) => state.trainer.correctTonePattern);
@@ -29,11 +29,11 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.correctCounter$.subscribe(counter => {
-        if (counter === 0) return;
+        if (counter === 0) {return;}
         this.isAnswerCorrect = true;
       }),
       this.incorrectCounter$.subscribe(counter => {
-        if (counter === 0) return;
+        if (counter === 0) {return;}
         this.isAnswerCorrect = false;
       }),
       this.selectedIndexWord$.subscribe(() => {

@@ -2,25 +2,28 @@
 
   <app-scoreboard></app-scoreboard>
 
-  <h5>Toggle hints: <button  [class.red]="showHints" class="button" (click)="showHints = !showHints">{{showHints ? 'On' : 'Off'}}</button></h5>
-
-  <button class="new-word" type="button" (click)="getNewWord()">Pick a new word!</button>
+  <!-- <button class="new-word" type="button" (click)="getNewWord()">Pick a new word!</button> -->
   
-  <!-- 1. Show unaccented article (+ case/number/gender)		=>		pick tone pattern (multiple choice) -->
   <ng-container *ngIf="selectedArticle">
     <app-selected 
-      [selectedWord]="selectedArticle.form" 
-      [hints]="[selectedArticle.case, selectedArticle.number, selectedArticle.gender]"
-      [showHints]="showHints">
+      [selectedWord]="displayWord" 
+      [hints]="[selectedArticle.case, selectedArticle.gramNumber, selectedArticle.gender]">
     </app-selected>
+  </ng-container>
+
+  <!-- 1. Show unaccented article (+ case/number/gender)		=>		pick tone pattern (multiple choice) -->
+  <ng-container>
     <app-tone-select-form 
       (answerIsCorrect)="onReceiveAnswerStatus($event)">
     </app-tone-select-form>
   </ng-container>
 
-<!-- 2. Show case/number/gender		=>		write the appropriate article (input field) (on mobile: contextual buttons) -->
-<ng-container>
-  <app-form-input (answerIsCorrect)="onReceiveAnswerStatus($event)"></app-form-input>
-</ng-container>
+  <!-- 2. Show case/number/gender		=>		write the appropriate article (input field) (on mobile: contextual buttons) -->
+  <ng-container>
+    <app-form-input
+      (answerIsCorrect)="onReceiveAnswerStatus($event)"></app-form-input>
+  </ng-container>
+
+  <!-- 3. Show accented form + target case/number/gender => write appropriate article (input field/multiple choice) -->
 
 </article>

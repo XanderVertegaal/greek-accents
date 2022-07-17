@@ -3,7 +3,8 @@ import {Store} from '@ngrx/store';
 import {StoreState} from 'src/app/shared/state';
 import {
   applyTonePatternToWord,
-  getRandomWord} from 'src/app/shared/utils';
+  getRandomWord,
+  QuestionType} from 'src/app/shared/utils';
 import {articles} from 'src/assets/exercises/article.data';
 import {Article, TonePattern} from 'src/assets/types';
 import {
@@ -12,7 +13,7 @@ import {
   incrementTotalCounter,
   resetAllCounters
 } from 'src/app/article/actions/article.actions';
-import { answerIsCorrect, answerIsIncorrect, answerReset, setSelectedWord } from './actions/article-exercise.actions';
+import { answerIsCorrect, answerIsIncorrect, answerReset, setSelectedArticle } from './actions/article-exercise.actions';
 
 @Component({
   selector: 'app-article-exercise',
@@ -22,14 +23,15 @@ import { answerIsCorrect, answerIsIncorrect, answerReset, setSelectedWord } from
 export class ArticleExerciseComponent implements OnInit {
   articles: Article[] = articles;
   selectedArticle: Article | null = null;
-  TonePattern = TonePattern;
+  displayWord: string | null = null;
+  tonePattern = TonePattern;
   tonePatterns: TonePattern[] = [
     TonePattern.OXYTONE_ACUTE,
     TonePattern.PERISPOMENON,
     TonePattern.TONELESS
   ];
-  showHints = false;
   applyTonePatternToWord = applyTonePatternToWord;
+  questionType = QuestionType;
 
   constructor(private store: Store<StoreState>) {}
 
@@ -40,25 +42,32 @@ export class ArticleExerciseComponent implements OnInit {
 
   getNewWord(): void {
     this.selectedArticle = getRandomWord(this.articles);
-    this.store.dispatch(setSelectedWord({word: this.selectedArticle}));
+    this.displayWord = this.selectedArticle.form;
+    this.store.dispatch(setSelectedArticle({ article: this.selectedArticle }));
   }
 
   onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
+    if (!this.displayWord || !this.selectedArticle) {
+      return;
+    }
     if (isAnswerCorrect === true) {
       this.store.dispatch(incrementCorrectCounter());
+      this.displayWord = applyTonePatternToWord(this.displayWord, this.selectedArticle.tone);
       this.store.dispatch(answerIsCorrect());
       setTimeout(() => {
         this.store.dispatch(answerReset());
+        this.getNewWord();
       }, 1500);
     } else {
       this.store.dispatch(incrementIncorrectCounter());
+      this.displayWord = applyTonePatternToWord(this.displayWord, this.selectedArticle.tone);
       this.store.dispatch(answerIsIncorrect());
       setTimeout(() => {
         this.store.dispatch(answerReset());
+        this.getNewWord();
       }, 1500);
     }
     this.store.dispatch(incrementTotalCounter());
-    this.getNewWord();
   }
 
   onSelectNewWord(): void {

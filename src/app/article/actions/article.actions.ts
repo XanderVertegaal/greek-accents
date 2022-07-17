@@ -1,4 +1,4 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
 export const setCorrectCounter = createAction(
   '[Article] Set correct counter',
@@ -7,12 +7,12 @@ export const setCorrectCounter = createAction(
 
 export const setIncorrectCounter = createAction(
     '[Article] Set incorrect counter',
-    props<{ incorrectCounter: number; }>()
+    props<{ incorrectCounter: number }>()
 );
 
 export const setTotalCounter = createAction(
     '[Article] Set total counter',
-    props<{ totalCounter: number; }>()
+    props<{ totalCounter: number }>()
 );
 
 export const incrementCorrectCounter = createAction(

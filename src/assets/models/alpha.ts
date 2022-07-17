@@ -1,4 +1,4 @@
-import { Aspiration, Character, Tone, Vowel } from "../types";
+import { Aspiration, Character, Tone, Vowel } from '../types';
 
 export const alphaLongShort: string[] = ['ᾱ', 'ᾰ', 'Ᾱ', 'Ᾰ'];
 
@@ -9,7 +9,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -20,7 +20,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -31,7 +31,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -42,7 +42,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false
     }
@@ -53,7 +53,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false
     }
@@ -64,7 +64,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false
     }
@@ -75,7 +75,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -86,7 +86,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -97,7 +97,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -108,7 +108,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     }
@@ -119,7 +119,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     }
@@ -130,7 +130,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     }
@@ -141,7 +141,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -152,7 +152,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -163,7 +163,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -174,7 +174,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -185,7 +185,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -196,7 +196,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -207,7 +207,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -218,7 +218,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -229,7 +229,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -240,7 +240,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -251,7 +251,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -262,7 +262,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -273,7 +273,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -284,7 +284,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -295,7 +295,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -306,7 +306,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.GRAVE,
       diaeresis: false
     }
@@ -317,7 +317,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.ACUTE,
       diaeresis: false
     }
@@ -328,7 +328,7 @@ export const alpha: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false
     }
@@ -342,7 +342,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -353,7 +353,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -364,7 +364,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -375,19 +375,19 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
   },
-  
+
   {
     glyph: 'ᾈ',
     props: {
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -398,7 +398,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -409,7 +409,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -420,7 +420,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -431,7 +431,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: true,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -442,7 +442,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -453,7 +453,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: true,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -464,7 +464,7 @@ export const alphaToneless: Character[] = [
       vowel: Vowel.ALPHA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }

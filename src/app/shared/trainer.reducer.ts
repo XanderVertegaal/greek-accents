@@ -20,22 +20,16 @@ const initialDataState: TrainerDataState = {
 
 export const trainerReducer = createReducer(
   initialDataState,
-  on(CorpusActions.setSelectedText, TextListActions.setSelectedText, (state, action) => {
-    return {
+  on(CorpusActions.setSelectedText, TextListActions.setSelectedText, (state, action) => ({
       ...state,
       selectedText: action.text
-    }
-  }),
-  on(TrainerActions.setSelectedIndexWord, (state, action) => {
-    return {
+    })),
+  on(TrainerActions.setSelectedIndexWord, (state, action) => ({
       ...state,
       selectedIndexWord: action.indexWord,
-    };
-  }),
-  on(TrainerActions.setCorrectTonePattern, (state, action) => {
-    return {
+    })),
+  on(TrainerActions.setCorrectTonePattern, (state, action) => ({
       ...state,
       correctTonePattern: action.tonePattern,
-    };
-  })
+    }))
 );

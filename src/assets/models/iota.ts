@@ -1,4 +1,4 @@
-import { Aspiration, Character, Tone, Vowel } from "../types";
+import { Aspiration, Character, Tone, Vowel } from '../types';
 
 export const iotaLongShort: string[] = ['ῑ', 'ῐ', 'Ῑ', 'Ῐ'];
 
@@ -9,7 +9,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -20,7 +20,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -31,7 +31,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -42,7 +42,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -53,7 +53,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -64,7 +64,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -75,7 +75,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -86,7 +86,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -97,7 +97,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -108,7 +108,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -119,7 +119,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -130,7 +130,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -141,7 +141,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -152,7 +152,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -163,7 +163,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -174,7 +174,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.GRAVE,
       diaeresis: true,
     },
@@ -185,7 +185,7 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.ACUTE,
       diaeresis: true,
     },
@@ -196,13 +196,13 @@ export const iota: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.CIRCUMFLEX,
       diaeresis: true,
     },
   },
 ];
- 
+
 export const iotaToneless: Character[] = [
   {
     glyph: 'Ἱ',
@@ -210,7 +210,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -221,7 +221,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -232,7 +232,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -243,7 +243,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -254,7 +254,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -265,7 +265,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: true
     }
@@ -276,7 +276,7 @@ export const iotaToneless: Character[] = [
       vowel: Vowel.IOTA,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }

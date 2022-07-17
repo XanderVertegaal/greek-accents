@@ -2,32 +2,50 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { alphabetMap } from 'src/app/shared/alphabetMap';
+import { slideInTrigger } from 'src/app/shared/animations';
 import { StoreState } from 'src/app/shared/state';
-import { getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
+import { applyTonePatternToWord, getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
 import { Aspiration, Character, Tone } from 'src/assets/types';
 
 @Component({
   selector: 'app-form-input',
   templateUrl: './form-input.component.html',
-  styleUrls: ['./form-input.component.scss']
+  styleUrls: ['./form-input.component.scss'],
+  animations: [ slideInTrigger ]
 })
 export class FormInputComponent implements OnInit {
   @Output() answerIsCorrect = new EventEmitter<boolean>();
-  isAnswerCorrect: boolean | undefined;
 
-  selectedWord: string | undefined = undefined;
+  showInfo = false;
+  targetForm: string | undefined = undefined;
   input = new FormControl();
 
   constructor(private store: Store<StoreState>) {}
 
   ngOnInit(): void {
-    this.store.select(state => state.exercise.answerStatus).subscribe(status => this.isAnswerCorrect = status);
+    this.store.select(storeState => storeState.exercise.selectedArticle).subscribe(article => {
+      if (article === undefined) {
+        return;
+      }
+      this.targetForm = applyTonePatternToWord(article.form, article.tone) ?? '';
+    });
   }
 
+  onClearInput(): void {
+    this.input.setValue('');
+  }
 
   onSubmit(event: Event): void {
     event.preventDefault();
-    
+    if (!this.targetForm) {
+      return;
+    }
+    if (this.input.value === this.targetForm) {
+      this.answerIsCorrect.emit(true);
+    } else {
+      this.answerIsCorrect.emit(false);
+    }
+    this.onClearInput();
   }
 
   onInput(event: Event): void {
@@ -35,7 +53,7 @@ export class FormInputComponent implements OnInit {
     const newValue = target.value
       .split('')
       .map(char => alphabetMap[char] ?? char);
-  
+
     const caretPosition = target.selectionStart ?? 0;
     const newlyAdded: string | undefined = newValue[caretPosition - 1];
     const prevChar: Character | undefined = getCharFromLetter(newValue[caretPosition - 2]);
@@ -66,12 +84,12 @@ export class FormInputComponent implements OnInit {
           newCharProps.props.tone === Tone.CIRCUMFLEX ? Tone.NONE : Tone.CIRCUMFLEX;
         break;
       case '(':
-        newCharProps.props.aspirated =
-          newCharProps.props.aspirated === Aspiration.ASPER ? Aspiration.NONE : Aspiration.ASPER;
+        newCharProps.props.aspiration =
+          newCharProps.props.aspiration === Aspiration.ASPER ? Aspiration.NONE : Aspiration.ASPER;
         break;
       case ')':
-        newCharProps.props.aspirated = 
-          newCharProps.props.aspirated === Aspiration.LENIS ? Aspiration.NONE : Aspiration.LENIS;
+        newCharProps.props.aspiration =
+          newCharProps.props.aspiration === Aspiration.LENIS ? Aspiration.NONE : Aspiration.LENIS;
         break;
       case ',':
         newCharProps.props.subscripted = !newCharProps.props.subscripted;
@@ -80,10 +98,10 @@ export class FormInputComponent implements OnInit {
         this.input.setValue(newValue.join(''));
         return;
     }
-    
+
     newChar = getCharFromProps(newCharProps);
     if (newChar) {
-      newValue.splice(caretPosition - 2, 2, newChar.glyph); 
+      newValue.splice(caretPosition - 2, 2, newChar.glyph);
     }
     this.input.setValue(newValue.join(''));
   }

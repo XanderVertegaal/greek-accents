@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export enum TonePattern {
   TONELESS = 'toneless',
   OXYTONE_ACUTE = 'oxytone (acute)',
@@ -43,7 +44,7 @@ export interface CharProps {
   vowel: Vowel;
   uppercase: boolean;
   subscripted: boolean;
-  aspirated: Aspiration;
+  aspiration: Aspiration;
   tone: Tone;
   diaeresis: boolean;
 }
@@ -85,10 +86,12 @@ export enum Genus {
 }
 export interface Nominal {
   case: Casus;
-  number: Numerus;
+  gramNumber: Numerus;
   gender: Genus;
-  tone: TonePattern
+  tone: TonePattern;
 }
+
+export type NominalTarget = Omit<Nominal, 'tone'>;
 
 export enum WordType {
   ARTICLE = 'article',
@@ -108,6 +111,8 @@ export interface NominalForm extends Nominal {
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
+export type SelectedWord = Article | NominalForm | undefined;
+
 export enum Declension {
   FIRST_DECLENSION,
   SECOND_DECLENSION,
@@ -121,7 +126,7 @@ export enum Diathesis {
   PASSIVUM,
 }
 
-export enum Tense {
+export enum Tempus {
   PRAESENS,
   IMPERFECTUM,
   AORISTUS,
@@ -130,7 +135,7 @@ export enum Tense {
   PLUSQUAMPERFECTUM,
 }
 
-export enum Mood {
+export enum Modus {
   INDICATIVUS,
   IMPERATIVUS,
   CONIUNCTIVUS,

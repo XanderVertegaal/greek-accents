@@ -6,7 +6,7 @@ import { CorpusService} from '../services/corpus.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  
+
   constructor(private corpusService: CorpusService) { }
 
   ngOnInit(): void {

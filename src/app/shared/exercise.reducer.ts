@@ -3,39 +3,37 @@ import { Article, NominalForm } from 'src/assets/types';
 import * as ArticleExerciseActions from '../article/article-exercise/actions/article-exercise.actions';
 
 export interface ExerciseState {
-  selectedWord: Article | NominalForm | undefined;
+  selectedArticle: Article | undefined;
+  selectedNominalForm: NominalForm | undefined;
   answerStatus: boolean | undefined;
 }
 
 const initialExerciseState: ExerciseState = {
-  selectedWord: undefined,
+  selectedArticle: undefined,
+  selectedNominalForm: undefined,
   answerStatus: undefined
 };
 
 export const exerciseReducer = createReducer(
   initialExerciseState,
-  on(ArticleExerciseActions.answerIsCorrect, state => {
-    return {
+  on(ArticleExerciseActions.answerIsCorrect, state => ({
       ...state,
       answerStatus: true
-    };
-  }),
-  on(ArticleExerciseActions.answerIsIncorrect, state => {
-    return {
+    })),
+  on(ArticleExerciseActions.answerIsIncorrect, state => ({
       ...state,
       answerStatus: false
-    };
-  }),
-  on(ArticleExerciseActions.answerReset, state => {
-    return {
+    })),
+  on(ArticleExerciseActions.answerReset, state => ({
       ...state,
       answerStatus: undefined
-    };
-  }),
-  on(ArticleExerciseActions.setSelectedWord, (state, action) => {
-    return {
+    })),
+  on(ArticleExerciseActions.setSelectedArticle, (state, action) => ({
       ...state,
-      selectedWord: action.word
-    };
-  })
+      selectedArticle: action.article
+    })),
+  on(ArticleExerciseActions.setSelectedNominalForm, (state, action) => ({
+      ...state,
+      selectedNominalForm: action.nominalForm
+    }))
 );

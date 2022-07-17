@@ -1,4 +1,4 @@
-import { Aspiration, Character, Tone, Vowel } from "../types";
+import { Aspiration, Character, Tone, Vowel } from '../types';
 
 export const upsilonLongShort: string[] = ['ῡ', 'ῠ', 'Ῡ', 'Ῠ'];
 
@@ -9,7 +9,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -20,7 +20,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -31,7 +31,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -42,7 +42,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -53,7 +53,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -64,7 +64,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -75,7 +75,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -86,7 +86,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -97,7 +97,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -108,7 +108,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.GRAVE,
       diaeresis: false,
     },
@@ -119,7 +119,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.ACUTE,
       diaeresis: false,
     },
@@ -130,7 +130,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.CIRCUMFLEX,
       diaeresis: false,
     },
@@ -141,7 +141,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.GRAVE,
       diaeresis: true,
     },
@@ -152,7 +152,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.ACUTE,
       diaeresis: true,
     },
@@ -163,7 +163,7 @@ export const upsilon: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.CIRCUMFLEX,
       diaeresis: true,
     },
@@ -177,7 +177,7 @@ export const upsilonToneless: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -188,7 +188,7 @@ export const upsilonToneless: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.ASPER,
+      aspiration: Aspiration.ASPER,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -199,7 +199,7 @@ export const upsilonToneless: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.LENIS,
+      aspiration: Aspiration.LENIS,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -210,7 +210,7 @@ export const upsilonToneless: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: true,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }
@@ -221,7 +221,7 @@ export const upsilonToneless: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: true
     }
@@ -232,7 +232,7 @@ export const upsilonToneless: Character[] = [
       vowel: Vowel.UPSILON,
       uppercase: false,
       subscripted: false,
-      aspirated: Aspiration.NONE,
+      aspiration: Aspiration.NONE,
       tone: Tone.NONE,
       diaeresis: false
     }

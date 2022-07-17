@@ -43,18 +43,18 @@ export const resetAllCounters = createAction(
 );
 
 export const answerIsCorrect = createAction(
-  "[Trainer] Answer is correct",
+  '[Trainer] Answer is correct',
 );
 
 export const answerIsIncorrect = createAction(
-  "[Trainer] Answer is incorrect",
+  '[Trainer] Answer is incorrect',
 );
 
 export const answerReset = createAction(
-  "[Trainer] Answer reset",
+  '[Trainer] Answer reset',
 );
 
 export const setSelectednucleusIndex = createAction(
-  "[Trainer] Set selected NucleusIndex",
+  '[Trainer] Set selected NucleusIndex',
   props<{ nucleusIndex: NucleusIndex }>()
 );

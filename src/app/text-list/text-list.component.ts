@@ -14,7 +14,7 @@ import { Observable, Subscription } from 'rxjs';
 export class TextListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   selectedText$: Observable<Text | null>;
-  selectedId: string = '';
+  selectedId = '';
   texts: Text[] = [];
 
   constructor(

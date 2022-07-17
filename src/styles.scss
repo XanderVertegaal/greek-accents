@@ -1,48 +1,55 @@
 * {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    margin: 0;
-    box-sizing: border-box;
-    padding: 0;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
 }
 
 .page-wrapper {
-    position: relative;
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .content-wrapper {
-    width: 1200px;
-    margin: 0 auto;
-    padding: .5em;
-    margin-bottom: 3em;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 0.5em;
+  margin-bottom: 3em;
 
-    @media screen and (max-width: 1200px) {
-        width: 100%;   
-    }
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 }
 
 .button {
-    color: white;
-    background-color: purple;
-    text-align: center;
-    font-weight: bold;
-    padding: .75em;
-    border-radius: 5px;
-    border: 2px solid white;
-    outline: 1px solid purple;
-    box-shadow: 1px 1px 1px 1px black;
+  color: white;
+  background-color: purple;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.75em;
+  border-radius: 5px;
+  border: 2px solid white;
+  outline: 1px solid purple;
+  box-shadow: 1px 1px 1px 1px black;
 
-    &.red {
-        background-color: #ca4f41;
-        outline: 1px solid #ca4f41;
-    }
+  &.red {
+    background-color: #ca4f41;
+    outline: 1px solid #ca4f41;
+  }
 
-    &:active {
-        transform: translateY(1px);
-        box-shadow: none;
-    }
+  &:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+}
+
+.card {
+  margin: 2em;
+  border: 2px solid purple;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px grey;
 }
