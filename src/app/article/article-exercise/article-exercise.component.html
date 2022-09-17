@@ -6,7 +6,6 @@
   
   <ng-container *ngIf="selectedArticle">
     <app-selected 
-      [selectedWord]="displayWord" 
       [hints]="[selectedArticle.case, selectedArticle.gramNumber, selectedArticle.gender]">
     </app-selected>
   </ng-container>

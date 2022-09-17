@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { fromEvent, Subscription } from 'rxjs';
 import { TonePattern } from 'src/assets/types';
 import { StoreState } from '../../shared/state';
-import { applyTonePatternToWord, determineTonePattern, getNuclei, removeWordAccents } from '../../shared/utils';
+import { applyTonePatternToWord, removeWordAccents } from '../../shared/utils';
 
 @Component({
   selector: 'app-tone-select-form',
@@ -16,28 +16,31 @@ export class ToneSelectFormComponent implements OnInit, OnDestroy {
   tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
 
-  selectedForm: string | undefined = undefined;
-  selectedTonePattern: TonePattern | undefined = undefined;
+  targetForm: string | null = null;
+  targetTonePattern: TonePattern | null = null;
 
   applyTonePatternToWord = applyTonePatternToWord;
 
   constructor(private store: Store<StoreState>) { }
 
   ngOnInit(): void {
-    this.store.select(state => state.exercise.selectedArticle).subscribe(article => {
+    this.store.select(state => state.exercise.selectedForm).subscribe(article => {
       if (article === undefined) {
         return;
       }
-      this.selectedForm = article.form;
-      this.selectedTonePattern = article.tone;
+      this.targetForm = article.form;
+      this.targetTonePattern = article.tone;
     });
 
     this.store.select(state => state.trainer.selectedIndexWord).subscribe(indexWord => {
       if (indexWord == null) {
         return;
       }
-      this.selectedForm = removeWordAccents(indexWord[1]);
-      this.selectedTonePattern = determineTonePattern(getNuclei(indexWord[1]));
+      this.targetForm = removeWordAccents(indexWord[1]);
+    });
+
+    this.store.select(state => state.trainer.correctTonePattern).subscribe(tp => {
+      this.targetTonePattern = tp;
     });
 
     this.subscriptions.push(
@@ -79,18 +82,19 @@ export class ToneSelectFormComponent implements OnInit, OnDestroy {
   }
 
   selectTone(tone: TonePattern): void {
-    if (!this.selectedTonePattern) {
+    if (!this.targetTonePattern) {
       return;
     }
-    const correctTone = this.selectedTonePattern;
+    const correctTone = this.targetTonePattern;
     if (tone === correctTone) {
       this.answerIsCorrect.emit(true);
     } else {
+      console.log('False!');
       this.answerIsCorrect.emit(false);
     }
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { filter, Observable, Subscription } from 'rxjs';
 import { IndexWord, Text, TonePattern } from 'src/assets/types';
 // eslint-disable-next-line max-len
 import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, resetAllCounters, answerIsCorrect, answerReset, answerIsIncorrect } from './actions/trainer.actions';
@@ -49,7 +49,9 @@ export class TrainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(resetAllCounters());
     this.subscriptions.push(
-      this.selectedText$.subscribe((text: Text | null) => {
+      this.selectedText$.pipe(
+        filter(text => text !== null)
+      ).subscribe(text => {
         if (text === null) {
           return;
         }
@@ -70,7 +72,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
           return;
         }
         this.selectedIndexWord = indexWordPair;
-        this.correct.push(this.accentedText[indexWordPair[0]]);
+        // this.correct.push(this.accentedText[indexWordPair[0]]);
         const currentIndex = this.selectedIndexWord[0];
         this.correctTonePattern = determineTonePattern(getNuclei(this.accentedText[currentIndex][1]));
         this.store.dispatch(setCorrectTonePattern({ tonePattern: this.correctTonePattern }));
@@ -101,22 +103,11 @@ export class TrainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSelectTone(tonePattern: TonePattern) {
-    if (tonePattern === this.correctTonePattern) {
-      this.store.dispatch(incrementCorrectCounter());
-    } else {
-      this.store.dispatch(incrementIncorrectCounter());
-    }
-    this.store.dispatch(incrementTotalCounter());
-  }
-
   onSelectNewWord(): void {
-    if (!this.displayText) {
+    if (!this.accentedText) {
       return;
     }
-    const unseenWords = this.displayText.filter(
-      (word) => !this.correct.includes(word)
-    );
+    const unseenWords = this.accentedText.filter(word => !this.correct.includes(word));
     if (this.correct.length > 0 && unseenWords.length === 0) {
       this.isGameOver = true;
     } else {
@@ -132,23 +123,23 @@ export class TrainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
-    if (isAnswerCorrect === true) {
-      this.store.dispatch(incrementCorrectCounter());
-      this.store.dispatch(answerIsCorrect());
-      setTimeout(() => {
-        this.store.dispatch(answerReset());
-      }, 1500);
-    } else {
-      this.store.dispatch(incrementIncorrectCounter());
-      this.store.dispatch(answerIsIncorrect());
-      setTimeout(() => {
-        this.store.dispatch(answerReset());
-      }, 1500);
-    }
-    this.store.dispatch(incrementTotalCounter());
-    this.onSelectNewWord();
-  }
+  // onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
+  //   if (isAnswerCorrect === true) {
+  //     this.store.dispatch(incrementCorrectCounter());
+  //     this.store.dispatch(answerIsCorrect());
+  //     setTimeout(() => {
+  //       this.store.dispatch(answerReset());
+  //     }, 1500);
+  //   } else {
+  //     this.store.dispatch(incrementIncorrectCounter());
+  //     this.store.dispatch(answerIsIncorrect());
+  //     setTimeout(() => {
+  //       this.store.dispatch(answerReset());
+  //     }, 1500);
+  //   }
+  //   this.store.dispatch(incrementTotalCounter());
+  //   this.onSelectNewWord();
+  // }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

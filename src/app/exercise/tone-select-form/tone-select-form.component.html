@@ -1,16 +1,16 @@
 <div class="display-wrapper card">
-  <form class="button-wrapper" *ngIf="selectedForm">
+  <form class="button-wrapper" *ngIf="targetForm">
     <button 
       *ngFor="let tp of tonePatterns"
       [class]="tp + '-button'"
-      [class.disabled]="!applyTonePatternToWord(selectedForm, tp)"
-      [disabled]="!applyTonePatternToWord(selectedForm, tp)"
+      [class.disabled]="!applyTonePatternToWord(targetForm, tp)"
+      [disabled]="!applyTonePatternToWord(targetForm, tp)"
       [style.grid-area]="tp"
       type="button"
       (click)="selectTone(tp)">
       {{tp}}
       <br>
-      {{applyTonePatternToWord(selectedForm, tp) ?? ''}}
+      {{applyTonePatternToWord(targetForm, tp) ?? ''}}
     </button>        
   </form>
 </div>

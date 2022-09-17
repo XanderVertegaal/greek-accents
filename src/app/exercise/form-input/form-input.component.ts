@@ -23,11 +23,11 @@ export class FormInputComponent implements OnInit {
   constructor(private store: Store<StoreState>) {}
 
   ngOnInit(): void {
-    this.store.select(storeState => storeState.exercise.selectedArticle).subscribe(article => {
-      if (article === undefined) {
+    this.store.select(storeState => storeState.exercise.selectedForm).subscribe(selected => {
+      if (selected === undefined) {
         return;
       }
-      this.targetForm = applyTonePatternToWord(article.form, article.tone) ?? '';
+      this.targetForm = applyTonePatternToWord(selected.form, selected.tone) ?? '';
     });
   }
 

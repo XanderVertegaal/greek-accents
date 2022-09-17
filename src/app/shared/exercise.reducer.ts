@@ -2,38 +2,38 @@ import { createReducer, on } from '@ngrx/store';
 import { Article, NominalForm } from 'src/assets/types';
 import * as ArticleExerciseActions from '../article/article-exercise/actions/article-exercise.actions';
 
+type SelectedForm = Article | NominalForm | undefined;
+
 export interface ExerciseState {
-  selectedArticle: Article | undefined;
-  selectedNominalForm: NominalForm | undefined;
-  answerStatus: boolean | undefined;
+  selectedForm: SelectedForm;
+  answerIsCorrect: boolean | undefined;
 }
 
 const initialExerciseState: ExerciseState = {
-  selectedArticle: undefined,
-  selectedNominalForm: undefined,
-  answerStatus: undefined
+  selectedForm: undefined,
+  answerIsCorrect: undefined
 };
 
 export const exerciseReducer = createReducer(
   initialExerciseState,
   on(ArticleExerciseActions.answerIsCorrect, state => ({
       ...state,
-      answerStatus: true
+      answerIsCorrect: true
     })),
   on(ArticleExerciseActions.answerIsIncorrect, state => ({
       ...state,
-      answerStatus: false
+      answerIsCorrect: false
     })),
   on(ArticleExerciseActions.answerReset, state => ({
       ...state,
-      answerStatus: undefined
+      answerIsCorrect: undefined
     })),
   on(ArticleExerciseActions.setSelectedArticle, (state, action) => ({
       ...state,
-      selectedArticle: action.article
+      selectedForm: action.article
     })),
   on(ArticleExerciseActions.setSelectedNominalForm, (state, action) => ({
       ...state,
-      selectedNominalForm: action.nominalForm
+      selectedForm: action.nominalForm
     }))
 );

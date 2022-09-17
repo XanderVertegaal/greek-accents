@@ -24,7 +24,7 @@ import { ArticleExerciseComponent } from './article/article-exercise/article-exe
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormInputComponent } from './exercise/form-input/form-input.component';
 import { ConversionTableComponent } from './shared/components/conversion-table/conversion-table.component';
-import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,7 @@ import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/
     StoreModule.forRoot(storeMap),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
-  providers: [],
+  providers: [TrimPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

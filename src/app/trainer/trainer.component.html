@@ -11,7 +11,7 @@
 </p>
 </section>
 
-<app-selected *ngIf="selectedIndexWord" [selectedWord]="selectedIndexWord[1] | trim"></app-selected>
+<app-selected *ngIf="selectedIndexWord"></app-selected>
 
 <app-scoreboard></app-scoreboard>
 
@@ -22,7 +22,6 @@
 </section> -->
 
 <app-tone-select-form 
-    *ngIf="selectedIndexWord"
-    (answerIsCorrect)="onReceiveAnswerStatus($event)">
+    *ngIf="selectedIndexWord">
 </app-tone-select-form>
     

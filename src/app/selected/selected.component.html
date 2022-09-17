@@ -1,11 +1,11 @@
 <section class="display-wrapper card" 
 [class.hinted]="hints"
-*ngIf="selectedWord">
+*ngIf="displayForm">
   <h4 class="display-header">Determine the tonal pattern of:</h4>
   <h2 class="display-word"
     [class.correct]="isAnswerCorrect === true" 
     [class.incorrect]="isAnswerCorrect === false">
-    {{selectedWord}}
+    {{displayForm}}
     <ng-container *ngIf="showHints">
       <br>
       <span class="hint" *ngFor="let hint of hints | keyvalue"> 
