@@ -49,7 +49,15 @@ export interface CharProps {
   diaeresis: boolean;
 }
 
+export interface CounterState {
+  correct: number;
+  incorrect: number;
+  total: number;
+}
+
 export type IndexWord = [number, string];
+
+export type AnswerState = 'waiting' | 'correct' | 'incorrect';
 
 export interface Text {
   id: string;
@@ -111,7 +119,7 @@ export interface NominalForm extends Nominal {
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-export type SelectedWord = Article | NominalForm | undefined;
+// export type SelectedWord = Article | NominalForm | undefined;
 
 export enum Declension {
   FIRST_DECLENSION,

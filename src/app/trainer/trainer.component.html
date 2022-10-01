@@ -1,27 +1,50 @@
-<section class="text-wrapper" *ngIf="displayText">
-    <h4 class="text-title">{{selectedAuthor}}, <em>{{selectedWork}}</em> {{selectedPassage}}</h4>
-<p *ngIf="selectedIndexWord">
-    <span 
-        *ngFor="let word of displayText" [id]="word[0]"
-        [class.selected]="word === selectedIndexWord" 
-        [class.seen]="correct.includes(word)"
-        (click)="onClickWord(word)">
-        {{word[1]}}
-    </span>
-</p>
-</section>
-
-<app-selected *ngIf="selectedIndexWord"></app-selected>
-
-<app-scoreboard></app-scoreboard>
-
-<app-notifications></app-notifications>
-
-<!-- <section class="word-analysis">
-    <p>Word type:</p>        
-</section> -->
-
-<app-tone-select-form 
-    *ngIf="selectedIndexWord">
-</app-tone-select-form>
+<main *ngIf="accentedText; else noText">
+    <section class="text-wrapper">
+        <h4 class="text-title" *ngIf="selectedText">{{selectedText.author}}, <em>{{selectedText.work}}</em> {{selectedText.passage}}</h4>
+    <p *ngIf="selectedIndexWord">
+        <ng-container *ngFor="let word of accentedText">
+            <span
+                *ngIf="!correct.includes(word)"
+                [class.selected]="word === selectedIndexWord"
+                [id]="word[0]"
+                (click)="onClickWord(word)">
+                {{word[1] | removeAccent}}
+            </span>
+            <span 
+                *ngIf="correct.includes(word)" 
+                class="seen"
+                [id]="word[0]">
+                {{word[1]}}
+            </span>
+        </ng-container>
+    </p>
+    </section>
     
+    <app-selected 
+        *ngIf="selectedIndexWord"
+        [targetForm]="selectedIndexWord[1]"
+        [answerState]="answerState">
+    </app-selected>
+    
+    <app-scoreboard></app-scoreboard>
+    
+    <app-notifications
+        [isGameOver]="isGameOver"
+        [correctTonePattern]="targetTonePattern"
+        [answerState]="answerState">
+    </app-notifications>
+    
+    <!-- <section class="word-analysis">
+        <p>Word type:</p>
+    </section> -->
+    
+    <app-tone-select-form
+        *ngIf="selectedIndexWord"
+        [targetForm]="selectedIndexWord[1]"
+        (answerIsCorrect)="onReceiveAnswerStatus($event)">
+    </app-tone-select-form>
+</main>
+    
+<ng-template #noText>
+    <p>No text chosen yet.</p>
+</ng-template>

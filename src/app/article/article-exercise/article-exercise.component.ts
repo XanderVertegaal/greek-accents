@@ -1,77 +1,65 @@
-import {Component, OnInit} from '@angular/core';
-import {Store} from '@ngrx/store';
-import {StoreState} from 'src/app/shared/state';
-import {
-  applyTonePatternToWord,
-  getRandomWord,
-  QuestionType} from 'src/app/shared/utils';
-import {articles} from 'src/assets/exercises/article.data';
-import {Article, TonePattern} from 'src/assets/types';
-import {
-  incrementCorrectCounter,
-  incrementIncorrectCounter,
-  incrementTotalCounter,
-  resetAllCounters
-} from 'src/app/article/actions/article.actions';
-import { answerIsCorrect, answerIsIncorrect, answerReset, setSelectedArticle } from './actions/article-exercise.actions';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { CounterService } from 'src/app/services/counter.service';
+import { ExerciseService } from 'src/app/services/exercise.service';
+import { QuestionType} from 'src/app/shared/utils';
+import {AnswerState, Article, TonePattern} from 'src/assets/types';
+
 
 @Component({
   selector: 'app-article-exercise',
   templateUrl: './article-exercise.component.html',
   styleUrls: ['./article-exercise.component.scss']
 })
-export class ArticleExerciseComponent implements OnInit {
-  articles: Article[] = articles;
+export class ArticleExerciseComponent implements OnInit, OnDestroy {
   selectedArticle: Article | null = null;
-  displayWord: string | null = null;
+  answerState: AnswerState = 'waiting';
   tonePattern = TonePattern;
   tonePatterns: TonePattern[] = [
     TonePattern.OXYTONE_ACUTE,
     TonePattern.PERISPOMENON,
     TonePattern.TONELESS
   ];
-  applyTonePatternToWord = applyTonePatternToWord;
   questionType = QuestionType;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private store: Store<StoreState>) {}
+  constructor(
+    private counterService: CounterService,
+    private exerciseService: ExerciseService
+  ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(resetAllCounters());
-    this.getNewWord();
+    this.subscriptions.push(
+      this.exerciseService.selectedArticle$.subscribe(article => this.selectedArticle = article)
+    );
+
+    this.counterService.resetCounters();
+    this.exerciseService.selectNewArticle();
   }
 
   getNewWord(): void {
-    this.selectedArticle = getRandomWord(this.articles);
-    this.displayWord = this.selectedArticle.form;
-    this.store.dispatch(setSelectedArticle({ article: this.selectedArticle }));
+    this.exerciseService.selectNewArticle();
   }
 
   onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
-    if (!this.displayWord || !this.selectedArticle) {
+    if (!this.selectedArticle) {
       return;
     }
     if (isAnswerCorrect === true) {
-      this.store.dispatch(incrementCorrectCounter());
-      this.displayWord = applyTonePatternToWord(this.displayWord, this.selectedArticle.tone);
-      this.store.dispatch(answerIsCorrect());
-      setTimeout(() => {
-        this.store.dispatch(answerReset());
-        this.getNewWord();
-      }, 1500);
+      this.counterService.incrementCounter('correct');
+      this.answerState = 'correct';
     } else {
-      this.store.dispatch(incrementIncorrectCounter());
-      this.displayWord = applyTonePatternToWord(this.displayWord, this.selectedArticle.tone);
-      this.store.dispatch(answerIsIncorrect());
-      setTimeout(() => {
-        this.store.dispatch(answerReset());
-        this.getNewWord();
-      }, 1500);
+      this.counterService.incrementCounter('incorrect');
+      this.answerState = 'incorrect';
     }
-    this.store.dispatch(incrementTotalCounter());
+    this.counterService.incrementCounter('total');
+    setTimeout(() => {
+      this.answerState = 'waiting';
+      this.getNewWord();
+    }, 1500);
   }
 
-  onSelectNewWord(): void {
-    this.getNewWord();
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
-
 }

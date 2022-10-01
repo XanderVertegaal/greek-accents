@@ -79,5 +79,15 @@
     &:first-of-type::before {
       content: '(';
     }
+
+    &.correct {
+      background-color: lightgreen;
+      color: white;
+    }
+
+    &.incorrect {
+      background-color: pink;
+      color: white;
+    }
   }
 }

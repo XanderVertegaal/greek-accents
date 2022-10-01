@@ -1,17 +1,6 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import {
-  allChars,
-  allSemi,
-  toneChars,
-} from 'src/assets/models';
-import {
-  Casus,
-  Character,
-  Genus,
-  NominalForm,
-  Numerus,
-  Tone,
-  TonePattern,
+import {allChars, allSemi, toneChars } from 'src/assets/models';
+import { Casus, Character, Genus, NominalForm, Numerus, Tone, TonePattern,
 } from 'src/assets/types';
 import { NucleusIndex } from 'src/assets/types';
 
@@ -22,14 +11,14 @@ export function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export function areCharPropsEqual(char1: Character, char2: Character): boolean {
+function areCharPropsEqual(char1: Character, char2: Character): boolean {
   const differences = Object.keys(char1.props).filter(
     (key) => char1.props[key] !== char2.props[key]
   );
   return differences.length === 0;
 }
 
-export function getAccChars(word: string): Character[] {
+function getAccChars(word: string): Character[] {
   const foundChars: Character[] = [];
   const letters = word.split('');
   letters.forEach((letter) => {
@@ -43,7 +32,7 @@ export function getAccChars(word: string): Character[] {
   return foundChars;
 }
 
-export function removeAcc(char: Character): Character | undefined {
+function removeAcc(char: Character): Character | undefined {
   const constructedBaseChar: Character = {
     ...char,
     props: {
@@ -67,11 +56,11 @@ export function getCharFromLetter(letter: string): Character | undefined {
   return allChars.find((c) => c.glyph === letter);
 }
 
-export function isVowel(letter: string): boolean {
+function isVowel(letter: string): boolean {
   return allChars.map((c) => c.glyph).includes(letter);
 }
 
-export function isSemivowel(letter: string): boolean {
+function isSemivowel(letter: string): boolean {
   return allSemi.map((u) => u.glyph).includes(letter);
 }
 
@@ -127,7 +116,7 @@ export function removeWordAccents(word: string): string {
   return unaccentedWord.join('');
 }
 
-export function applyToneToNucleus(
+function applyToneToNucleus(
   { nucleus, index }: NucleusIndex,
   tone: Tone
 ): NucleusIndex | null {
@@ -157,19 +146,13 @@ export function applyToneToNucleus(
     : { nucleus: nucleus[0] + accChar.glyph, index };
 }
 
-export function replaceNucleus(
-  word: string,
-  { nucleus, index }: NucleusIndex
-): string {
+function replaceNucleus(word: string, { nucleus, index }: NucleusIndex): string {
   const newWord = word.split('').reverse();
   newWord.splice(index, nucleus.length, nucleus);
   return newWord.reverse().join('');
 }
 
-export function applyTonePatternToWord(
-  word: string,
-  tonePattern: TonePattern
-): string | null {
+export function applyTonePatternToWord(word: string, tonePattern: TonePattern): string | null {
   const nuclei = getNuclei(word);
   let selectedNucleus: NucleusIndex | null = null;
   let accentedNucleus: NucleusIndex | null = null;
@@ -289,12 +272,15 @@ export function determineTonePattern(nuclei: NucleusIndex[]): TonePattern {
   return TonePattern.TONELESS;
 }
 
-export function getRandomWord<T>(wordArray: T[]): T {
-  return wordArray[randomInt(0, wordArray.length - 1)];
+export function getRandomItem<T>(arrayOfItems: T[]): T {
+  return arrayOfItems[randomInt(0, arrayOfItems.length - 1)];
 }
 
-export function removeMacraBreves(word: string): string {
-  return word.replace(/[ᾱᾰ]/g, 'α').replace(/[ῑῐ]/g, 'ι').replace(/[ῡῠ]/g, 'υ');
+function removeMacraBreves(word: string): string {
+  return word
+    .replace(/[ᾱᾰ]/g, 'α')
+    .replace(/[ῑῐ]/g, 'ι')
+    .replace(/[ῡῠ]/g, 'υ');
 }
 
 function isPenultimateLong(longShort: string): boolean | undefined {
@@ -313,11 +299,7 @@ function isPenultimateLong(longShort: string): boolean | undefined {
   return undefined;
 }
 
-function getUnaccentedStem(
-  word: NominalForm,
-  targetCase: Casus,
-  targetNumber: Numerus
-): string {
+function getUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: Numerus): string {
   const bareStem = word.form.endsWith('ς')
     ? removeMacraBreves(word.form).slice(0, -1)
     : removeMacraBreves(word.form);
@@ -532,4 +514,8 @@ export function declineFirstDeclensionSubstantive(
           return '';
       }
   }
+}
+
+export function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined;
 }

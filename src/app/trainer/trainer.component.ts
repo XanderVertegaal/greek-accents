@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { filter, Observable, Subscription } from 'rxjs';
-import { IndexWord, Text, TonePattern } from 'src/assets/types';
-// eslint-disable-next-line max-len
-import { setCorrectTonePattern, setSelectedIndexWord, incrementCorrectCounter, incrementIncorrectCounter, incrementTotalCounter, resetAllCounters, answerIsCorrect, answerReset, answerIsIncorrect } from './actions/trainer.actions';
-import { StoreState } from '../shared/state';
-import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord, removeWordAccents } from '../shared/utils';
+import { filter, first, map, Subscription } from 'rxjs';
+import { AnswerState, IndexWord, Text, TonePattern } from 'src/assets/types';
+import { CounterService } from '../services/counter.service';
+import { TrainerService } from '../services/trainer.service';
+import { applyTonePatternToWord, determineTonePattern, getNuclei, notEmpty } from '../shared/utils';
 
 @Component({
   selector: 'app-trainer',
@@ -15,90 +13,54 @@ import { applyTonePatternToWord, determineTonePattern, getNuclei, getRandomWord,
 export class TrainerComponent implements OnInit, OnDestroy {
   applyTonePatternToWord = applyTonePatternToWord;
 
-  subscriptions: Subscription[] = [];
+  selectedText: Text | null = null;
 
   accentedText: IndexWord[] | null = null;
-  displayText: IndexWord[] | null = null;
-  selectedAuthor = '';
-  selectedWork = '';
-  selectedPassage = '';
-
-  selectedIndexWord$: Observable<IndexWord | null>;
   selectedIndexWord: IndexWord | null = null;
-  correctCounter$: Observable<number>;
-  totalCounter$: Observable<number>;
-  selectedText$: Observable<Text | null>;
 
-  correctTonePattern: TonePattern | null = null;
+  targetTonePattern: TonePattern | null = null;
   tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
-  isAnswerCorrect: boolean | null = null;
+  answerState: AnswerState = 'waiting';
   isGameOver = false;
-
   correct: IndexWord[] = [];
+  private subscriptions: Subscription[] = [];
 
   constructor(
-    private store: Store<StoreState>,
-  ) {
-    this.selectedIndexWord$ = this.store.select(state => state.trainer.selectedIndexWord);
-    this.totalCounter$ = this.store.select(state => state.score.totalCounter);
-    this.correctCounter$ = this.store.select(state => state.score.correctCounter);
-    this.selectedText$ = this.store.select(state => state.trainer.selectedText);
-  }
+    private counterService: CounterService,
+    private trainerService: TrainerService,
+  ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(resetAllCounters());
+    this.counterService.resetCounters();
+
+    const accentedText$ = this.trainerService.selectedText$.pipe(
+      filter(notEmpty),
+      map(text => text.text.split(' ')),
+      map(textArray => Array.from(textArray.entries()))
+    );
+
+
     this.subscriptions.push(
-      this.selectedText$.pipe(
-        filter(text => text !== null)
-      ).subscribe(text => {
-        if (text === null) {
-          return;
-        }
-        const splitText = text.text.split(' ');
-        const unaccentedText = splitText.map((word) =>
-          removeWordAccents(word).replace(/[,.;:—·]/gi, '')
-        );
-        this.accentedText = Array.from(splitText.entries());
-        this.displayText = Array.from(unaccentedText.entries());
-        this.selectedAuthor = text.author;
-        this.selectedWork = text.work;
-        this.selectedPassage = text.passage;
+      this.trainerService.selectedText$.subscribe(text => {
+        this.selectedText = text;
         this.onSelectNewWord();
       }),
 
-      this.selectedIndexWord$.subscribe((indexWordPair) => {
-        if (!indexWordPair || !this.accentedText) {
-          return;
-        }
-        this.selectedIndexWord = indexWordPair;
-        // this.correct.push(this.accentedText[indexWordPair[0]]);
-        const currentIndex = this.selectedIndexWord[0];
-        this.correctTonePattern = determineTonePattern(getNuclei(this.accentedText[currentIndex][1]));
-        this.store.dispatch(setCorrectTonePattern({ tonePattern: this.correctTonePattern }));
+      accentedText$.subscribe(text => this.accentedText = text),
+
+      accentedText$.pipe(first()).subscribe(text => {
+        this.trainerService.selectNewIndexWord(text);
       }),
 
-      this.correctCounter$.subscribe((correctCounter) => {
-        if (correctCounter === 0) {
+      this.trainerService.selectedIndexWord$.pipe(
+        filter(notEmpty)
+      ).subscribe(indexWord => {
+        if (!this.accentedText) {
           return;
         }
-        if (this.accentedText && this.selectedIndexWord) {
-          this.displayText?.splice(
-            this.selectedIndexWord[0],
-            1,
-            this.accentedText[this.selectedIndexWord[0]]
-          );
-          this.selectedIndexWord = this.accentedText[this.selectedIndexWord[0]];
-        }
-      }),
-
-      this.totalCounter$.subscribe((counter) => {
-        if (counter === 0) {
-          return;
-        }
-        setTimeout(() => {
-          this.onSelectNewWord();
-        }, 1500);
+        this.selectedIndexWord = indexWord;
+        this.targetTonePattern = determineTonePattern(getNuclei(indexWord[1]));
       })
     );
   }
@@ -111,35 +73,35 @@ export class TrainerComponent implements OnInit, OnDestroy {
     if (this.correct.length > 0 && unseenWords.length === 0) {
       this.isGameOver = true;
     } else {
-      this.store.dispatch(
-        setSelectedIndexWord({ indexWord: getRandomWord(unseenWords) })
-      );
+      this.trainerService.selectNewIndexWord(unseenWords);
     }
   }
 
   onClickWord(indexWord: IndexWord): void {
     if (!this.correct.includes(indexWord)) {
-      this.store.dispatch(setSelectedIndexWord({ indexWord }));
+      this.trainerService.selectedIndexWord$.next(indexWord);
     }
   }
 
-  // onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
-  //   if (isAnswerCorrect === true) {
-  //     this.store.dispatch(incrementCorrectCounter());
-  //     this.store.dispatch(answerIsCorrect());
-  //     setTimeout(() => {
-  //       this.store.dispatch(answerReset());
-  //     }, 1500);
-  //   } else {
-  //     this.store.dispatch(incrementIncorrectCounter());
-  //     this.store.dispatch(answerIsIncorrect());
-  //     setTimeout(() => {
-  //       this.store.dispatch(answerReset());
-  //     }, 1500);
-  //   }
-  //   this.store.dispatch(incrementTotalCounter());
-  //   this.onSelectNewWord();
-  // }
+  onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
+    if (!this.selectedIndexWord) {
+      return;
+    }
+
+    if (isAnswerCorrect === true) {
+      this.counterService.incrementCounter('correct');
+      this.answerState = 'correct';
+      this.correct.push(this.selectedIndexWord);
+    } else {
+      this.counterService.incrementCounter('incorrect');
+      this.answerState = 'incorrect';
+    }
+    this.counterService.incrementCounter('total');
+    setTimeout(() => {
+      this.answerState = 'waiting';
+      this.onSelectNewWord();
+    }, 1500);
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());

@@ -7,10 +7,10 @@
       [disabled]="!applyTonePatternToWord(targetForm, tp)"
       [style.grid-area]="tp"
       type="button"
-      (click)="selectTone(tp)">
+      (click)="selectedTone$.next(tp)">
       {{tp}}
       <br>
-      {{applyTonePatternToWord(targetForm, tp) ?? ''}}
+      {{targetForm | trim | removeAccent | addAccent:tp}}
     </button>        
   </form>
 </div>

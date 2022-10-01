@@ -1,10 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { filter, map, Subject, Subscription, throttleTime } from 'rxjs';
 import { alphabetMap } from 'src/app/shared/alphabetMap';
 import { slideInTrigger } from 'src/app/shared/animations';
-import { StoreState } from 'src/app/shared/state';
-import { applyTonePatternToWord, getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
+import { getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
 import { Aspiration, Character, Tone } from 'src/assets/types';
 
 @Component({
@@ -13,39 +12,37 @@ import { Aspiration, Character, Tone } from 'src/assets/types';
   styleUrls: ['./form-input.component.scss'],
   animations: [ slideInTrigger ]
 })
-export class FormInputComponent implements OnInit {
+export class FormInputComponent implements OnInit, OnDestroy {
+  @Input() targetForm: string | null = null;
   @Output() answerIsCorrect = new EventEmitter<boolean>();
-
   showInfo = false;
-  targetForm: string | undefined = undefined;
-  input = new FormControl();
+  form = new FormGroup({
+    input: new FormControl()
+  });
+  submitAnswer = new Subject<void>();
+  private subscriptions: Subscription[] = [];
 
-  constructor(private store: Store<StoreState>) {}
+  constructor() { }
 
   ngOnInit(): void {
-    this.store.select(storeState => storeState.exercise.selectedForm).subscribe(selected => {
-      if (selected === undefined) {
-        return;
-      }
-      this.targetForm = applyTonePatternToWord(selected.form, selected.tone) ?? '';
-    });
+    this.subscriptions.push(
+      this.submitAnswer.pipe(
+        map(() => this.form.controls['input'].value),
+        filter(inputValue => this.targetForm !== null && inputValue !== null),
+        throttleTime(1000)
+      ).subscribe(inputValue => {
+        if (inputValue === this.targetForm) {
+          this.answerIsCorrect.emit(true);
+        } else {
+          this.answerIsCorrect.emit(false);
+        }
+        this.clearInput();
+      })
+    );
   }
 
-  onClearInput(): void {
-    this.input.setValue('');
-  }
-
-  onSubmit(event: Event): void {
-    event.preventDefault();
-    if (!this.targetForm) {
-      return;
-    }
-    if (this.input.value === this.targetForm) {
-      this.answerIsCorrect.emit(true);
-    } else {
-      this.answerIsCorrect.emit(false);
-    }
-    this.onClearInput();
+  clearInput(): void {
+    this.form.reset();
   }
 
   onInput(event: Event): void {
@@ -59,7 +56,7 @@ export class FormInputComponent implements OnInit {
     const prevChar: Character | undefined = getCharFromLetter(newValue[caretPosition - 2]);
 
     if (!newlyAdded || !prevChar) {
-      this.input.setValue(newValue.join(''));
+      this.form.controls['input'].setValue(newValue.join(''));
       return;
     }
 
@@ -95,7 +92,7 @@ export class FormInputComponent implements OnInit {
         newCharProps.props.subscripted = !newCharProps.props.subscripted;
         break;
       default:
-        this.input.setValue(newValue.join(''));
+        this.form.controls['input'].setValue(newValue.join(''));
         return;
     }
 
@@ -103,7 +100,11 @@ export class FormInputComponent implements OnInit {
     if (newChar) {
       newValue.splice(caretPosition - 2, 2, newChar.glyph);
     }
-    this.input.setValue(newValue.join(''));
+    this.form.controls['input'].setValue(newValue.join(''));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }

@@ -1,11 +1,11 @@
-<form (submit)="onSubmit($event)">
+<form [formGroup]="form" (submit)="submitAnswer.next(); $event.preventDefault()">
   <div class="form-row">
     <label for="input">Enter the accented Greek form:</label>
     <input 
       type="text" 
       name="input" 
       (input)="onInput($event)" 
-      [formControl]="input">
+      formControlName="input">
     <div 
       class="info"
       [class.show-info]="showInfo" 

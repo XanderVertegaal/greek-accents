@@ -4,12 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
-import { storeMap } from './shared/state';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
-import { TrimPipe } from './trim.pipe';
 import { ToneSelectFormComponent } from './exercise/tone-select-form/tone-select-form.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -25,6 +20,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormInputComponent } from './exercise/form-input/form-input.component';
 import { ConversionTableComponent } from './shared/components/conversion-table/conversion-table.component';
 import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/animations';
+import { TrimPipe } from './shared/trim.pipe';
+import { RemoveAccentPipe } from './shared/remove-accent.pipe';
+import { AddAccentPipe } from './shared/add-accent.pipe';
 
 @NgModule({
   declarations: [
@@ -44,6 +42,8 @@ import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/
     ArticleExerciseComponent,
     FormInputComponent,
     ConversionTableComponent,
+    RemoveAccentPipe,
+    AddAccentPipe,
   ],
   imports: [
     ReactiveFormsModule,
@@ -51,8 +51,6 @@ import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(storeMap),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [TrimPipe],
   bootstrap: [AppComponent]

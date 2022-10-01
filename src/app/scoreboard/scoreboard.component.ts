@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { StoreState } from '../shared/state';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { CounterState } from 'src/assets/types';
+import { CounterService } from '../services/counter.service';
 
 @Component({
   selector: 'app-scoreboard',
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.scss']
 })
-export class ScoreboardComponent {
-  correctCounter$: Observable<number>;
-  incorrectCounter$: Observable<number>;
-  totalCounter$: Observable<number>;
+export class ScoreboardComponent implements OnInit, OnDestroy {
+  counters: CounterState | null = null;
+  private subscriptions: Subscription[] = [];
 
+  constructor(
+    private counterService: CounterService
+  ) { }
 
-  constructor(private store: Store<StoreState>) {
-    this.correctCounter$ = this.store.select((state) => state.score.correctCounter);
-    this.incorrectCounter$ = this.store.select((state) => state.score.incorrectCounter);
-    this.totalCounter$ = this.store.select((state) => state.score.totalCounter);
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.counterService.watchCounters$().subscribe(counters => this.counters = counters)
+    );
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
 }

@@ -1,96 +1,86 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { fromEvent, Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { filter, fromEvent, Subject, Subscription, throttleTime } from 'rxjs';
 import { TonePattern } from 'src/assets/types';
-import { StoreState } from '../../shared/state';
-import { applyTonePatternToWord, removeWordAccents } from '../../shared/utils';
+import { applyTonePatternToWord, determineTonePattern, getNuclei } from '../../shared/utils';
 
 @Component({
   selector: 'app-tone-select-form',
   templateUrl: './tone-select-form.component.html',
   styleUrls: ['./tone-select-form.component.scss'],
 })
-export class ToneSelectFormComponent implements OnInit, OnDestroy {
+export class ToneSelectFormComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() targetForm: string | null = null;
   @Output() answerIsCorrect = new EventEmitter<boolean>();
-  subscriptions: Subscription[] = [];
+  targetTonePattern: TonePattern | null = null;
   tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
-
-  targetForm: string | null = null;
-  targetTonePattern: TonePattern | null = null;
+  selectedTone$ = new Subject<TonePattern>();
 
   applyTonePatternToWord = applyTonePatternToWord;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private store: Store<StoreState>) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.store.select(state => state.exercise.selectedForm).subscribe(article => {
-      if (article === undefined) {
-        return;
-      }
-      this.targetForm = article.form;
-      this.targetTonePattern = article.tone;
-    });
-
-    this.store.select(state => state.trainer.selectedIndexWord).subscribe(indexWord => {
-      if (indexWord == null) {
-        return;
-      }
-      this.targetForm = removeWordAccents(indexWord[1]);
-    });
-
-    this.store.select(state => state.trainer.correctTonePattern).subscribe(tp => {
-      this.targetTonePattern = tp;
-    });
-
     this.subscriptions.push(
-      fromEvent(window, 'keydown').subscribe((event: Event) => {
+      fromEvent(window, 'keydown').pipe(
+      ).subscribe(event => {
         this.handleKeyDown(event as KeyboardEvent);
+      }),
+
+      this.selectedTone$.pipe(
+        filter(() => this.targetTonePattern !== null),
+        throttleTime(1000)
+      ).subscribe(tone => {
+        const correctTone = this.targetTonePattern;
+        if (tone === correctTone) {
+          this.answerIsCorrect.emit(true);
+        } else {
+          this.answerIsCorrect.emit(false);
+        }
       })
     );
+
+    if (this.targetForm) {
+      console.log('targetform: ', this.targetForm);
+      this.targetTonePattern = determineTonePattern(getNuclei(this.targetForm));
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['targetForm']) {
+      this.targetTonePattern = determineTonePattern(getNuclei(changes['targetForm'].currentValue));
+    }
   }
 
   handleKeyDown(event: KeyboardEvent) {
     switch (event.key) {
       case '0':
-        this.selectTone(TonePattern.TONELESS);
+        this.selectedTone$.next(TonePattern.TONELESS);
         break;
       case '1':
-        this.selectTone(TonePattern.OXYTONE_ACUTE);
+        this.selectedTone$.next(TonePattern.OXYTONE_ACUTE);
         break;
       case '2':
-        this.selectTone(TonePattern.PAROXYTONE);
+        this.selectedTone$.next(TonePattern.PAROXYTONE);
         break;
       case '3':
-        this.selectTone(TonePattern.PROPAROXYTONE);
+        this.selectedTone$.next(TonePattern.PROPAROXYTONE);
         break;
       case '4':
-        this.selectTone(TonePattern.PERISPOMENON);
+        this.selectedTone$.next(TonePattern.PERISPOMENON);
         break;
       case '5':
-        this.selectTone(TonePattern.PROPERISPOMENON);
+        this.selectedTone$.next(TonePattern.PROPERISPOMENON);
         break;
       case '6':
-        this.selectTone(TonePattern.PROPAROXYTONE_AND_OXYTONE);
+        this.selectedTone$.next(TonePattern.PROPAROXYTONE_AND_OXYTONE);
         break;
       case '7':
-        this.selectTone(TonePattern.PROPERISPOMENON_AND_OXYTONE);
+        this.selectedTone$.next(TonePattern.PROPERISPOMENON_AND_OXYTONE);
         break;
       case '8':
-        this.selectTone(TonePattern.OXYTONE_GRAVE);
-    }
-  }
-
-  selectTone(tone: TonePattern): void {
-    if (!this.targetTonePattern) {
-      return;
-    }
-    const correctTone = this.targetTonePattern;
-    if (tone === correctTone) {
-      this.answerIsCorrect.emit(true);
-    } else {
-      console.log('False!');
-      this.answerIsCorrect.emit(false);
+        this.selectedTone$.next(TonePattern.OXYTONE_GRAVE);
     }
   }
 

@@ -1,14 +1,23 @@
 <section class="display-wrapper card" 
 [class.hinted]="hints"
-*ngIf="displayForm">
+*ngIf="targetForm">
   <h4 class="display-header">Determine the tonal pattern of:</h4>
-  <h2 class="display-word"
-    [class.correct]="isAnswerCorrect === true" 
-    [class.incorrect]="isAnswerCorrect === false">
-    {{displayForm}}
+  <h2 
+    class="display-word"
+    [class.correct]="answerState === 'correct'" 
+    [class.incorrect]="answerState === 'incorrect'">
+    <ng-container *ngIf="answerState !== 'correct'; else correct">
+      {{targetForm | trim | removeAccent}}
+    </ng-container>
+    <ng-template #correct>{{targetForm | trim}}</ng-template>
+    
     <ng-container *ngIf="showHints">
       <br>
-      <span class="hint" *ngFor="let hint of hints | keyvalue"> 
+      <span 
+        *ngFor="let hint of hints | keyvalue"
+        class="hint"
+        [class.correct]="answerState === 'correct'"
+        [class.incorrect]="answerState === 'incorrect'"> 
         {{hint.value}}
       </span>
     </ng-container>

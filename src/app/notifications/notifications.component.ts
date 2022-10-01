@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { IndexWord, TonePattern } from 'src/assets/types';
-import { StoreState } from '../shared/state';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { skip, Subscription } from 'rxjs';
+import { AnswerState, TonePattern } from 'src/assets/types';
+import { CounterService } from '../services/counter.service';
 
 @Component({
   selector: 'app-notifications',
@@ -10,37 +9,28 @@ import { StoreState } from '../shared/state';
   styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-  subscriptions: Subscription[] = [];
-  correctCounter$: Observable<number>;
-  incorrectCounter$: Observable<number>;
-  correctTonePattern$: Observable<TonePattern | null>;
-  selectedIndexWord$: Observable<IndexWord | null>;
-  correctTonePattern: TonePattern | null = null;
-  isAnswerCorrect: boolean | null = null;
-  isGameOver = false;
+  @Input() isGameOver = false;
+  @Input() correctTonePattern: TonePattern | null = null;
+  @Input() answerState: AnswerState = 'waiting';
 
-  constructor(private store: Store<StoreState>) {
-    this.correctCounter$ = this.store.select((state) => state.score.correctCounter);
-    this.incorrectCounter$ = this.store.select((state) => state.score.incorrectCounter);
-    this.correctTonePattern$ = this.store.select((state) => state.trainer.correctTonePattern);
-    this.selectedIndexWord$ = this.store.select((state) => state.trainer.selectedIndexWord);
-  }
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private counterService: CounterService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.correctCounter$.subscribe(counter => {
-        if (counter === 0) {return;}
-        this.isAnswerCorrect = true;
+      this.counterService.watchCounter$('correct').pipe(
+        skip(1)
+      ).subscribe(() => {
+        this.answerState = 'correct';
       }),
-      this.incorrectCounter$.subscribe(counter => {
-        if (counter === 0) {return;}
-        this.isAnswerCorrect = false;
-      }),
-      this.selectedIndexWord$.subscribe(() => {
-        this.isAnswerCorrect = null;
-      }),
-      this.correctTonePattern$.subscribe(tp => {
-        this.correctTonePattern = tp;
+
+      this.counterService.watchCounter$('incorrect').pipe(
+        skip(1)
+      ).subscribe(() => {
+        this.answerState = 'incorrect';
       })
     );
   }
@@ -48,5 +38,4 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
-
 }

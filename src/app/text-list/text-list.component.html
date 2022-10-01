@@ -4,7 +4,7 @@
     </header>
     
     <ul *ngIf="texts.length > 0; else noTexts">
-        <li *ngFor="let text of texts" (click)="selectText(text.id)" [class.selected]="selectedId === text.id">
+        <li *ngFor="let text of texts" (click)="selectText(text)" [class.selected]="selectedText?.id === text.id">
             <strong>{{text.author}}, <em>{{text.work}}</em> {{text.passage}}</strong>
         </li>
     </ul>
