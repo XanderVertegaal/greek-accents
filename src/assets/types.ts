@@ -99,8 +99,6 @@ export interface Nominal {
   tone: TonePattern;
 }
 
-export type NominalTarget = Omit<Nominal, 'tone'>;
-
 export enum WordType {
   ARTICLE = 'article',
   SUBSTANTIVE = 'substantive',

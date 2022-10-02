@@ -6,7 +6,7 @@
   
   <ng-container *ngIf="selectedArticle">
     <app-selected
-      [targetForm]="selectedArticle.form"
+      [targetForm]="selectedArticle.form | addAccent:selectedArticle.tone"
       [answerState]="answerState" 
       [hints]="[selectedArticle.case, selectedArticle.gramNumber, selectedArticle.gender]">
     </app-selected>

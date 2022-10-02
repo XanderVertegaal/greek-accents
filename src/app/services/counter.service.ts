@@ -16,13 +16,6 @@ export class CounterService {
 
   constructor() { }
 
-  getCounter(counterName: keyof CounterState): number {
-    return this.counter$.value[counterName];
-  }
-
-  setCounter(counterName: keyof CounterState, value: number): void {
-    this.counter$.next({ ...this.counter$.value, [counterName]: value });
-  }
 
   incrementCounter(counterName: keyof CounterState): void {
     const currValue = this.counter$.value[counterName];
@@ -42,8 +35,8 @@ export class CounterService {
       pairwise(),
       filter(([prev, curr]) => prev[counterName] !== curr[counterName]),
       map(([, curr]) => curr[counterName])
-    );
-  }
+      );
+    }
 
   watchCounters$(): Observable<CounterState> {
     return this.counter$;
@@ -51,5 +44,13 @@ export class CounterService {
 
   resetCounters(): void {
     this.counter$.next(initialCounter);
+  }
+
+  private getCounter(counterName: keyof CounterState): number {
+    return this.counter$.value[counterName];
+  }
+
+  private setCounter(counterName: keyof CounterState, value: number): void {
+    this.counter$.next({ ...this.counter$.value, [counterName]: value });
   }
 }
