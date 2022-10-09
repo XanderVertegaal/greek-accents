@@ -10,5 +10,4 @@ export class AddAccentPipe implements PipeTransform {
   transform(word: string, tonePattern: TonePattern): string | null {
     return applyTonePatternToWord(word, tonePattern);
   }
-
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CounterState } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
@@ -9,6 +9,7 @@ import { CounterService } from '../services/counter.service';
   styleUrls: ['./scoreboard.component.scss']
 })
 export class ScoreboardComponent implements OnInit, OnDestroy {
+  @Input() numberOfAssignments = 0;
   counters: CounterState | null = null;
   private subscriptions: Subscription[] = [];
 

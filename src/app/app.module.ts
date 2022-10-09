@@ -23,34 +23,36 @@ import { BrowserAnimationsModule } from 'node_modules/@angular/platform-browser/
 import { TrimPipe } from './shared/trim.pipe';
 import { RemoveAccentPipe } from './shared/remove-accent.pipe';
 import { AddAccentPipe } from './shared/add-accent.pipe';
+import { ExerciseComponent } from './exercise/exercise.component';
 
 @NgModule({
   declarations: [
+    AddAccentPipe,
     AppComponent,
-    HomeComponent,
-    TrimPipe,
-    ToneSelectFormComponent,
-    ScoreboardComponent,
-    NotificationsComponent,
-    TextListComponent,
-    TrainerComponent,
-    CourseComponent,
+    ArticleExerciseComponent,
     ArticleLessonComponent,
-    SelectedComponent,
+    ConversionTableComponent,
+    CourseComponent,
+    ExerciseComponent,
     FirstDeclensionComponent,
     FirstDeclensionNounsComponent,
-    ArticleExerciseComponent,
     FormInputComponent,
-    ConversionTableComponent,
+    HomeComponent,
+    NotificationsComponent,
     RemoveAccentPipe,
-    AddAccentPipe,
+    ScoreboardComponent,
+    SelectedComponent,
+    TextListComponent,
+    ToneSelectFormComponent,
+    TrainerComponent,
+    TrimPipe,
   ],
   imports: [
-    ReactiveFormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    BrowserModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [TrimPipe],
   bootstrap: [AppComponent]

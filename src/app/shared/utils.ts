@@ -1,11 +1,9 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
+import { articles } from 'src/assets/exercises/article.data';
 import {allChars, allSemi, toneChars } from 'src/assets/models';
-import { Casus, Character, Genus, NominalForm, Numerus, Tone, TonePattern,
+import { Article, Assignment, Casus, Character, Genus, NominalForm, Numerus, Question, Tone, TonePattern,
 } from 'src/assets/types';
 import { NucleusIndex } from 'src/assets/types';
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export enum QuestionType { DETERMINE, TRANSFORM }
 
 export function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -276,6 +274,12 @@ export function getRandomItem<T>(arrayOfItems: T[]): T {
   return arrayOfItems[randomInt(0, arrayOfItems.length - 1)];
 }
 
+export function getRandomEnumValue<T extends object>(anEnum: T): T[keyof T] {
+  const enumValues = Object.values(anEnum) as T[keyof T][];
+  const randomIndex = Math.floor(Math.random() * enumValues.length);
+  return enumValues[randomIndex];
+}
+
 function removeMacraBreves(word: string): string {
   return word
     .replace(/[ᾱᾰ]/g, 'α')
@@ -516,6 +520,53 @@ export function declineFirstDeclensionSubstantive(
   }
 }
 
+
+
+
+
+// A generic solution will not work:
+//
+// generateAssignments<W extends WordClass>: Assignment<W>[]
+//
+// Source: https://stackoverflow.com/questions/69783310/type-is-assignable-to-the-constraint-of-type-t-but-t-could-be-instantiated
+//
+// I would like this to mean: if input = Article, output = Article.
+// However, type identity between input and output is not enforced in TS right now.
+export function generateNewArticleAssignments(amount = 20): Assignment<Article>[] {
+  const newAssignments: Assignment<Article>[] = [];
+  const shuffledArticles = [...articles].sort(() => 0.5 - Math.random());
+  const randomArticles = shuffledArticles.slice(0, amount);
+  randomArticles.forEach(art => {
+    newAssignments.push({
+      word: art,
+      question: getRandomEnumValue(Question),
+      finished: false
+    });
+  });
+  console.log('Assignments: ', newAssignments);
+  return newAssignments;
+}
+
 export function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
+}
+
+
+export function shuffle(array: unknown[]): unknown[] {
+  let currentIndex = array.length;
+  let randomIndex = 0;
+
+  // While there remain elements to shuffle.
+  while (currentIndex !== 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
 }

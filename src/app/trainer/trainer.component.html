@@ -23,7 +23,7 @@
     <app-selected 
         *ngIf="selectedIndexWord"
         [targetForm]="selectedIndexWord[1]"
-        [answerState]="answerState">
+        [gameState]="gameState">
     </app-selected>
     
     <app-scoreboard></app-scoreboard>
@@ -31,7 +31,7 @@
     <app-notifications
         [isGameOver]="isGameOver"
         [correctTonePattern]="targetTonePattern"
-        [answerState]="answerState">
+        [gameState]="gameState">
     </app-notifications>
     
     <!-- <section class="word-analysis">

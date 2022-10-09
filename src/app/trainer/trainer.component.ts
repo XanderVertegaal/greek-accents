@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { filter, first, map, Subscription } from 'rxjs';
-import { AnswerState, IndexWord, Text, TonePattern } from 'src/assets/types';
+import { GameState, IndexWord, Text, TonePattern } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
 import { TrainerService } from '../services/trainer.service';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, notEmpty } from '../shared/utils';
@@ -21,7 +21,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
   targetTonePattern: TonePattern | null = null;
   tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
-  answerState: AnswerState = 'waiting';
+  gameState: GameState = 'waiting';
   isGameOver = false;
   correct: IndexWord[] = [];
   private subscriptions: Subscription[] = [];
@@ -90,15 +90,15 @@ export class TrainerComponent implements OnInit, OnDestroy {
 
     if (isAnswerCorrect === true) {
       this.counterService.incrementCounter('correct');
-      this.answerState = 'correct';
+      this.gameState = 'correct';
       this.correct.push(this.selectedIndexWord);
     } else {
       this.counterService.incrementCounter('incorrect');
-      this.answerState = 'incorrect';
+      this.gameState = 'incorrect';
     }
     this.counterService.incrementCounter('total');
     setTimeout(() => {
-      this.answerState = 'waiting';
+      this.gameState = 'waiting';
       this.onSelectNewWord();
     }, 1500);
   }

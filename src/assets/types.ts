@@ -57,7 +57,7 @@ export interface CounterState {
 
 export type IndexWord = [number, string];
 
-export type AnswerState = 'waiting' | 'correct' | 'incorrect';
+export type GameState = 'waiting' | 'correct' | 'incorrect';
 
 export interface Text {
   id: string;
@@ -81,6 +81,12 @@ export enum Casus {
   VOCATIVE = 'voc.',
 }
 
+export enum Persona {
+  FIRST = '1st',
+  SECOND = '2nd',
+  THIRD = '3rd'
+}
+
 export enum Numerus {
   SINGULAR = 'sg.',
   DUAL = 'du.',
@@ -92,6 +98,7 @@ export enum Genus {
   MASCULINE = 'masc.',
   NEUTER = 'neut.'
 }
+
 export interface Nominal {
   case: Casus;
   gramNumber: Numerus;
@@ -99,20 +106,47 @@ export interface Nominal {
   tone: TonePattern;
 }
 
-export enum WordType {
-  ARTICLE = 'article',
-  SUBSTANTIVE = 'substantive',
-  VERB = 'verb'
-}
-
-export interface Article extends Nominal {
-  form: string;
+export interface Verbal {
+  modus: Modus;
+  tempus: Tempus;
+  diathesis: Diathesis;
+  gramNumber: Numerus;
+  persona: Persona;
 }
 
 export interface NominalForm extends Nominal {
   form: string;
   translation: string;
   exception?: Partial<NominalForm>[];
+}
+
+export interface Article extends NominalForm {
+  type: 'article';
+}
+
+export interface Substantive extends NominalForm {
+  type: 'substantive';
+}
+
+export interface VerbalForm extends Verbal {
+  type: 'verbalForm';
+  form: string;
+  translation: string;
+  exception?: Partial<VerbalForm>[];
+}
+
+export type WordClass = Article | Substantive | VerbalForm;
+
+export enum Question {
+  SELECT_TONE = 'select-tone',   // Tone select buttons
+  WRITE_TONE = 'write-tone',    // Toneless form provided, type input
+  WRITE_WORD = 'write-word'    // Gramm. analysis provided, type input
+}
+
+export interface Assignment<T extends WordClass> {
+  word: T;
+  question: Question;
+  finished?: boolean;
 }
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;

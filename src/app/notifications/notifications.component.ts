@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { skip, Subscription } from 'rxjs';
-import { AnswerState, TonePattern } from 'src/assets/types';
+import { GameState, TonePattern } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { CounterService } from '../services/counter.service';
 export class NotificationsComponent implements OnInit, OnDestroy {
   @Input() isGameOver = false;
   @Input() correctTonePattern: TonePattern | null = null;
-  @Input() answerState: AnswerState = 'waiting';
+  @Input() gameState: GameState = 'waiting';
 
   private subscriptions: Subscription[] = [];
 
@@ -24,13 +24,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       this.counterService.watchCounter$('correct').pipe(
         skip(1)
       ).subscribe(() => {
-        this.answerState = 'correct';
+        this.gameState = 'correct';
       }),
 
       this.counterService.watchCounter$('incorrect').pipe(
         skip(1)
       ).subscribe(() => {
-        this.answerState = 'incorrect';
+        this.gameState = 'incorrect';
       })
     );
   }

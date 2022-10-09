@@ -4,9 +4,9 @@
   <h4 class="display-header">Determine the tonal pattern of:</h4>
   <h2 
     class="display-word"
-    [class.correct]="answerState === 'correct'" 
-    [class.incorrect]="answerState === 'incorrect'">
-    <ng-container *ngIf="answerState !== 'correct'; else correct">
+    [class.correct]="gameState === 'correct'" 
+    [class.incorrect]="gameState === 'incorrect'">
+    <ng-container *ngIf="gameState !== 'correct'; else correct">
       {{targetForm | trim | removeAccent}}
     </ng-container>
     <ng-template #correct>{{targetForm | trim}}</ng-template>
@@ -16,8 +16,8 @@
       <span 
         *ngFor="let hint of hints | keyvalue"
         class="hint"
-        [class.correct]="answerState === 'correct'"
-        [class.incorrect]="answerState === 'incorrect'"> 
+        [class.correct]="gameState === 'correct'"
+        [class.incorrect]="gameState === 'incorrect'"> 
         {{hint.value}}
       </span>
     </ng-container>
