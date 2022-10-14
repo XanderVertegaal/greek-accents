@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GameState, Casus, Genus, Numerus } from 'src/assets/types';
+import { GameState, Hint } from 'src/assets/types';
 
 @Component({
   selector: 'app-selected',
@@ -7,11 +7,11 @@ import { GameState, Casus, Genus, Numerus } from 'src/assets/types';
   styleUrls: ['./selected.component.scss']
 })
 export class SelectedComponent {
-  @Input() hints: [Casus, Numerus, Genus] | null = null;
+  @Input() hints: Hint[] | null = null;
   @Input() targetForm: string | null = null;
   @Input() gameState: GameState = 'waiting';
-  showHints = true;
+  @Input() showHints = true;
 
-  constructor( ) { }
+  constructor() { }
 
 }

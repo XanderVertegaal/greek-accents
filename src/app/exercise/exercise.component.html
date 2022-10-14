@@ -11,6 +11,8 @@
 
   <ng-container *ngIf="selectedAssignment">
     <app-selected
+      [showHints]="true"
+      [hints]="getHints(selectedAssignment)"
       [targetForm]="getTargetForm(selectedAssignment.word)"
       [gameState]="gameState">
     </app-selected>
@@ -33,7 +35,6 @@
   </ng-container>
 
   <!-- 3. Show accented form + target case/number/gender => write appropriate article (input field/multiple choice) -->
-
   <ng-container *ngIf="selectedAssignment && selectedAssignment.question === 'write-word'">
     <p>Not implemented yet...</p>
     <button (click)="onReceiveAnswerStatus(true)">Next task</button>

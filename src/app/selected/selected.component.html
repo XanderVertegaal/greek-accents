@@ -10,15 +10,16 @@
       {{targetForm | trim | removeAccent}}
     </ng-container>
     <ng-template #correct>{{targetForm | trim}}</ng-template>
+
     
-    <ng-container *ngIf="showHints">
+    <ng-container *ngIf="hints && showHints">
       <br>
       <span 
-        *ngFor="let hint of hints | keyvalue"
+        *ngFor="let hint of hints"
         class="hint"
         [class.correct]="gameState === 'correct'"
         [class.incorrect]="gameState === 'incorrect'"> 
-        {{hint.value}}
+        {{hint}}
       </span>
     </ng-container>
   </h2>

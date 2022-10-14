@@ -42,7 +42,6 @@ export class ToneSelectFormComponent implements OnInit, OnChanges, OnDestroy {
     );
 
     if (this.targetForm) {
-      console.log('targetform: ', this.targetForm);
       this.targetTonePattern = determineTonePattern(getNuclei(this.targetForm));
     }
   }

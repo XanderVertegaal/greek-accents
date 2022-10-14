@@ -235,7 +235,6 @@ export function determineTonePattern(nuclei: NucleusIndex[]): TonePattern {
         return Tone.NONE;
     }
   });
-  // console.log('Found nucleid tones:', nucleusTones)
   switch (nucleusTones[0]) {
     case Tone.GRAVE:
       return TonePattern.OXYTONE_GRAVE;
@@ -543,7 +542,6 @@ export function generateNewArticleAssignments(amount = 20): Assignment<Article>[
       finished: false
     });
   });
-  console.log('Assignments: ', newAssignments);
   return newAssignments;
 }
 

@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 import { Component } from '@angular/core';
-import { GameState, Assignment, TonePattern, WordClass } from 'src/assets/types';
+import { GameState, Assignment, TonePattern, WordClass, Hint } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
 import { applyTonePatternToWord, shuffle } from '../shared/utils';
 
@@ -45,6 +46,16 @@ export class ExerciseComponent<W extends WordClass> {
     return wordClass.form;    // With verbs, we want to apply recessive accentuation here etc.
   }
 
+  getHints(assignment: Assignment<W>): Hint[] {
+    const hints: Hint[] = [];
+    if (assignment.word.type === 'article' || assignment.word.type === 'substantive') {
+      hints.push(assignment.word.case, assignment.word.gramNumber, assignment.word.gender);
+    } else {
+      hints.push(assignment.word.modus, assignment.word.tempus, assignment.word.diathesis, assignment.word.gramNumber, assignment.word.persona);
+    }
+    return hints;
+  }
+
   protected selectNewAssignment(options: { shuffle: boolean } = { shuffle: false }): void {
     const unfinishedAssignments = this.assignments.filter(assignment => assignment.finished === false);
     if (unfinishedAssignments.length === 0) {
@@ -57,5 +68,4 @@ export class ExerciseComponent<W extends WordClass> {
 
     this.selectedAssignment = unfinishedAssignments.pop() ?? null;
   }
-
 }

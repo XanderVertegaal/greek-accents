@@ -137,6 +137,8 @@ export interface VerbalForm extends Verbal {
 
 export type WordClass = Article | Substantive | VerbalForm;
 
+export type Hint = Casus | Numerus | Genus | Modus | Tempus | Diathesis | Numerus | Persona;
+
 export enum Question {
   SELECT_TONE = 'select-tone',   // Tone select buttons
   WRITE_TONE = 'write-tone',    // Toneless form provided, type input
@@ -146,7 +148,7 @@ export enum Question {
 export interface Assignment<T extends WordClass> {
   word: T;
   question: Question;
-  finished?: boolean;
+  finished: boolean;
 }
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
@@ -154,31 +156,31 @@ export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 // export type SelectedWord = Article | NominalForm | undefined;
 
 export enum Declension {
-  FIRST_DECLENSION,
-  SECOND_DECLENSION,
-  THIRD_DECLENSION,
+  FIRST_DECLENSION = '1st decl.',
+  SECOND_DECLENSION = '2nd decl.',
+  THIRD_DECLENSION = '3rd decl.',
 }
 
 export enum Diathesis {
-  ACTIVUM,
-  MEDIUM,
-  MEDIOPASSIVUM,
-  PASSIVUM,
+  ACTIVUM = 'act.',
+  MEDIUM = 'med.',
+  MEDIOPASSIVUM = 'med.-pass.',
+  PASSIVUM = 'pass.',
 }
 
 export enum Tempus {
-  PRAESENS,
-  IMPERFECTUM,
-  AORISTUS,
-  FUTURUM,
-  PERFECTUM,
-  PLUSQUAMPERFECTUM,
+  PRAESENS = 'prs.',
+  IMPERFECTUM = 'ipf.',
+  AORISTUS = 'aor.',
+  FUTURUM = 'fut.',
+  PERFECTUM = 'pf.',
+  PLUSQUAMPERFECTUM = 'pl.q.pf.',
 }
 
 export enum Modus {
-  INDICATIVUS,
-  IMPERATIVUS,
-  CONIUNCTIVUS,
-  OPTATIVUS,
-  INFINITIVUS,
+  INDICATIVUS = 'ind.',
+  IMPERATIVUS = 'imp.',
+  CONIUNCTIVUS = 'con.',
+  OPTATIVUS = 'opt.',
+  INFINITIVUS = 'inf.',
 }
