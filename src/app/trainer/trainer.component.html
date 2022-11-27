@@ -1,6 +1,11 @@
-<main *ngIf="accentedText; else noText">
-    <section class="text-wrapper">
-        <h4 class="text-title" *ngIf="selectedText">{{selectedText.author}}, <em>{{selectedText.work}}</em> {{selectedText.passage}}</h4>
+<main>
+    <section class="text-select-wrapper" *ngIf="texts">
+        <select name="text-select" [formControl]="selectedText">
+            <option *ngFor="let text of texts" [ngValue]="text">{{text.author}} -- {{text.work}}</option>
+        </select>
+    </section>
+    <section class="text-wrapper" *ngIf="selectedText.value; else noText">
+        <h4 class="text-title">{{selectedText.value.author}}, <em>{{selectedText.value.work}}</em> {{selectedText.value.passage}}</h4>
     <p *ngIf="selectedIndexWord">
         <ng-container *ngFor="let word of accentedText">
             <span
@@ -20,13 +25,13 @@
     </p>
     </section>
     
-    <app-selected 
+    <app-trainer-selected 
         *ngIf="selectedIndexWord"
         [targetForm]="selectedIndexWord[1]"
         [gameState]="gameState">
-    </app-selected>
+    </app-trainer-selected>
     
-    <app-scoreboard></app-scoreboard>
+    <app-scoreboard *ngIf="accentedText"></app-scoreboard>
     
     <app-notifications
         [isGameOver]="isGameOver"

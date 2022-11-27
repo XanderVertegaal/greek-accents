@@ -7,7 +7,6 @@ import { NominalForm } from 'src/assets/types';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent {
-  selectedWord: NominalForm | null = null;
 
   constructor() { }
 

@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { declineFirstDeclensionSubstantive } from 'src/app/shared/utils';
 import { firstDeclensionSubstantives } from 'src/assets/exercises/first-decl-subst.data';
-import { Casus, Numerus } from 'src/assets/types';
+import { Casus, NominalForm, Numerus } from 'src/assets/types';
 
 @Component({
   selector: 'app-first-declension-nouns',
@@ -9,6 +9,7 @@ import { Casus, Numerus } from 'src/assets/types';
   styleUrls: ['./first-declension-nouns.component.scss']
 })
 export class FirstDeclensionNounsComponent {
+  @Input() word: NominalForm | null = null;
   declineSubstantive = declineFirstDeclensionSubstantive;
   casus = Casus;
   numerus = Numerus;

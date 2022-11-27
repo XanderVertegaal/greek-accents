@@ -4,7 +4,7 @@ import { filter, map, Subject, Subscription, throttleTime } from 'rxjs';
 import { alphabetMap } from 'src/app/shared/alphabetMap';
 import { slideInTrigger } from 'src/app/shared/animations';
 import { getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
-import { Aspiration, Character, Tone } from 'src/assets/types';
+import { Aspiration, Character, Tone, WordClass } from 'src/assets/types';
 
 @Component({
   selector: 'app-form-input',
@@ -17,7 +17,7 @@ export class FormInputComponent implements OnInit, OnDestroy {
   @Output() answerIsCorrect = new EventEmitter<boolean>();
   showInfo = false;
   form = new FormGroup({
-    input: new FormControl()
+    input: new FormControl<string|null>(null)
   });
   submitAnswer = new Subject<void>();
   private subscriptions: Subscription[] = [];
@@ -27,7 +27,7 @@ export class FormInputComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.submitAnswer.pipe(
-        map(() => this.form.controls['input'].value),
+        map(() => this.form.controls.input.value),
         filter(inputValue => this.targetForm !== null && inputValue !== null),
         throttleTime(1000)
       ).subscribe(inputValue => {

@@ -1,7 +1,8 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { articles } from 'src/assets/exercises/article.data';
+import { firstDeclensionSubstantives } from 'src/assets/exercises/first-decl-subst.data';
 import {allChars, allSemi, toneChars } from 'src/assets/models';
-import { Article, Assignment, Casus, Character, Genus, NominalForm, Numerus, Question, Tone, TonePattern,
+import { Article, Assignment, Casus, Character, Genus, NominalForm, Numerus, Question, Substantive, Tone, TonePattern, WordClass,
 } from 'src/assets/types';
 import { NucleusIndex } from 'src/assets/types';
 
@@ -520,9 +521,6 @@ export function declineFirstDeclensionSubstantive(
 }
 
 
-
-
-
 // A generic solution will not work:
 //
 // generateAssignments<W extends WordClass>: Assignment<W>[]
@@ -545,10 +543,73 @@ export function generateNewArticleAssignments(amount = 20): Assignment<Article>[
   return newAssignments;
 }
 
+export function generateNewFirstDeclensionAssignments(amount = 20): Assignment<Substantive>[] {
+  const newAssignments: Assignment<Substantive>[] = [];
+  const randomSubstantives: Substantive[] = [];
+  let i = 0;
+  const words: string[] = [];
+
+  while (i < amount) {
+    const randomLexeme = getRandomItem(firstDeclensionSubstantives);
+    const randomCase = getRandomEnumValue(Casus);
+    const randomNumber = getRandomEnumValue(Numerus);
+    const word = declineFirstDeclensionSubstantive(randomLexeme, randomCase, randomNumber);
+
+    // Try again if no word can be declined or if the word is already included.
+    if (!word || words.includes(word)) {
+      continue;
+    }
+
+    words.push(word);
+    i = i + 1;
+
+    const newSubstantive: Substantive = {
+      type: 'substantive',
+      form: word,
+      case: randomCase,
+      gender: randomLexeme.gender,
+      gramNumber: randomNumber,
+      tone: determineTonePattern(getNuclei(word)),
+      translation: randomLexeme.translation,
+      exception: randomLexeme.exception
+    };
+    randomSubstantives.push(newSubstantive);
+  }
+
+  randomSubstantives.forEach(substantive => {
+    newAssignments.push({
+      finished: false,
+      question: getRandomEnumValue(Question),
+      word: substantive
+    });
+  });
+  return newAssignments;
+}
+
 export function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
 }
 
+export function getNominativeSg(word: WordClass): string {
+  switch (word.type) {
+    case 'article': {
+      const nomSg = articles.find(art =>
+        art.case === Casus.NOMINATIVE
+        && art.gender === word.gender
+        && art.gramNumber === Numerus.SINGULAR);
+      if (nomSg === undefined) {
+        console.warn('No nominative singular found!');
+        return '';
+      }
+      return nomSg.form;
+    }
+    case 'substantive':
+      return word.form;
+    default:
+      console.error('No nominative singular function implemented for non-nominals.');
+      return '';
+  }
+}
 
 export function shuffle(array: unknown[]): unknown[] {
   let currentIndex = array.length;
@@ -567,4 +628,11 @@ export function shuffle(array: unknown[]): unknown[] {
   }
 
   return array;
+}
+
+export function getTargetForm(wordClass: WordClass): string {
+  if ('tone' in wordClass) {
+    return applyTonePatternToWord(wordClass.form, wordClass.tone) ?? '';
+  }
+  return wordClass.form;    // With verbs, we want to apply recessive accentuation here etc.
 }

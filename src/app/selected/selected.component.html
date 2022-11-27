@@ -1,29 +1,35 @@
 <section class="display-wrapper card" 
 [class.hinted]="hints"
-*ngIf="targetForm">
-  <h4 class="display-header">Determine the tonal pattern of:</h4>
-  <h2 
-    class="display-word"
-    [class.correct]="gameState === 'correct'" 
-    [class.incorrect]="gameState === 'incorrect'">
-    <ng-container *ngIf="gameState !== 'correct'; else correct">
-      {{targetForm | trim | removeAccent}}
-    </ng-container>
-    <ng-template #correct>{{targetForm | trim}}</ng-template>
-
+*ngIf="selectedAssignment">
+  <h4 class="display-header">
+    {{selectedAssignment.question === 'write-word' ? 'Provide the requested form:' : 'Determine the tonal pattern of:'}}
+  </h4>
+  <section class="selected-body" [class.correct]="gameState === 'correct'" 
+  [class.incorrect]="gameState === 'incorrect'">
+    <h2 class="display-word">
+      <ng-container *ngIf="gameState === 'waiting'; else correctAnswer">
+        {{getDisplayForm(selectedAssignment) | trim | removeAccent}}
+      </ng-container>
+      <ng-template #correctAnswer>
+        {{getDisplayForm(selectedAssignment) | trim}}
+      </ng-template>
+    </h2>
     
-    <ng-container *ngIf="hints && showHints">
-      <br>
-      <span 
+    <section *ngIf="hints && showHints" class="grammatical-hints">
+      <span
         *ngFor="let hint of hints"
         class="hint"
         [class.correct]="gameState === 'correct'"
-        [class.incorrect]="gameState === 'incorrect'"> 
+        [class.incorrect]="gameState === 'incorrect'">
         {{hint}}
       </span>
-    </ng-container>
-  </h2>
-  
+    </section>
+
+    <section *ngIf="hints && showBaseForm" class="base-form">
+      <span>Baseform here.</span>
+    </section>
+  </section>
+
   <div class="hint-button-wrapper" *ngIf="hints">
     <h5>Hints:</h5>
     <button  

@@ -1,5 +1,4 @@
 <main class="content-wrapper">
-
   <app-scoreboard
     [numberOfAssignments]="assignments.length">
   </app-scoreboard>
@@ -11,14 +10,12 @@
 
   <ng-container *ngIf="selectedAssignment">
     <app-selected
+      [selectedAssignment]="selectedAssignment"
       [showHints]="true"
-      [hints]="getHints(selectedAssignment)"
-      [targetForm]="getTargetForm(selectedAssignment.word)"
       [gameState]="gameState">
     </app-selected>
   </ng-container>
 
-  <!-- 1. Show unaccented article (+ case/number/gender)		=>		pick tone pattern (multiple choice) -->
   <ng-container *ngIf="selectedAssignment && selectedAssignment.question === 'select-tone'">
     <app-tone-select-form
       [targetForm]="getTargetForm(selectedAssignment.word)"
@@ -26,18 +23,10 @@
     </app-tone-select-form>
   </ng-container>
 
-  <!-- 2. Show case/number/gender		=>		write the appropriate article (input field) (on mobile: contextual buttons) -->
-  <ng-container *ngIf="selectedAssignment && selectedAssignment.question === 'write-tone'">
+  <ng-container *ngIf="selectedAssignment && (selectedAssignment.question === 'write-tone' || selectedAssignment.question === 'write-word')">
     <app-form-input
       [targetForm]="getTargetForm(selectedAssignment.word)"
       (answerIsCorrect)="onReceiveAnswerStatus($event)">
     </app-form-input>
   </ng-container>
-
-  <!-- 3. Show accented form + target case/number/gender => write appropriate article (input field/multiple choice) -->
-  <ng-container *ngIf="selectedAssignment && selectedAssignment.question === 'write-word'">
-    <p>Not implemented yet...</p>
-    <button (click)="onReceiveAnswerStatus(true)">Next task</button>
-  </ng-container>
-
 </main>

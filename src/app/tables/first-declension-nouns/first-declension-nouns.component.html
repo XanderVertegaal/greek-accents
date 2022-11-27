@@ -1,7 +1,5 @@
-<section>
-    <h4>Declension tables</h4>
-  
-    <table *ngFor="let word of words">
+<section *ngIf="word">  
+    <table>
       <thead>
         <th>{{word.form}}</th>
         <th>'{{word.translation}}'</th>

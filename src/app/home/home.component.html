@@ -1,22 +1,17 @@
 <div class="page-wrapper">
-    <header class="header">
-            <h2>Greek accent trainer</h2>
-    </header>
-
+  <header class="header">
+    <h2>Greek accent trainer</h2>
     <nav>
-        <ul>
-            <li routerLink="texts">Texts</li>
-            <li routerLink="trainer">Trainer</li>
-            <li routerLink="course">Course</li>
-        </ul>
+      <a routerLink="trainer" routerLinkActive="active">Trainer</a>
+      <a routerLink="course" routerLinkActive="active">Course</a>
     </nav>
+  </header>
 
-    
-    <article class="content-wrapper">
-        <router-outlet></router-outlet>
-    </article>
+  <article class="content-wrapper">
+    <router-outlet></router-outlet>
+  </article>
 
-    <footer class="footer">
-        <p>&copy; 2022</p>
-    </footer>
+  <footer class="footer">
+    <p>&copy; 2022</p>
+  </footer>
 </div>

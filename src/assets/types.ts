@@ -153,8 +153,6 @@ export interface Assignment<T extends WordClass> {
 
 export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-// export type SelectedWord = Article | NominalForm | undefined;
-
 export enum Declension {
   FIRST_DECLENSION = '1st decl.',
   SECOND_DECLENSION = '2nd decl.',

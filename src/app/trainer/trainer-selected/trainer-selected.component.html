@@ -1,0 +1,13 @@
+<section *ngIf="targetForm" class="display-wrapper card">
+  <h4 class="display-header">{{'Determine the tonal pattern of:'}}</h4>
+  <h2 class="display-word"
+    [class.correct]="gameState === 'correct'" 
+    [class.incorrect]="gameState === 'incorrect'">
+    <ng-container *ngIf="gameState === 'waiting'; else correctAnswer">
+      {{targetForm | trim | removeAccent}}
+    </ng-container>
+    <ng-template #correctAnswer>
+      {{targetForm | trim}}
+    </ng-template>
+  </h2>
+</section>

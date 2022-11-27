@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { filter, first, map, Subscription } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { filter, first, map, share, Subscription } from 'rxjs';
 import { GameState, IndexWord, Text, TonePattern } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
 import { TrainerService } from '../services/trainer.service';
+import { CorpusService } from '../services/corpus.service';
 import { applyTonePatternToWord, determineTonePattern, getNuclei, notEmpty } from '../shared/utils';
 
 @Component({
@@ -13,8 +15,8 @@ import { applyTonePatternToWord, determineTonePattern, getNuclei, notEmpty } fro
 export class TrainerComponent implements OnInit, OnDestroy {
   applyTonePatternToWord = applyTonePatternToWord;
 
-  selectedText: Text | null = null;
-
+  texts: Text[] = [];
+  selectedText = new FormControl<Text | null>(null);
   accentedText: IndexWord[] | null = null;
   selectedIndexWord: IndexWord | null = null;
 
@@ -29,24 +31,26 @@ export class TrainerComponent implements OnInit, OnDestroy {
   constructor(
     private counterService: CounterService,
     private trainerService: TrainerService,
+    private corpusService: CorpusService
   ) { }
 
   ngOnInit(): void {
     this.counterService.resetCounters();
 
-    const accentedText$ = this.trainerService.selectedText$.pipe(
+    const selectedText$ = this.selectedText.valueChanges.pipe(share());
+
+    const accentedText$ = selectedText$.pipe(
       filter(notEmpty),
       map(text => text.text.split(' ')),
       map(textArray => Array.from(textArray.entries()))
     );
 
-
     this.subscriptions.push(
-      this.trainerService.selectedText$.subscribe(text => {
-        this.selectedText = text;
+      this.corpusService.texts$.subscribe(texts => this.texts = texts),
+
+      selectedText$.subscribe(() => {
         this.onSelectNewWord();
       }),
-
       accentedText$.subscribe(text => this.accentedText = text),
 
       accentedText$.pipe(first()).subscribe(text => {

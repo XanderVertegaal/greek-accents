@@ -2,5 +2,5 @@
 <section class="score-board" *ngIf="counters">
     <p class="correct"> 👍 {{counters.correct }}</p>
     <p class="incorrect"> 👎 {{counters.incorrect}}</p>
-    <p class="total"> Total {{counters.total}}<ng-container *ngIf="numberOfAssignments > 0">/ {{numberOfAssignments}}</ng-container></p>
+    <p class="total"> Total {{counters.total}} <ng-container *ngIf="numberOfAssignments > 0">/ {{numberOfAssignments}}</ng-container></p>
 </section>
