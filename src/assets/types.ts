@@ -103,7 +103,7 @@ export interface Nominal {
   case: Casus;
   gramNumber: Numerus;
   gender: Genus;
-  tone: TonePattern;
+  baseTone: TonePattern;
 }
 
 export interface Verbal {
@@ -115,7 +115,9 @@ export interface Verbal {
 }
 
 export interface NominalForm extends Nominal {
-  form: string;
+  baseForm: string;
+  inflectedForm?: string;
+  inflectedTone?: TonePattern;
   translation: string;
   exception?: Partial<NominalForm>[];
 }
@@ -130,7 +132,8 @@ export interface Substantive extends NominalForm {
 
 export interface VerbalForm extends Verbal {
   type: 'verbalForm';
-  form: string;
+  inflectedForm?: string;
+  baseForm: string;
   translation: string;
   exception?: Partial<VerbalForm>[];
 }

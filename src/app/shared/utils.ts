@@ -304,15 +304,15 @@ function isPenultimateLong(longShort: string): boolean | undefined {
 }
 
 function getUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: Numerus): string {
-  const bareStem = word.form.endsWith('ς')
-    ? removeMacraBreves(word.form).slice(0, -1)
-    : removeMacraBreves(word.form);
+  const bareStem = word.baseForm.endsWith('ς')
+    ? removeMacraBreves(word.baseForm).slice(0, -1)
+    : removeMacraBreves(word.baseForm);
 
   switch (targetNumber) {
     case Numerus.SINGULAR:
       switch (targetCase) {
         case Casus.NOMINATIVE:
-          return removeMacraBreves(word.form);
+          return removeMacraBreves(word.baseForm);
         case Casus.VOCATIVE:
           if (word.gender === Genus.MASCULINE) {
             if (bareStem.endsWith('τη')) {
@@ -320,12 +320,12 @@ function getUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: N
             }
             return bareStem;
           }
-          return word.form;
+          return word.baseForm;
         case Casus.GENITIVE:
           if (word.gender === Genus.MASCULINE) {
             return bareStem.slice(0, -1) + 'ου';
           }
-          if (word.tone === TonePattern.PERISPOMENON) {
+          if (word.baseTone === TonePattern.PERISPOMENON) {
             return bareStem + 'ς';
           }
           if (bareStem.match(/[ρει]α$/)) {
@@ -339,7 +339,7 @@ function getUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: N
             }
             return bareStem.replace(/η$/, 'ῃ');
           }
-          if (word.tone === TonePattern.PERISPOMENON) {
+          if (word.baseTone === TonePattern.PERISPOMENON) {
             if (bareStem.endsWith('α')) {
               return bareStem.replace(/α$/, 'ᾳ');
             }
@@ -398,8 +398,8 @@ export function declineFirstDeclensionSubstantive(
       && (targetNumber === exc.gramNumber ?? word.gramNumber)
     );
     if (exception !== undefined) {
-      const selectedForm = exception.form ?? word.form;
-      const selectedTonePattern = exception.tone ?? word.tone;
+      const selectedForm = exception.baseForm ?? word.baseForm;
+      const selectedTonePattern = exception.baseTone ?? word.baseTone;
       return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? '';
     }
   }
@@ -410,10 +410,10 @@ export function declineFirstDeclensionSubstantive(
         case Casus.NOMINATIVE:
         case Casus.ACCUSATIVE:
         case Casus.VOCATIVE:
-          return applyTonePatternToWord(stem, word.tone) ?? '';
+          return applyTonePatternToWord(stem, word.baseTone) ?? '';
         case Casus.GENITIVE:
         case Casus.DATIVE:
-          switch (word.tone) {
+          switch (word.baseTone) {
             case TonePattern.OXYTONE_ACUTE:
             case TonePattern.PERISPOMENON:
               return (
@@ -434,15 +434,15 @@ export function declineFirstDeclensionSubstantive(
         case Casus.NOMINATIVE:
         case Casus.VOCATIVE:
         case Casus.ACCUSATIVE:
-          switch (word.tone) {
+          switch (word.baseTone) {
             case TonePattern.PROPAROXYTONE:
             case TonePattern.PROPERISPOMENON:
               return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
           }
-          return applyTonePatternToWord(stem, word.tone) ?? '';
+          return applyTonePatternToWord(stem, word.baseTone) ?? '';
         case Casus.GENITIVE:
         case Casus.DATIVE:
-          switch (word.tone) {
+          switch (word.baseTone) {
             case TonePattern.OXYTONE_ACUTE:
             case TonePattern.PERISPOMENON:
               return (
@@ -462,18 +462,18 @@ export function declineFirstDeclensionSubstantive(
       switch (targetCase) {
         case Casus.NOMINATIVE:
         case Casus.VOCATIVE:
-          if (word.tone === TonePattern.PAROXYTONE) {
+          if (word.baseTone === TonePattern.PAROXYTONE) {
             // If properispomenon is possible => penultimate is possibly long. If it is short: it must be paroxytone.
             if (
               applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) !== null
             ) {
               // Perispomenon or paroxytone depends on length of penultimate nucleus.
-              if (isPenultimateLong(word.form) === true) {
+              if (isPenultimateLong(word.baseForm) === true) {
                 return (
                   applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) ??
                   ''
                 );
-              } else if (isPenultimateLong(word.form) === false) {
+              } else if (isPenultimateLong(word.baseForm) === false) {
                 return (
                   applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? ''
                 );
@@ -487,11 +487,11 @@ export function declineFirstDeclensionSubstantive(
               }
             }
           }
-          return applyTonePatternToWord(stem, word.tone) ?? '';
+          return applyTonePatternToWord(stem, word.baseTone) ?? '';
         case Casus.GENITIVE:
           return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
         case Casus.DATIVE:
-          switch (word.tone) {
+          switch (word.baseTone) {
             case TonePattern.OXYTONE_ACUTE:
             case TonePattern.PERISPOMENON:
               return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
@@ -503,10 +503,10 @@ export function declineFirstDeclensionSubstantive(
               return '';
           }
         case Casus.ACCUSATIVE:
-          switch (word.tone) {
+          switch (word.baseTone) {
             case TonePattern.OXYTONE_ACUTE:
             case TonePattern.PERISPOMENON:
-              return applyTonePatternToWord(stem, word.tone) ?? '';
+              return applyTonePatternToWord(stem, word.baseTone) ?? '';
             case TonePattern.PAROXYTONE:
             case TonePattern.PROPAROXYTONE:
             case TonePattern.PROPERISPOMENON:
@@ -565,11 +565,13 @@ export function generateNewFirstDeclensionAssignments(amount = 20): Assignment<S
 
     const newSubstantive: Substantive = {
       type: 'substantive',
-      form: word,
+      inflectedForm: word,
+      baseForm: randomLexeme.baseForm,
+      baseTone: randomLexeme.baseTone,
       case: randomCase,
       gender: randomLexeme.gender,
       gramNumber: randomNumber,
-      tone: determineTonePattern(getNuclei(word)),
+      inflectedTone: determineTonePattern(getNuclei(word)),
       translation: randomLexeme.translation,
       exception: randomLexeme.exception
     };
@@ -601,10 +603,10 @@ export function getNominativeSg(word: WordClass): string {
         console.warn('No nominative singular found!');
         return '';
       }
-      return nomSg.form;
+      return nomSg.baseForm;
     }
     case 'substantive':
-      return word.form;
+      return word.baseForm;
     default:
       console.error('No nominative singular function implemented for non-nominals.');
       return '';
@@ -631,8 +633,8 @@ export function shuffle(array: unknown[]): unknown[] {
 }
 
 export function getTargetForm(wordClass: WordClass): string {
-  if ('tone' in wordClass) {
-    return applyTonePatternToWord(wordClass.form, wordClass.tone) ?? '';
+  if ('inflectedTone' in wordClass && wordClass.inflectedForm && wordClass.inflectedTone) {
+    return applyTonePatternToWord(wordClass.inflectedForm, wordClass.inflectedTone) ?? '';
   }
-  return wordClass.form;    // With verbs, we want to apply recessive accentuation here etc.
+  return wordClass.baseForm;    // With verbs, we want to apply recessive accentuation here etc.
 }

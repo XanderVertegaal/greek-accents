@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { filter, map, Subject, Subscription, throttleTime } from 'rxjs';
+import { MistakeService } from 'src/app/services/mistake.service';
 import { alphabetMap } from 'src/app/shared/alphabetMap';
 import { slideInTrigger } from 'src/app/shared/animations';
 import { getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
@@ -22,7 +23,9 @@ export class FormInputComponent implements OnInit, OnDestroy {
   submitAnswer = new Subject<void>();
   private subscriptions: Subscription[] = [];
 
-  constructor() { }
+  constructor(
+    private mistake: MistakeService
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(

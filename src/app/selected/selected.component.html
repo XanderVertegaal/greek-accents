@@ -25,19 +25,24 @@
       </span>
     </section>
 
-    <section *ngIf="hints && showBaseForm" class="base-form">
-      <span>Baseform here.</span>
+    <section *ngIf="baseForm && showBaseForm" class="base-form">
+      <span>{{baseForm}}</span>
     </section>
   </section>
 
-  <div class="hint-button-wrapper" *ngIf="hints">
-    <h5>Hints:</h5>
-    <button  
-      class="button red"
-      [class.show-hints]="showHints" 
-      (click)="showHints = !showHints">
-      {{showHints ? 'On' : 'Off'}}
-    </button>
-  </div>
+
+
+  <aside class="settings-wrapper" *ngIf="hints">
+    <div class="setting-button">
+      <h5>Hints:</h5>
+      <app-toggle-switch [isOn]="showHints" (switchOn)="showHints = $event">
+      </app-toggle-switch>
+    </div>
+    <div class="setting-button">
+      <h5>Base form:</h5>
+      <app-toggle-switch [isOn]="showBaseForm" (switchOn)="showBaseForm = $event">
+      </app-toggle-switch>
+    </div>
+  </aside>
 
 </section>

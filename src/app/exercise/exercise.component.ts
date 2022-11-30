@@ -1,8 +1,8 @@
-/* eslint-disable max-len */
 import { Component } from '@angular/core';
-import { GameState, Assignment, TonePattern, WordClass, Hint } from 'src/assets/types';
+import { Router } from '@angular/router';
+import { GameState, Assignment, TonePattern, WordClass } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
-import { applyTonePatternToWord, getNominativeSg, getTargetForm, shuffle } from '../shared/utils';
+import { getTargetForm, shuffle } from '../shared/utils';
 
 @Component({
   selector: 'app-exercise',
@@ -13,12 +13,13 @@ export class ExerciseComponent<W extends WordClass> {
   selectedAssignment: Assignment<W> | null = null;
   assignments: Assignment<W>[] = [];
   gameState: GameState = 'waiting';
-  isGameOver = false;
   tonePattern = TonePattern;
   getTargetForm = getTargetForm;
+  numberOfAssignments = 0;
 
   constructor(
-    protected counterService: CounterService
+    protected counterService: CounterService,
+    private router: Router
   ) { }
 
   onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
@@ -32,6 +33,7 @@ export class ExerciseComponent<W extends WordClass> {
     } else {
       this.counterService.incrementCounter('incorrect');
       this.gameState = 'incorrect';
+      this.numberOfAssignments++;
     }
     this.counterService.incrementCounter('total');
     setTimeout(() => {
@@ -43,13 +45,11 @@ export class ExerciseComponent<W extends WordClass> {
   protected selectNewAssignment(options: { shuffle: boolean } = { shuffle: false }): void {
     const unfinishedAssignments = this.assignments.filter(assignment => assignment.finished === false);
     if (unfinishedAssignments.length === 0) {
-      this.isGameOver = true;
+      this.router.navigate(['/', 'course', 'summary']);
     }
-
     if (options.shuffle === true) {
       shuffle(unfinishedAssignments);
     }
-
     this.selectedAssignment = unfinishedAssignments.pop() ?? null;
   }
 }

@@ -9,6 +9,7 @@ import { ArticleExerciseComponent } from './article/article-exercise/article-exe
 import { CourseOverviewComponent } from './course/course-overview/course-overview.component';
 import { FirstDeclensionLessonComponent } from './first-declension/first-declension-lesson/first-declension-lesson.component';
 import { FirstDeclensionExerciseComponent } from './first-declension/first-declension-exercise/first-declension-exercise.component';
+import { SummaryComponent } from './summary/summary.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
         { path: 'article-lesson', component: ArticleLessonComponent },
         { path: 'article-exercise', component: ArticleExerciseComponent },
         { path: 'first-declension-lesson', component: FirstDeclensionLessonComponent },
-        { path: 'first-declension-exercise', component: FirstDeclensionExerciseComponent},
+        { path: 'first-declension-exercise', component: FirstDeclensionExerciseComponent },
+        { path: 'summary', component: SummaryComponent },
         { path: '', pathMatch: 'full', redirectTo: 'overview'}
       ] },
       { path: '**', redirectTo: 'trainer' },

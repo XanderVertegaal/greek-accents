@@ -28,6 +28,8 @@ import { FirstDeclensionLessonComponent } from './first-declension/first-declens
 import { FirstDeclensionExerciseComponent } from './first-declension/first-declension-exercise/first-declension-exercise.component';
 import { TooltipDirective } from './shared/tooltip.directive';
 import { TrainerSelectedComponent } from './trainer/trainer-selected/trainer-selected.component';
+import { ToggleSwitchComponent } from './shared/components/toggle-switch/toggle-switch.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { TrainerSelectedComponent } from './trainer/trainer-selected/trainer-sel
     FirstDeclensionExerciseComponent,
     TooltipDirective,
     TrainerSelectedComponent,
+    ToggleSwitchComponent,
+    SummaryComponent,
   ],
   imports: [
     AppRoutingModule,

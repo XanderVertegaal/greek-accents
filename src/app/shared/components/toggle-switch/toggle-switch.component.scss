@@ -1,0 +1,48 @@
+$height: 30px;
+
+.toggle-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $height;
+  width: 60px;
+  border: 1px solid #ca4f41;
+  border-radius: 30px;
+  background-color: white;
+  transition: background-color 300ms ease-in-out;
+  cursor: pointer;
+  
+  &.on {
+    background-color: #ca4f41;
+  }
+
+  button {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    height: calc($height - 2px);
+    width: calc($height - 2px);
+    border-radius: 50%;
+    border: 0;
+    transition: right 300ms ease-in-out;
+    cursor: pointer;
+
+    &.on {
+      right: 0;
+    }
+  }
+
+  .on-label,
+  .off-label {
+    color: #ca4f41;
+    margin: 0px 5px 2px;
+    pointer-events: none;
+    transition: color 300ms ease-in-out;
+    user-select: none;
+    
+    &.on {
+      color: white;
+    }
+  }
+}

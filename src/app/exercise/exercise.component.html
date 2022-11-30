@@ -1,12 +1,7 @@
 <main class="content-wrapper">
   <app-scoreboard
-    [numberOfAssignments]="assignments.length">
+    [numberOfAssignments]="numberOfAssignments">
   </app-scoreboard>
-
-  <section class="game-over" *ngIf="isGameOver === true">
-    <h3 class="game-over-title">Game over!</h3>
-    <button class="button">New game</button>
-  </section>
 
   <ng-container *ngIf="selectedAssignment">
     <app-selected

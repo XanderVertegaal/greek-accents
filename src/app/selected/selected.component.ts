@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Assignment, GameState, Hint, WordClass } from 'src/assets/types';
-import { getNominativeSg, getTargetForm } from '../shared/utils';
+import { articles } from 'src/assets/exercises/article.data';
+import { Assignment, Casus, GameState, Hint, Numerus, WordClass } from 'src/assets/types';
+import { applyTonePatternToWord, declineFirstDeclensionSubstantive, getNominativeSg, getTargetForm } from '../shared/utils';
 
 @Component({
   selector: 'app-selected',
@@ -13,12 +14,14 @@ export class SelectedComponent implements OnChanges {
   @Input() showHints = true;
   @Input() showBaseForm = true;
   hints: Hint[] | null = null;
+  baseForm: string | null = null;
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedAssignment'] && this.selectedAssignment !== null) {
       this.hints = this.getHints(this.selectedAssignment);
+      this.baseForm = this.getBaseFormString(this.selectedAssignment.word);
     }
   }
 
@@ -44,5 +47,22 @@ export class SelectedComponent implements OnChanges {
     } else {
       return getTargetForm(selectedAssignment.word);
     }
+  }
+
+  getBaseFormString(word: WordClass): string | null {
+    if (word.type === 'article' || word.type === 'substantive') {
+      const article = articles.find(art =>
+        art.gender === word.gender &&
+        art.case === Casus.NOMINATIVE &&
+        art.gramNumber === Numerus.SINGULAR);
+      if (!article) {
+        return null;
+      }
+      return `
+      ${applyTonePatternToWord(article.baseForm, article.baseTone)} 
+      ${declineFirstDeclensionSubstantive(word, Casus.NOMINATIVE, Numerus.SINGULAR)}
+      `;
+    }
+    return null;
   }
 }

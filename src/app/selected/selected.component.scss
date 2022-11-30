@@ -13,26 +13,23 @@
     margin-bottom: 0.5em;
   }
 
-  .hint-button-wrapper {
+  .settings-wrapper {
     position: absolute;
-    top: 4px;
+    top: 6px;
     right: 10px;
     display: flex;
     align-items: center;
-    justify-content: stretch;
 
-    h5 {
-      font-size: 14px;
-      margin-right: 1em;
-    }
+    .setting-button {
+      display: flex;
+      align-items: center;
 
-    button {
-      padding: 0.5em 2em;
+      h5 {
+        margin-right: 10px;
+      }
 
-      &.show-hints {
-        background-color: white;
-        color: #ca4f41;
-        box-shadow: none;
+      &:first-of-type {
+        margin-right: 20px;
       }
     }
   }
