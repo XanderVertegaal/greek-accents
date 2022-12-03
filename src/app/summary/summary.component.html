@@ -1,3 +1,13 @@
 <article class="summary-wrapper">
-  <h4>Summary</h4>
+  <h4>Exercise summary</h4>
+
+  <ul *ngIf="mistakes.length > 0; else noMistakes">
+    <li *ngFor="let mistake of mistakes">
+      You entered: {{mistake.incorrectInput}}, which should have been {{mistake.assignment.word.inflectedForm}}
+    </li>
+  </ul>
+
+  <ng-template #noMistakes>
+    <h4>You did not make any mistakes. Well done!</h4>
+  </ng-template>
 </article>

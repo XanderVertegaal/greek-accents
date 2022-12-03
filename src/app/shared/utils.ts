@@ -106,13 +106,19 @@ export function getNuclei(word: string): NucleusIndex[] {
 }
 
 export function removeWordAccents(word: string): string {
-  const unaccentedWord = word.split('').map((letter) => {
-    if (!isVowel(letter)) {return letter;}
-    const char = getCharFromLetter(letter);
-    if (char === undefined) {return;}
-    return removeAcc(char)?.glyph;
-  });
-  return unaccentedWord.join('');
+  return word
+    .split('')
+    .map((letter) => {
+      if (!isVowel(letter)) {
+        return letter;
+      }
+      const char = getCharFromLetter(letter);
+      if (char === undefined) {
+        return;
+      }
+      return removeAcc(char)?.glyph;
+    })
+    .join('');
 }
 
 function applyToneToNucleus(
@@ -164,7 +170,7 @@ export function applyTonePatternToWord(word: string, tonePattern: TonePattern): 
 
   switch (tonePattern) {
     case TonePattern.TONELESS:
-      return word;
+      return removeWordAccents(word);
     case TonePattern.OXYTONE_GRAVE:
       selectedNucleus = nuclei[0];
       accentedNucleus = applyToneToNucleus(selectedNucleus, Tone.GRAVE);
@@ -581,7 +587,8 @@ export function generateNewFirstDeclensionAssignments(amount = 20): Assignment<S
   randomSubstantives.forEach(substantive => {
     newAssignments.push({
       finished: false,
-      question: getRandomEnumValue(Question),
+      // question: getRandomEnumValue(Question),
+      question: Question.SELECT_TONE,
       word: substantive
     });
   });

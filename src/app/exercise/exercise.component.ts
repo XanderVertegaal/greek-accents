@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { GameState, Assignment, TonePattern, WordClass } from 'src/assets/types';
+import { GameState, Assignment, TonePattern, WordClass, Answer } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
+import { MistakeService } from '../services/mistake.service';
 import { getTargetForm, shuffle } from '../shared/utils';
 
 @Component({
@@ -19,14 +20,15 @@ export class ExerciseComponent<W extends WordClass> {
 
   constructor(
     protected counterService: CounterService,
-    private router: Router
+    private router: Router,
+    private mistakeService: MistakeService
   ) { }
 
-  onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
+  onReceiveAnswerStatus(answer: Answer): void {
     if (!this.selectedAssignment) {
       return;
     }
-    if (isAnswerCorrect === true) {
+    if (answer.isCorrect === true) {
       this.selectedAssignment.finished = true;
       this.counterService.incrementCounter('correct');
       this.gameState = 'correct';
@@ -34,6 +36,10 @@ export class ExerciseComponent<W extends WordClass> {
       this.counterService.incrementCounter('incorrect');
       this.gameState = 'incorrect';
       this.numberOfAssignments++;
+      this.mistakeService.mistakes.push({
+        assignment: this.selectedAssignment,
+        incorrectInput: answer.enteredForm
+      });
     }
     this.counterService.incrementCounter('total');
     setTimeout(() => {

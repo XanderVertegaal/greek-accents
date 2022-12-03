@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { filter, fromEvent, Subject, Subscription, throttleTime } from 'rxjs';
-import { TonePattern } from 'src/assets/types';
-import { applyTonePatternToWord, determineTonePattern, getNuclei } from '../../shared/utils';
+import { filter, fromEvent, map, Subject, Subscription, throttleTime } from 'rxjs';
+import { Answer, TonePattern } from 'src/assets/types';
+import { applyTonePatternToWord, determineTonePattern, getNuclei, removeWordAccents } from '../../shared/utils';
 
 @Component({
   selector: 'app-tone-select-form',
@@ -10,7 +10,7 @@ import { applyTonePatternToWord, determineTonePattern, getNuclei } from '../../s
 })
 export class ToneSelectFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() targetForm: string | null = null;
-  @Output() answerIsCorrect = new EventEmitter<boolean>();
+  @Output() answerIsCorrect = new EventEmitter<Answer>();
   targetTonePattern: TonePattern | null = null;
   tonePattern = TonePattern;
   tonePatterns: TonePattern[] = Object.values(TonePattern);
@@ -29,14 +29,27 @@ export class ToneSelectFormComponent implements OnInit, OnChanges, OnDestroy {
       }),
 
       this.selectedTone$.pipe(
-        filter(() => this.targetTonePattern !== null),
         throttleTime(1000)
-      ).subscribe(tone => {
+      ).subscribe(tonePattern => {
+        const targetForm = this.targetForm;
+        if (tonePattern === null || targetForm === null) {
+          return; // Should not occur, see filter above.
+        }
         const correctTone = this.targetTonePattern;
-        if (tone === correctTone) {
-          this.answerIsCorrect.emit(true);
+        const enteredForm = applyTonePatternToWord(removeWordAccents(targetForm), tonePattern);
+        if (enteredForm === null) {
+          return;
+        }
+        if (tonePattern === correctTone) {
+          this.answerIsCorrect.emit({
+            enteredForm,
+            isCorrect: true
+          });
         } else {
-          this.answerIsCorrect.emit(false);
+          this.answerIsCorrect.emit({
+            enteredForm,
+            isCorrect: false
+          });
         }
       })
     );

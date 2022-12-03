@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { filter, first, map, share, Subscription } from 'rxjs';
-import { GameState, IndexWord, Text, TonePattern } from 'src/assets/types';
+import { Answer, GameState, IndexWord, Text, TonePattern } from 'src/assets/types';
 import { CounterService } from '../services/counter.service';
 import { TrainerService } from '../services/trainer.service';
 import { CorpusService } from '../services/corpus.service';
@@ -87,12 +87,12 @@ export class TrainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  onReceiveAnswerStatus(isAnswerCorrect: boolean): void {
+  onReceiveAnswerStatus(answer: Answer): void {
     if (!this.selectedIndexWord) {
       return;
     }
 
-    if (isAnswerCorrect === true) {
+    if (answer.isCorrect === true) {
       this.counterService.incrementCounter('correct');
       this.gameState = 'correct';
       this.correct.push(this.selectedIndexWord);

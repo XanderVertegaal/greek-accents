@@ -5,7 +5,7 @@ import { MistakeService } from 'src/app/services/mistake.service';
 import { alphabetMap } from 'src/app/shared/alphabetMap';
 import { slideInTrigger } from 'src/app/shared/animations';
 import { getCharFromLetter, getCharFromProps } from 'src/app/shared/utils';
-import { Aspiration, Character, Tone, WordClass } from 'src/assets/types';
+import { Answer, Aspiration, Character, Tone } from 'src/assets/types';
 
 @Component({
   selector: 'app-form-input',
@@ -15,7 +15,7 @@ import { Aspiration, Character, Tone, WordClass } from 'src/assets/types';
 })
 export class FormInputComponent implements OnInit, OnDestroy {
   @Input() targetForm: string | null = null;
-  @Output() answerIsCorrect = new EventEmitter<boolean>();
+  @Output() answerIsCorrect = new EventEmitter<Answer>();
   showInfo = false;
   form = new FormGroup({
     input: new FormControl<string|null>(null)
@@ -23,21 +23,25 @@ export class FormInputComponent implements OnInit, OnDestroy {
   submitAnswer = new Subject<void>();
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    private mistake: MistakeService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.subscriptions.push(
       this.submitAnswer.pipe(
         map(() => this.form.controls.input.value),
-        filter(inputValue => this.targetForm !== null && inputValue !== null),
+        filter((inputValue): inputValue is string => this.targetForm !== null && inputValue !== null),
         throttleTime(1000)
       ).subscribe(inputValue => {
         if (inputValue === this.targetForm) {
-          this.answerIsCorrect.emit(true);
+          this.answerIsCorrect.emit({
+            enteredForm: inputValue,
+            isCorrect: true
+          });
         } else {
-          this.answerIsCorrect.emit(false);
+          this.answerIsCorrect.emit({
+            enteredForm: inputValue,
+            isCorrect: false
+          });
         }
         this.clearInput();
       })
@@ -59,7 +63,7 @@ export class FormInputComponent implements OnInit, OnDestroy {
     const prevChar: Character | undefined = getCharFromLetter(newValue[caretPosition - 2]);
 
     if (!newlyAdded || !prevChar) {
-      this.form.controls['input'].setValue(newValue.join(''));
+      this.form.controls.input.setValue(newValue.join(''));
       return;
     }
 
@@ -94,8 +98,11 @@ export class FormInputComponent implements OnInit, OnDestroy {
       case ',':
         newCharProps.props.subscripted = !newCharProps.props.subscripted;
         break;
+      case '.':
+        newCharProps.props.diaeresis = !newCharProps.props.diaeresis;
+        break;
       default:
-        this.form.controls['input'].setValue(newValue.join(''));
+        this.form.controls.input.setValue(newValue.join(''));
         return;
     }
 
@@ -103,11 +110,10 @@ export class FormInputComponent implements OnInit, OnDestroy {
     if (newChar) {
       newValue.splice(caretPosition - 2, 2, newChar.glyph);
     }
-    this.form.controls['input'].setValue(newValue.join(''));
+    this.form.controls.input.setValue(newValue.join(''));
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
-
 }

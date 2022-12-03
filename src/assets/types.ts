@@ -148,6 +148,11 @@ export enum Question {
   WRITE_WORD = 'write-word'    // Gramm. analysis provided, type input
 }
 
+export interface Answer {
+  enteredForm: string;
+  isCorrect: boolean;
+}
+
 export interface Assignment<T extends WordClass> {
   word: T;
   question: Question;

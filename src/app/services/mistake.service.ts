@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Assignment, WordClass } from 'src/assets/types';
 
-interface Mistake {
+export interface Mistake {
   assignment: Assignment<WordClass>;
   incorrectInput: string;
 }
