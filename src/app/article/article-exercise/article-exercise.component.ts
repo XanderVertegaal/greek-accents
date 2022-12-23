@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { ExerciseComponent } from 'src/app/exercise/exercise.component';
 import { CounterService } from 'src/app/services/counter.service';
 import { MistakeService } from 'src/app/services/mistake.service';
-import { generateNewArticleAssignments } from 'src/app/shared/utils';
-import {Article} from 'src/assets/types';
+import { getRandomEnumValue } from 'src/app/shared/utils';
+import { articles } from 'src/assets/exercises/article.data';
+import {Article, Assignment, Question} from 'src/assets/types';
 
 
 @Component({
@@ -18,10 +19,17 @@ export class ArticleExerciseComponent extends ExerciseComponent<Article> impleme
     super(counterService, router, mistake);
   }
 
-  ngOnInit(): void {
-    this.counterService.resetCounters();
-    this.assignments = generateNewArticleAssignments(5);
-    this.selectNewAssignment();
+  protected generateAssignments(amount = 20): void {
+    const newAssignments: Assignment<Article>[] = [];
+    const shuffledArticles = [...articles].sort(() => 0.5 - Math.random());
+    const randomArticles = shuffledArticles.slice(0, amount);
+    randomArticles.forEach(art => {
+      newAssignments.push({
+        word: art,
+        question: getRandomEnumValue(Question),
+        finished: false
+      });
+    });
+    this.gameStart$.next(newAssignments);
   }
-
 }

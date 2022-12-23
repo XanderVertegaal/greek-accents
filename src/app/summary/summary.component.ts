@@ -9,14 +9,22 @@ import { mockMistakes } from './mistakesTemp';
   styleUrls: ['./summary.component.scss']
 })
 export class SummaryComponent implements OnInit {
-  mistakes: Mistake[] = [];
+  allMistakes: Mistake[] = [];
+  lexemeMistakes: Mistake[] = [];
+  toneMistakes: Mistake[] = [];
 
   constructor(private mistakeService: MistakeService) { }
 
   ngOnInit(): void {
     // this.mistakes = this.mistakeService.mistakes;
-    this.mistakes = mockMistakes;
+    this.allMistakes = mockMistakes;
     console.log('Mistakes were made:', this.mistakeService.mistakes);
+
+    this.analyseMistakes(this.allMistakes);
+  }
+
+  private analyseMistakes(mistakes: Mistake[]): void {
+    return;
   }
 
 }

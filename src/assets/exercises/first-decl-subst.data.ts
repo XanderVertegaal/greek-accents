@@ -10,7 +10,7 @@ class FirstDeclensionSubstantive implements NominalForm {
   gramNumber: Numerus;
   inflectedTone?: TonePattern;
   baseTone: TonePattern;
-  exception: Partial<NominalForm>[] | undefined;
+  exception?: Partial<NominalForm>[];
 
   constructor(props: PartialBy<NominalForm, 'case' | 'gender' | 'gramNumber'>) {
     this.case = props.case || Casus.NOMINATIVE;

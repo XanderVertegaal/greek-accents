@@ -1,8 +1,7 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { articles } from 'src/assets/exercises/article.data';
-import { firstDeclensionSubstantives } from 'src/assets/exercises/first-decl-subst.data';
 import {allChars, allSemi, toneChars } from 'src/assets/models';
-import { Article, Assignment, Casus, Character, Genus, NominalForm, Numerus, Question, Substantive, Tone, TonePattern, WordClass,
+import { Article, Assignment, Casus, Character, Genus, NominalForm, Numerus, Question, Tone, TonePattern, WordClass,
 } from 'src/assets/types';
 import { NucleusIndex } from 'src/assets/types';
 
@@ -309,7 +308,7 @@ function isPenultimateLong(longShort: string): boolean | undefined {
   return undefined;
 }
 
-function getUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: Numerus): string {
+function getFirstDeclUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: Numerus): string {
   const bareStem = word.baseForm.endsWith('ς')
     ? removeMacraBreves(word.baseForm).slice(0, -1)
     : removeMacraBreves(word.baseForm);
@@ -396,7 +395,7 @@ export function declineFirstDeclensionSubstantive(
   targetCase: Casus,
   targetNumber: Numerus
 ): string | void {
-  const stem = getUnaccentedStem(word, targetCase, targetNumber);
+  const stem = getFirstDeclUnaccentedStem(word, targetCase, targetNumber);
 
   if (word.exception) {
     const exception = word.exception.find(exc =>
@@ -406,7 +405,7 @@ export function declineFirstDeclensionSubstantive(
     if (exception !== undefined) {
       const selectedForm = exception.baseForm ?? word.baseForm;
       const selectedTonePattern = exception.baseTone ?? word.baseTone;
-      return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? '';
+      return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? undefined;
     }
   }
 
@@ -526,73 +525,185 @@ export function declineFirstDeclensionSubstantive(
   }
 }
 
+function getSecondDeclUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: Numerus): string {
+  const bareStem = removeMacraBreves(word.baseForm);
 
-// A generic solution will not work:
-//
-// generateAssignments<W extends WordClass>: Assignment<W>[]
-//
-// Source: https://stackoverflow.com/questions/69783310/type-is-assignable-to-the-constraint-of-type-t-but-t-could-be-instantiated
-//
-// I would like this to mean: if input = Article, output = Article.
-// However, type identity between input and output is not enforced in TS right now.
-export function generateNewArticleAssignments(amount = 20): Assignment<Article>[] {
-  const newAssignments: Assignment<Article>[] = [];
-  const shuffledArticles = [...articles].sort(() => 0.5 - Math.random());
-  const randomArticles = shuffledArticles.slice(0, amount);
-  randomArticles.forEach(art => {
-    newAssignments.push({
-      word: art,
-      question: getRandomEnumValue(Question),
-      finished: false
-    });
-  });
-  return newAssignments;
+  switch (targetNumber) {
+    case Numerus.SINGULAR:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+          return bareStem;
+        case Casus.VOCATIVE:
+          if (bareStem.endsWith('ος')) {
+            return bareStem.replace(/ος$/, 'ε');
+          }
+          return bareStem;
+        case Casus.GENITIVE:
+          return bareStem.slice(0, -1) + 'υ';
+        case Casus.DATIVE:
+          return bareStem.slice(0, -2) + 'ῳ';
+        case Casus.ACCUSATIVE:
+          if (bareStem.endsWith('ος')) {
+            return bareStem.replace(/ς$/, 'ν');
+          }
+          return bareStem;
+      }
+      break;
+    case Numerus.DUAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+        case Casus.ACCUSATIVE:
+          return bareStem.slice(0, -2) + 'ω';
+        case Casus.GENITIVE:
+        case Casus.DATIVE:
+          return bareStem.slice(0, -2) + 'οιν';
+      }
+      break;
+    case Numerus.PLURAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+          return bareStem.slice(0, -2) + 'οι';
+        case Casus.GENITIVE:
+          return bareStem.slice(0, -2) + 'ων';
+        case Casus.DATIVE:
+          return bareStem.slice(0, -2) + 'οις';
+        case Casus.ACCUSATIVE:
+          return bareStem.slice(0, -2) + 'ους';
+      }
+  }
 }
 
-export function generateNewFirstDeclensionAssignments(amount = 20): Assignment<Substantive>[] {
-  const newAssignments: Assignment<Substantive>[] = [];
-  const randomSubstantives: Substantive[] = [];
-  let i = 0;
-  const words: string[] = [];
+export function declineSecondDeclensionSubstantive(
+  word: NominalForm,
+  targetCase: Casus,
+  targetNumber: Numerus
+): string | void {
+  const stem = getSecondDeclUnaccentedStem(word, targetCase, targetNumber);
 
-  while (i < amount) {
-    const randomLexeme = getRandomItem(firstDeclensionSubstantives);
-    const randomCase = getRandomEnumValue(Casus);
-    const randomNumber = getRandomEnumValue(Numerus);
-    const word = declineFirstDeclensionSubstantive(randomLexeme, randomCase, randomNumber);
-
-    // Try again if no word can be declined or if the word is already included.
-    if (!word || words.includes(word)) {
-      continue;
+  if (word.exception) {
+    const exception = word.exception.find(exc =>
+      (targetCase === exc.case ?? word.case)
+      && (targetNumber === exc.gramNumber ?? word.gramNumber)
+    );
+    if (exception !== undefined) {
+      const selectedForm = exception.baseForm ?? word.baseForm;
+      const selectedTonePattern = exception.baseTone ?? word.baseTone;
+      return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? undefined;
     }
-
-    words.push(word);
-    i = i + 1;
-
-    const newSubstantive: Substantive = {
-      type: 'substantive',
-      inflectedForm: word,
-      baseForm: randomLexeme.baseForm,
-      baseTone: randomLexeme.baseTone,
-      case: randomCase,
-      gender: randomLexeme.gender,
-      gramNumber: randomNumber,
-      inflectedTone: determineTonePattern(getNuclei(word)),
-      translation: randomLexeme.translation,
-      exception: randomLexeme.exception
-    };
-    randomSubstantives.push(newSubstantive);
   }
 
-  randomSubstantives.forEach(substantive => {
-    newAssignments.push({
-      finished: false,
-      // question: getRandomEnumValue(Question),
-      question: Question.SELECT_TONE,
-      word: substantive
-    });
-  });
-  return newAssignments;
+  switch (targetNumber) {
+    case Numerus.SINGULAR:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+        case Casus.ACCUSATIVE:
+          return applyTonePatternToWord(stem, word.baseTone) ?? '';
+        case Casus.GENITIVE:
+        case Casus.DATIVE:
+          switch (word.baseTone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return (
+                applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? ''
+              );
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+      }
+      case Numerus.DUAL:
+        switch (targetCase) {
+          case Casus.NOMINATIVE:
+          case Casus.VOCATIVE:
+          case Casus.ACCUSATIVE:
+            switch (word.baseTone) {
+              case TonePattern.PROPAROXYTONE:
+              case TonePattern.PROPERISPOMENON:
+                return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            }
+            return applyTonePatternToWord(stem, word.baseTone) ?? '';
+          case Casus.GENITIVE:
+          case Casus.DATIVE:
+            switch (word.baseTone) {
+              case TonePattern.OXYTONE_ACUTE:
+              case TonePattern.PERISPOMENON:
+                return (
+                  applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? ''
+                );
+              case TonePattern.PAROXYTONE:
+              case TonePattern.PROPAROXYTONE:
+              case TonePattern.PROPERISPOMENON:
+                return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+              default:
+                return '';
+            }
+        }
+    case Numerus.PLURAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+          if (word.baseTone === TonePattern.PAROXYTONE) {
+            // If properispomenon is possible => penultimate is possibly long. If it is short: it must be paroxytone.
+            if (
+              applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) !== null
+            ) {
+              // Perispomenon or paroxytone depends on length of penultimate nucleus.
+              if (isPenultimateLong(word.baseForm) === true) {
+                return (
+                  applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) ??
+                  ''
+                );
+              } else if (isPenultimateLong(word.baseForm) === false) {
+                return (
+                  applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? ''
+                );
+              } else {
+                return `${
+                  applyTonePatternToWord(stem, TonePattern.PROPERISPOMENON) ??
+                  ''
+                } // ${
+                  applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? ''
+                }`;
+              }
+            }
+          }
+          return applyTonePatternToWord(stem, word.baseTone) ?? '';
+        case Casus.GENITIVE:
+          return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
+        case Casus.DATIVE:
+          switch (word.baseTone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+        case Casus.ACCUSATIVE:
+          switch (word.baseTone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return applyTonePatternToWord(stem, word.baseTone) ?? '';
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+        default:
+          return '';
+      }
+  }
 }
 
 export function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {

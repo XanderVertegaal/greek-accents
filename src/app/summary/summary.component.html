@@ -1,13 +1,35 @@
 <article class="summary-wrapper">
   <h4>Exercise summary</h4>
 
-  <ul *ngIf="mistakes.length > 0; else noMistakes">
-    <li *ngFor="let mistake of mistakes">
-      You entered: {{mistake.incorrectInput}}, which should have been {{mistake.assignment.word.inflectedForm}}
-    </li>
-  </ul>
+  <section class="summary-section">
+    <h5 class="summary-title">General summary</h5>
+    <ul *ngIf="allMistakes.length > 0; else noMistakes" class="summary-list">
+      <li *ngFor="let mistake of allMistakes" class="summary-list-item">
+        You entered: {{mistake.incorrectInput}}, which should have been {{mistake.assignment.word.inflectedForm}}
+      </li>
+    </ul>
+  </section>
+
+  <section class="summary-section">
+    <h5 class="summary-title">Lexemes summary</h5>
+    <ul *ngIf="lexemeMistakes.length > 0" class="summary-list">
+      <li *ngFor="let mistake of lexemeMistakes" class="summary-list-item">
+        You entered: {{mistake.incorrectInput}}, which should have been {{mistake.assignment.word.inflectedForm}}
+      </li>
+    </ul>
+  </section>
+
+  <section class="summary-section">
+    <h5 class="summary-title">Tones summary</h5>
+    <ul *ngIf="toneMistakes.length > 0" class="summary-list">
+      <li *ngFor="let mistake of toneMistakes" class="summary-list-item">
+        You entered: {{mistake.incorrectInput}}, which should have been {{mistake.assignment.word.inflectedForm}}
+      </li>
+    </ul>
+  </section>
 
   <ng-template #noMistakes>
-    <h4>You did not make any mistakes. Well done!</h4>
+    <h4>You have not made any mistakes. Well done!</h4>
   </ng-template>
 </article>
+
