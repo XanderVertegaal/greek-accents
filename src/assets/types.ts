@@ -114,12 +114,14 @@ export interface Verbal {
   persona: Persona;
 }
 
+export type NominalException = Required<Pick<NominalForm, 'case' | 'gramNumber' | 'inflectedTone' | 'inflectedForm'>>;
+
 export interface NominalForm extends Nominal {
   baseForm: string;
   inflectedForm?: string;
   inflectedTone?: TonePattern;
   translation: string;
-  exception?: Partial<NominalForm>[];
+  exception?: NominalException[];
 }
 
 export interface Article extends NominalForm {

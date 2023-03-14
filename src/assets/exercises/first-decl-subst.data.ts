@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Casus, Genus, NominalForm, Numerus, PartialBy, TonePattern } from '../types';
+import { Casus, Genus, NominalException, NominalForm, Numerus, PartialBy, TonePattern } from '../types';
 
 class FirstDeclensionSubstantive implements NominalForm {
   inflectedForm?: string;
@@ -10,7 +10,7 @@ class FirstDeclensionSubstantive implements NominalForm {
   gramNumber: Numerus;
   inflectedTone?: TonePattern;
   baseTone: TonePattern;
-  exception?: Partial<NominalForm>[];
+  exception?: NominalException[];
 
   constructor(props: PartialBy<NominalForm, 'case' | 'gender' | 'gramNumber'>) {
     this.case = props.case || Casus.NOMINATIVE;
@@ -101,7 +101,8 @@ export const firstDeclensionSubstantives: NominalForm[] = [
   new FirstDeclensionSubstantive({
     baseForm: 'Περσης', translation: 'Persian', gender: Genus.MASCULINE, baseTone: TonePattern.PAROXYTONE, exception: [
       {
-        baseForm: 'Περσα',
+        inflectedForm: 'Περσα',
+        inflectedTone: TonePattern.PROPAROXYTONE,
         case: Casus.VOCATIVE,
         gramNumber: Numerus.SINGULAR
       }
@@ -110,10 +111,10 @@ export const firstDeclensionSubstantives: NominalForm[] = [
     baseForm: 'δεσποτης', translation: 'tyrant', gender: Genus.MASCULINE, baseTone: TonePattern.PAROXYTONE,
     exception: [
       {
-        baseForm: 'δεσποτα',
+        inflectedForm: 'δεσποτα',
         case: Casus.VOCATIVE,
         gramNumber: Numerus.SINGULAR,
-        baseTone: TonePattern.PROPAROXYTONE
+        inflectedTone: TonePattern.PROPAROXYTONE
       }
     ]}),
 

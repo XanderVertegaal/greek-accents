@@ -10,6 +10,8 @@ import { CourseOverviewComponent } from './course/course-overview/course-overvie
 import { FirstDeclensionLessonComponent } from './first-declension/first-declension-lesson/first-declension-lesson.component';
 import { FirstDeclensionExerciseComponent } from './first-declension/first-declension-exercise/first-declension-exercise.component';
 import { SummaryComponent } from './summary/summary.component';
+import { SecondDeclensionExerciseComponent } from './second-declension/second-declension-exercise/second-declension-exercise.component';
+import { SecondDeclensionLessonComponent } from './second-declension/second-declension-lesson/second-declension-lesson.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,8 @@ const routes: Routes = [
         { path: 'article-exercise', component: ArticleExerciseComponent },
         { path: 'first-declension-lesson', component: FirstDeclensionLessonComponent },
         { path: 'first-declension-exercise', component: FirstDeclensionExerciseComponent },
+        { path: 'second-declension-lesson', component: SecondDeclensionLessonComponent },
+        { path: 'second-declension-exercise', component: SecondDeclensionExerciseComponent },
         { path: 'summary', component: SummaryComponent },
         { path: '', pathMatch: 'full', redirectTo: 'overview'}
       ] },

@@ -13,7 +13,7 @@ import { TrainerComponent } from './trainer/trainer.component';
 import { CourseComponent } from './course/course.component';
 import { ArticleLessonComponent } from './article/article-lesson/article-lesson.component';
 import { SelectedComponent } from './selected/selected.component';
-import { FirstDeclensionNounsComponent } from './first-declension-nouns/first-declension-nouns.component';
+import { FirstDeclensionNounsComponent } from './shared/abstract/table/first-declension-nouns/first-declension-nouns.component';
 import { ArticleExerciseComponent } from './article/article-exercise/article-exercise.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormInputComponent } from './exercise/form-input/form-input.component';
@@ -31,6 +31,7 @@ import { ToggleSwitchComponent } from './shared/components/toggle-switch/toggle-
 import { SummaryComponent } from './summary/summary.component';
 import { SecondDeclensionLessonComponent } from './second-declension/second-declension-lesson/second-declension-lesson.component';
 import { SecondDeclensionExerciseComponent } from './second-declension/second-declension-exercise/second-declension-exercise.component';
+import { SecondDeclensionNounsComponent } from './shared/abstract/table/second-declension-nouns/second-declension-nouns.component';
 
 @NgModule({
   declarations: [
@@ -40,26 +41,27 @@ import { SecondDeclensionExerciseComponent } from './second-declension/second-de
     ArticleLessonComponent,
     ConversionTableComponent,
     CourseComponent,
+    CourseOverviewComponent,
     FirstDeclensionNounsComponent,
     FormInputComponent,
     HomeComponent,
-    NotificationsComponent,
-    RemoveAccentPipe,
-    ScoreboardComponent,
-    SelectedComponent,
-    TextListComponent,
-    ToneSelectFormComponent,
-    TrainerComponent,
-    TrimPipe,
-    CourseOverviewComponent,
     FirstDeclensionLessonComponent,
     FirstDeclensionExerciseComponent,
-    TooltipDirective,
-    TrainerSelectedComponent,
-    ToggleSwitchComponent,
-    SummaryComponent,
-    SecondDeclensionLessonComponent,
+    NotificationsComponent,
+    RemoveAccentPipe,
     SecondDeclensionExerciseComponent,
+    ScoreboardComponent,
+    SecondDeclensionLessonComponent,
+    SecondDeclensionNounsComponent,
+    SelectedComponent,
+    SummaryComponent,
+    TextListComponent,
+    ToggleSwitchComponent,
+    ToneSelectFormComponent,
+    TooltipDirective,
+    TrainerComponent,
+    TrainerSelectedComponent,
+    TrimPipe
   ],
   imports: [
     AppRoutingModule,

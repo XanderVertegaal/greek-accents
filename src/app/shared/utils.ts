@@ -1,7 +1,7 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { articles } from 'src/assets/exercises/article.data';
 import {allChars, allSemi, toneChars } from 'src/assets/models';
-import { Article, Assignment, Casus, Character, Genus, NominalForm, Numerus, Question, Tone, TonePattern, WordClass,
+import { Casus, Character, Genus, NominalForm, Numerus, Tone, TonePattern, WordClass,
 } from 'src/assets/types';
 import { NucleusIndex } from 'src/assets/types';
 
@@ -403,9 +403,7 @@ export function declineFirstDeclensionSubstantive(
       && (targetNumber === exc.gramNumber ?? word.gramNumber)
     );
     if (exception !== undefined) {
-      const selectedForm = exception.baseForm ?? word.baseForm;
-      const selectedTonePattern = exception.baseTone ?? word.baseTone;
-      return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? undefined;
+      return applyTonePatternToWord(exception.inflectedForm, exception.inflectedTone) ?? undefined;
     }
   }
 
@@ -528,6 +526,9 @@ export function declineFirstDeclensionSubstantive(
 function getSecondDeclUnaccentedStem(word: NominalForm, targetCase: Casus, targetNumber: Numerus): string {
   const bareStem = removeMacraBreves(word.baseForm);
 
+  const isContracted = bareStem.endsWith('ους') || bareStem.endsWith('ουν');
+  const atticDeclension = bareStem.endsWith('ως') || bareStem.endsWith('ων');
+
   switch (targetNumber) {
     case Numerus.SINGULAR:
       switch (targetCase) {
@@ -539,14 +540,21 @@ function getSecondDeclUnaccentedStem(word: NominalForm, targetCase: Casus, targe
           }
           return bareStem;
         case Casus.GENITIVE:
-          return bareStem.slice(0, -1) + 'υ';
-        case Casus.DATIVE:
-          return bareStem.slice(0, -2) + 'ῳ';
-        case Casus.ACCUSATIVE:
-          if (bareStem.endsWith('ος')) {
-            return bareStem.replace(/ς$/, 'ν');
+          if (atticDeclension) {
+            return bareStem.slice(0, -1);
+          } else if (isContracted) {
+            return bareStem.slice(0, -3) + 'ου';
+          } else {
+            return bareStem.slice(0, -1) + 'υ';
           }
-          return bareStem;
+        case Casus.DATIVE:
+          if (isContracted) {
+            return bareStem.slice(0, -3) + 'ῳ';
+          } else {
+            return bareStem.slice(0, -2) + 'ῳ';
+          }
+        case Casus.ACCUSATIVE:
+          return bareStem.replace(/ς$/, 'ν');
       }
       break;
     case Numerus.DUAL:
@@ -554,23 +562,73 @@ function getSecondDeclUnaccentedStem(word: NominalForm, targetCase: Casus, targe
         case Casus.NOMINATIVE:
         case Casus.VOCATIVE:
         case Casus.ACCUSATIVE:
-          return bareStem.slice(0, -2) + 'ω';
+          if (isContracted) {
+            return bareStem.slice(0, -3) + 'ω';
+          } else {
+            return bareStem.slice(0, -2) + 'ω';
+          }
         case Casus.GENITIVE:
         case Casus.DATIVE:
-          return bareStem.slice(0, -2) + 'οιν';
+          if (atticDeclension) {
+            return bareStem.slice(0, -2) + 'ῳν';
+          } else if (isContracted) {
+            return bareStem.slice(0, -3) + 'οιν';
+          } else {
+            return bareStem.slice(0, -2) + 'οιν';
+          }
       }
       break;
     case Numerus.PLURAL:
       switch (targetCase) {
         case Casus.NOMINATIVE:
         case Casus.VOCATIVE:
-          return bareStem.slice(0, -2) + 'οι';
+          if (word.gender === Genus.NEUTER) {
+            if (isContracted) {
+              return bareStem.slice(0, -3) + 'α';
+            } else {
+              return bareStem.slice(0, -2) + 'α';
+            }
+          } else {
+            if (atticDeclension) {
+              return bareStem.slice(0, -2) + 'ῳ';
+            } else if (isContracted) {
+              return bareStem.slice(0, -3) + 'οι';
+            } else {
+              return bareStem.slice(0, -2) + 'οι';
+            }
+          }
         case Casus.GENITIVE:
-          return bareStem.slice(0, -2) + 'ων';
+          if (isContracted) {
+            return bareStem.slice(0, -3) + 'ων';
+          } else {
+            return bareStem.slice(0, -2) + 'ων';
+          }
         case Casus.DATIVE:
-          return bareStem.slice(0, -2) + 'οις';
+          if (atticDeclension) {
+            return bareStem.slice(0, -2) + 'ῳς';
+          } else if (isContracted) {
+            return bareStem.slice(0, -3) + 'οις';
+          } else {
+            return bareStem.slice(0, -2) + 'οις';
+          }
         case Casus.ACCUSATIVE:
-          return bareStem.slice(0, -2) + 'ους';
+          if (word.gender === Genus.MASCULINE) {
+            if (atticDeclension) {
+              return bareStem.slice(0, -2) + 'ως';
+            } else if (isContracted) {
+              return bareStem.slice(0, -3) + 'ους';
+            } else {
+              return bareStem.slice(0, -2) + 'ους';
+            }
+          } else {
+            if (atticDeclension) {
+              return bareStem.slice(0, -2) + 'ῳ';
+            } else if (isContracted) {
+              return bareStem.slice(0, -3) + 'α';
+            } else {
+              return bareStem.slice(0, -2) + 'α';
+            }
+          }
       }
   }
 }
@@ -588,11 +646,13 @@ export function declineSecondDeclensionSubstantive(
       && (targetNumber === exc.gramNumber ?? word.gramNumber)
     );
     if (exception !== undefined) {
-      const selectedForm = exception.baseForm ?? word.baseForm;
-      const selectedTonePattern = exception.baseTone ?? word.baseTone;
-      return applyTonePatternToWord(selectedForm, selectedTonePattern) ?? undefined;
+      return applyTonePatternToWord(exception.inflectedForm, exception.inflectedTone) ?? undefined;
     }
   }
+
+  const bareStem = removeMacraBreves(word.baseForm);
+  const isContracted = bareStem.endsWith('ους') || bareStem.endsWith('ουν');
+  const atticDeclension = bareStem.endsWith('ως') || bareStem.endsWith('ων');
 
   switch (targetNumber) {
     case Numerus.SINGULAR:
@@ -617,33 +677,36 @@ export function declineSecondDeclensionSubstantive(
               return '';
           }
       }
-      case Numerus.DUAL:
-        switch (targetCase) {
-          case Casus.NOMINATIVE:
-          case Casus.VOCATIVE:
-          case Casus.ACCUSATIVE:
-            switch (word.baseTone) {
-              case TonePattern.PROPAROXYTONE:
-              case TonePattern.PROPERISPOMENON:
-                return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
-            }
-            return applyTonePatternToWord(stem, word.baseTone) ?? '';
-          case Casus.GENITIVE:
-          case Casus.DATIVE:
-            switch (word.baseTone) {
-              case TonePattern.OXYTONE_ACUTE:
-              case TonePattern.PERISPOMENON:
-                return (
-                  applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? ''
-                );
-              case TonePattern.PAROXYTONE:
-              case TonePattern.PROPAROXYTONE:
-              case TonePattern.PROPERISPOMENON:
-                return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
-              default:
-                return '';
-            }
-        }
+      break;
+    case Numerus.DUAL:
+      switch (targetCase) {
+        case Casus.NOMINATIVE:
+        case Casus.VOCATIVE:
+        case Casus.ACCUSATIVE:
+          if (word.baseTone === TonePattern.PROPAROXYTONE || word.baseTone === TonePattern.PROPERISPOMENON) {
+            return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+          }
+          if (isContracted && word.baseTone === TonePattern.PERISPOMENON) {
+            return applyTonePatternToWord(stem, TonePattern.OXYTONE_ACUTE) ?? '';
+          }
+          return applyTonePatternToWord(stem, word.baseTone) ?? '';
+        case Casus.GENITIVE:
+        case Casus.DATIVE:
+          switch (word.baseTone) {
+            case TonePattern.OXYTONE_ACUTE:
+            case TonePattern.PERISPOMENON:
+              return (
+                applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? ''
+              );
+            case TonePattern.PAROXYTONE:
+            case TonePattern.PROPAROXYTONE:
+            case TonePattern.PROPERISPOMENON:
+              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+            default:
+              return '';
+          }
+      }
+      break;
     case Numerus.PLURAL:
       switch (targetCase) {
         case Casus.NOMINATIVE:
@@ -675,7 +738,11 @@ export function declineSecondDeclensionSubstantive(
           }
           return applyTonePatternToWord(stem, word.baseTone) ?? '';
         case Casus.GENITIVE:
-          return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
+          if (word.baseTone === TonePattern.OXYTONE_ACUTE || word.baseTone === TonePattern.PERISPOMENON) {
+            return applyTonePatternToWord(stem, TonePattern.PERISPOMENON) ?? '';
+          } else {
+            return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+          }
         case Casus.DATIVE:
           switch (word.baseTone) {
             case TonePattern.OXYTONE_ACUTE:
@@ -696,7 +763,11 @@ export function declineSecondDeclensionSubstantive(
             case TonePattern.PAROXYTONE:
             case TonePattern.PROPAROXYTONE:
             case TonePattern.PROPERISPOMENON:
-              return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+              if (word.gender === Genus.NEUTER) {
+                return applyTonePatternToWord(stem, word.baseTone) ?? '';
+              } else {
+                return applyTonePatternToWord(stem, TonePattern.PAROXYTONE) ?? '';
+              }
             default:
               return '';
           }
